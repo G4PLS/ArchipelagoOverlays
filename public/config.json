@@ -1,0 +1,46 @@
+{
+    "alerts": {
+        "item-alert": {
+            "progression": {
+                "color": "rgb(255,0,255)",
+                "audio-sources": ["https://cdn.pixabay.com/download/audio/2025/07/04/audio_9dcd152e4d.mp3?filename=new-notification-021-370045.mp3"],
+                "image-sources": ["https://cdn.pixabay.com/animation/2023/06/13/15/13/15-13-53-6_512.gif"],
+                "animation": "fade-in"
+            },
+            "trap": {
+                "color": "rgb(255,0,0)",
+                "audio-sources": ["https://cdn.pixabay.com/download/audio/2023/01/19/audio_e3369a8a96.mp3?filename=dbd-bear-trap-being-disarmed-135902.mp3"],
+                "image-sources": ["https://cdn.pixabay.com/photo/2012/04/14/12/52/trap-33819_1280.png"],
+                "animation": "fade-in"
+            },
+            "useful": {
+                "color": "rgb(0,255,0)",
+                "audio-sources": [],
+                "image-sources": ["https://cdn.pixabay.com/photo/2025/06/09/16/27/animal-9650392_1280.jpg"],
+                "animation": "fade-in"
+            },
+            "normal": {
+                "color": "rgb(255,255,255)",
+                "audio-sources": ["https://cdn.pixabay.com/download/audio/2025/06/02/audio_f91dce208a.mp3?filename=new-notification-09-352705.mp3"],
+                "image-sources": ["https://cdn.pixabay.com/animation/2023/06/13/15/13/15-13-48-916_512.gif"],
+                "timeout": 2500,
+                "animation": "fade-in"
+            }
+        }
+    },
+    "animations": {
+        "fade-in": {
+            "duration": 2000,
+            "timing-function": "ease-in",
+            "iteration-count": 1,
+            "keyframes": {
+                "0%": {
+                    "opacity": 0
+                },
+                "100%": {
+                    "opacity": 1
+                }
+            }
+        }
+    }
+}
