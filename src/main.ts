@@ -1,5 +1,4 @@
-import { SettingsManager } from "./settings";
-import type { ItemAlertConfig } from "./settings";
+import { SettingsManager } from "./settingsManager"
 
 const fileInput: HTMLInputElement = document.getElementById("fileInput") as HTMLInputElement
 
@@ -15,12 +14,7 @@ fileInput.addEventListener("change", (event) => {
     reader.onload = (e) => {
         try {
             const json = JSON.parse(e.target?.result as string)
-            let settingsManager: SettingsManager = new SettingsManager(json)
-
-            console.log(settingsManager.getAnimation("fade-in"))
-            
-            let alertConf: ItemAlertConfig = settingsManager.getAlertSettings("item-alert", "trap")
-            console.log(alertConf.animation == null)
+            let settingsManager: SettingsManager = SettingsManager.getInstance()
         }
         catch (err) {
             console.error(err)

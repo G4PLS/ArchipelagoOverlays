@@ -1,31 +1,95 @@
 {
+    "images": {
+        "goal": "https://cdn.pixabay.com/photo/2025/06/19/07/59/allgau-9668453_1280.jpg",
+        "trap": "https://cdn.pixabay.com/photo/2012/04/14/12/52/trap-33819_1280.png"
+    },
+    "audios": {
+        "ad-ding": "https://cdn.pixabay.com/download/audio/2025/07/04/audio_9dcd152e4d.mp3?filename=new-notification-021-370045.mp3",
+        "ad-goal": "https://cdn.pixabay.com/download/audio/2025/06/02/audio_f91dce208a.mp3?filename=new-notification-09-352705.mp3"
+    },
     "alerts": {
-        "item-alert": {
-            "progression": {
-                "color": "rgb(255,0,255)",
-                "audio-sources": ["https://cdn.pixabay.com/download/audio/2025/07/04/audio_9dcd152e4d.mp3?filename=new-notification-021-370045.mp3"],
-                "image-sources": ["https://cdn.pixabay.com/animation/2023/06/13/15/13/15-13-53-6_512.gif"],
-                "animation": "fade-in"
-            },
-            "trap": {
-                "color": "rgb(255,0,0)",
-                "audio-sources": ["https://cdn.pixabay.com/download/audio/2023/01/19/audio_e3369a8a96.mp3?filename=dbd-bear-trap-being-disarmed-135902.mp3"],
-                "image-sources": ["https://cdn.pixabay.com/photo/2012/04/14/12/52/trap-33819_1280.png"],
-                "animation": "fade-in"
-            },
-            "useful": {
-                "color": "rgb(0,255,0)",
-                "audio-sources": [],
-                "image-sources": ["https://cdn.pixabay.com/photo/2025/06/09/16/27/animal-9650392_1280.jpg"],
-                "animation": "fade-in"
-            },
-            "normal": {
-                "color": "rgb(255,255,255)",
-                "audio-sources": ["https://cdn.pixabay.com/download/audio/2025/06/02/audio_f91dce208a.mp3?filename=new-notification-09-352705.mp3"],
-                "image-sources": ["https://cdn.pixabay.com/animation/2023/06/13/15/13/15-13-48-916_512.gif"],
-                "timeout": 2500,
-                "animation": "fade-in"
-            }
+        "progression-item": {
+            "color": "#FF00FF",
+            "audio-sources": [
+                "ad-ding",
+                "ad-goal"
+            ],
+            "image-sources": [
+                "trap"
+            ],
+            "timeout": 2500,
+            "animation": "fade-in"
+        },
+        "trap-item": {
+            "color": "#FF0000",
+            "audio-sources": [
+                "ad-goal"
+            ],
+            "image-sources": [
+                ""
+            ],
+            "timeout": 2500,
+            "animation": "fade-in"
+        },
+        "useful-item": {
+            "color": "#00FF00",
+            "audio-sources": [],
+            "image-sources": [
+                "goal"
+            ],
+            "timeout": 2500,
+            "animation": "fade-in"
+        },
+        "normal-item": {
+            "color": "#FFFFFF",
+            "audio-sources": [
+                ""
+            ],
+            "image-sources": [
+                "goal"
+            ],
+            "timeout": 2500,
+            "animation": "fade-in"
+        },
+        "undefined-item": {
+            "color": "#FFFFFF",
+            "audio-sources": [
+                "goal"
+            ],
+            "image-sources": [
+                "trap"
+            ],
+            "timeout": 2500,
+            "animation": "fade-in"
+        },
+        "deathlink": {
+            "color": "#FF0000",
+            "audio-sources": [
+                "ding"
+            ],
+            "image-sources": [
+                "trap"
+            ],
+            "timeout": 2500,
+            "animation": "fade-in"
+        },
+        "goal": {
+            "color": "#FF0000",
+            "audio-sources": [
+                "ding"
+            ],
+            "image-sources": [
+                "goal"
+            ],
+            "timeout": 2500,
+            "animation": "fade-in"
+        },
+        "countdown": {
+            "color": "#FFFFFF",
+            "audio-sources": [],
+            "image-sources": [],
+            "timeout": 950,
+            "animation":"fade-out"
         }
     },
     "animations": {
@@ -39,6 +103,19 @@
                 },
                 "100%": {
                     "opacity": 1
+                }
+            }
+        },
+        "fade-out": {
+            "duration": 2000,
+            "timing-function": "ease-in",
+            "iteration-count": 1,
+            "keyframes": {
+                "0%": {
+                    "opacity": 1
+                },
+                "100%": {
+                    "opacity": 0
                 }
             }
         }
