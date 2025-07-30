@@ -10,9 +10,16 @@ if (!styleTag) {
 
 const currentAnimations: Map<string, Animation> = new Map<string, Animation>();
 
+interface AnimationProps {
+    name: string;
+    duration: number;
+    timingFunction: string;
+    iterationCount: string | number;
+}
+
 interface Animation {
     keyframeCss: string,
-    animationCss: string,
+    animationProps: AnimationProps;
 }
 
 function generateAnimationCss(animationConfig: AnimationConfig): Animation {
@@ -30,14 +37,7 @@ function generateAnimationCss(animationConfig: AnimationConfig): Animation {
 
     const keyframesCss = keyframeLines.join("\n");
 
-    const animationCss = [
-        `animation-name: ${name};`,
-        `animation-duration: ${duration}ms;`,
-        `animation-timing-function: ${timingFunction};`,
-        `animation-iteration-count: ${iterationCount};`,
-    ].join("\n");
-
-    return { keyframeCss: keyframesCss, animationCss: animationCss };
+    return { keyframeCss: keyframesCss, animationProps: { name, duration, timingFunction, iterationCount } };
 }
 
 export function loadAnimations(animationConfigs: AnimationConfig[]) {
@@ -64,15 +64,10 @@ export function applyAnimation(element: HTMLElement, animationName: string) {
     if (!animation)
         return;
 
-    for (const line of animation.animationCss.trim().split("\n")) {
-        const [propRaw, valueRaw] = line.split(":");
-        if (!propRaw || !valueRaw) continue;
-
-        const prop = propRaw.trim();
-        const value = valueRaw.trim().replace(/;$/, "");
-        const jsProp = prop.replace(/-([a-z])/g, (_, char) => char.toUpperCase());
-        (element.style as any)[jsProp] = value;
-    }
+    element.style.animationName = animation.animationProps.name;
+    element.style.animationDuration = `${animation.animationProps.duration}ms`;
+    element.style.animationTimingFunction = animation.animationProps.timingFunction;
+    element.style.animationIterationCount = `${animation.animationProps.iterationCount}`;
 }
 
 export function removeAnimationFromElement(element: HTMLElement) {

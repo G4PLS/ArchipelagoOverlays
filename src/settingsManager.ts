@@ -10,7 +10,7 @@ export interface AnimationConfig {
     name: string;
     duration: number;
     timingFunction: string;
-    iterationCount: number | "infinite";
+    iterationCount: number;
     keyframes: AnimationKeyframes;
 }
 
@@ -228,7 +228,7 @@ export class SettingsManager {
                 const animation: AnimationConfig = {
                     name: animationName,
                     duration: duration ?? 2500,
-                    timingFunction: animationConfig["timing-function"] ?? "ease-in",
+                    timingFunction: animationConfig["timing-function"] ?? "linear",
                     iterationCount: animationConfig["iteration-count"] ?? 1,
                     keyframes: animationConfig.keyframes
                 };

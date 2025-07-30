@@ -129,7 +129,7 @@
     "animations": {
         "fade-in": {
             "duration": 2000,
-            "timing-function": "ease-in",
+            "timing-function": "linear",
             "iteration-count": 1,
             "keyframes": {
                 "0%": {
@@ -142,7 +142,7 @@
         },
         "fade-out": {
             "duration": 2000,
-            "timing-function": "ease-in",
+            "timing-function": "linear",
             "iteration-count": 1,
             "keyframes": {
                 "0%": {

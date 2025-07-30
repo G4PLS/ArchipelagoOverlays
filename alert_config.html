@@ -18,8 +18,11 @@
             <label for="archipelago-url">URL</label>
             <input type="text" placeholder="archipelago.gg:43741" id="archipelago-url" required>
 
-            <label for="archipelago-slot-name">Slot name</label>
-            <input type="text" placeholder="Player1" id="archipelago-slot-name">
+            <label for="archipelago-slot-tag-entry">Slot names</label>
+            <div class="tag-main-container">
+                <div class="tag-container" id="archipelago-slot-tags"></div>
+                <input type="text" id="archipelago-slot-tag-entry">
+            </div>
 
             <label for="archipelago-password">Password</label>
             <input type="password" placeholder="Password" id="archipelago-password">
@@ -29,23 +32,22 @@
         <div class="settings-box">
             <h2>Font Settings</h2>
 
-            <label for="font-input">Font Family</label>
-            <input list="fonts" id="font-input" placeholder="Enter font">
-            <datalist id="fonts">
-                <option value="Arial">
-                <option value="Helvetica">
-                <option value="Verdana">
-                <option value="Tahoma">
-                <option value="Trebuchet MS">
-                <option value="Times New Roman">
-                <option value="Georgia">
-                <option value="Palatino Linotype">
-                <option value="Book Antiqua">
-                <option value="Courier New">
-                <option value="Lucida Console">
-                <option value="Consolas">
-                <option value="Monaco">
-            </datalist>
+            <label for="font">Font Family</label>
+            <select id="font">
+                <option value="Arial">Arial</option>
+                <option value="Helvetica">Helvetica</option>
+                <option value="Verdana">Verdana</option>
+                <option value="Tahoma">Tahoma</option>
+                <option value="Trebuchet MS">Trebuchet MS</option>
+                <option value="Times New Roman">Times New Roman</option>
+                <option value="Georgia">Georgia</option>
+                <option value="Palatino Linotype">Palatino Linotype</option>
+                <option value="Book Antiqua">Book Antiqua</option>
+                <option value="Courier New">Courier New</option>
+                <option value="Lucida Console">Lucida Console</option>
+                <option value="Consolas">Consolas</option>
+                <option value="Monaco">Monaco</option>
+            </select>
 
             <label for="font-style">Style</label>
             <select id="font-style">
@@ -59,7 +61,7 @@
             <input type="number" min="1" max="100" step="1" value="12" id="font-size">
 
             <label for="stroke-width">Stroke Width</label>
-            <input type="number" min="0" max="100" step="1" value="12" id="stroke-width">
+            <input type="number" min="0" max="100" step="1" value="0" id="stroke-width">
 
             <label for="shadow-select">Shadow</label>
             <select id="shadow-select">

@@ -52,27 +52,17 @@ function createTabGroup<T>(
 }
 
 function createAlertSettings(container: HTMLElement, alert: AlertConfig) {
-    if (alert?.color) {
-        addInput(container, `${alert.name}-color`, "Color", "color", alert.color);
-    }
-    if (alert?.timeout) {
-        addInput(container, `${alert.name}-timeout`, "Timeout", "number", alert.timeout.toString(), { min: "0", step: "100" })
-    }
-    if (alert?.animation) {
-        addSelect(container, `${alert.name}-animation`, "Animation", animations.map(a => a.name), alert.animation);
-    }
-    if (alert?.audioSources) {
-        addTagSelector(container, `${alert.name}-audios`, "Audios", audios.map(audio => audio.name), alert.audioSources.map(audio => audio.name));
-    }
-    if (alert?.imageSources) {
-        addTagSelector(container, `${alert.name}-images`, "Images", images.map(image => image.name), alert.imageSources.map(image => image.name));
-    }
+    addInput(container, `${alert.name}-color`, "Color", "color", alert.color);
+    addInput(container, `${alert.name}-timeout`, "Timeout (ms)", "number", alert.timeout?.toString(), { min: "0", step: "100" })
+    addSelect(container, `${alert.name}-animation`, "Animation", animations.map(a => a.name), alert.animation || "");
+    addTagSelector(container, `${alert.name}-images`, "Images", images.map(image => image.name), alert.imageSources?.map(image => image.name));
+    addTagSelector(container, `${alert.name}-audios`, "Audios", audios.map(audio => audio.name), alert.audioSources?.map(audio => audio.name));
 }
 
 function createAnimationSettings(container: HTMLElement, animation: AnimationConfig) {
-    if (animation?.duration) {
-        addInput(container, `${animation.name}-timeout`, "Duration", "number", animation.duration.toString(), { min: "0", step: "100" })
-    }
+    addInput(container, `${animation.name}-duration`, "Duration (ms)", "number", animation.duration?.toString(), { min: "0", step: "100" })
+    addSelect(container, `${animation.name}-timing-function`, "Timing Function", ["ease-in", "ease-out", "ease-in-out", "linear", "step-start", "step-end"], animation.timingFunction);
+    addInput(container, `${animation.name}-iterations`, "Iterations", "number", animation.iterationCount.toString(), {min: "1", max:"100", step:"1"});
 }
 
 function addInput(container: HTMLElement, id: string, labelText: string, type: string, value: string, attributes: Record<string, string> = {}) {
@@ -201,10 +191,103 @@ function addTagSelector(
     container.appendChild(mainContainer);
 }
 
+function initTagInput(idPrefix: string, initialTags: string[] = []) {
+    const tagContainer = document.getElementById(`${idPrefix}-tags`);
+    const input = document.getElementById(`${idPrefix}-tag-entry`) as HTMLInputElement;
+
+    if (!tagContainer || !input) {
+        console.error(`Tag container or input not found for prefix: ${idPrefix}`);
+        return;
+    }
+
+    // Helper: Create tag element
+    function createTag(item: string) {
+        if (!item.trim()) return;
+
+        const tag = document.createElement("span");
+        tag.className = "tag";
+        tag.textContent = item;
+
+        // Remove tag on click
+        tag.addEventListener("click", () => {
+            tag.remove();
+        });
+
+        tagContainer!.appendChild(tag);
+    }
+
+    // Add initial tags
+    initialTags.forEach(tag => createTag(tag));
+
+    // Handle input (Enter key adds tag)
+    input.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+            e.preventDefault();
+            createTag(input.value);
+            input.value = "";
+        }
+    });
+}
+
+
 function generateUrl() {
     const baseUrl = "http://localhost:5173/alert";
     const params = new URLSearchParams();
 
+    // ARCHIPELAGO
+    const archipelagoUrlElement: HTMLInputElement = document.getElementById("archipelago-url") as HTMLInputElement;
+    if (archipelagoUrlElement) {
+        const fullUrl = archipelagoUrlElement.value;
+
+        const parts = fullUrl.split(":");
+
+        if (parts.length == 1) {
+            params.set("url", fullUrl);
+        }
+        else if (parts.length == 2) {
+            params.set("url", parts[0])
+            params.set("port", parts[1])
+        }
+    }
+
+    const archipelagoSlotElement = Array.from(document.querySelectorAll(`#archipelago-slot-tags .tag`))
+            .map(tag => tag.textContent || "");
+    if (archipelagoSlotElement) {
+        params.set(`slots`, archipelagoSlotElement.join(","));
+    }
+
+    const archipelagoPasswordElement: HTMLInputElement = document.getElementById("archipelago-password") as HTMLInputElement;
+    if (archipelagoPasswordElement) {
+        params.set("password", archipelagoPasswordElement.value);
+    }
+
+    // FONT
+    const fontElement: HTMLSelectElement = document.getElementById("font") as HTMLSelectElement;
+    if (fontElement) {
+        params.set("font", fontElement.value);
+    }
+
+    const fontStyleElement: HTMLSelectElement = document.getElementById("font-style") as HTMLSelectElement;
+    if (fontStyleElement) {
+        params.set("font-style", fontStyleElement.value);
+    }
+
+    const fontSizeElement: HTMLInputElement = document.getElementById("font-size") as HTMLInputElement;
+    if (fontSizeElement) {
+        params.set("font-size", fontSizeElement.value);
+    }
+
+    const strokeWidthElement: HTMLSelectElement = document.getElementById("stroke-width") as HTMLSelectElement;
+    if (strokeWidthElement) {
+        params.set("stroke-width", strokeWidthElement.value);
+    }
+
+    const shadowElement: HTMLSelectElement = document.getElementById("shadow-select") as HTMLSelectElement;
+    if (shadowElement) {
+        params.set("shadow-select", shadowElement.value);
+    }
+
+    // ALERTS
     alerts.forEach(alert => {
         const colorElement: HTMLInputElement = document.getElementById(`${alert.name}-color`) as HTMLInputElement;
         if (colorElement && colorElement.value.toLowerCase() !== alert.color.toLowerCase()) {
@@ -236,10 +319,11 @@ function generateUrl() {
         }
     });
 
+    // ANIMATIONS
     animations.forEach(animation => {
-        const durationElement: HTMLInputElement = document.getElementById(`${animation.name}-timeout`) as HTMLInputElement;
+        const durationElement: HTMLInputElement = document.getElementById(`${animation.name}-duration`) as HTMLInputElement;
         if (durationElement && Number(durationElement.value) !== animation.duration) {
-            params.set(`${animation.name}-timeout`, durationElement.value);
+            params.set(`${animation.name}-duration`, durationElement.value);
         }
     });
 
@@ -250,8 +334,10 @@ function generateUrl() {
 
 createTabGroup("alert-tabs", "alert-tab-container", alerts, alert => alert.name, createAlertSettings)
 createTabGroup("animation-tabs", "animation-tab-container", animations, animation => animation.name, createAnimationSettings)
+initTagInput("archipelago-slot")
 
 document.getElementById("generate-url-button")?.addEventListener("click", () => {
     const url = generateUrl();
     navigator.clipboard.writeText(url);
 });
+
