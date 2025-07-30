@@ -106,7 +106,7 @@ export class SettingsManager {
                 timeout = parsedDuration;
         }
 
-        const animationString = urlParams.get(`${type}-anim`)
+        const animationString = urlParams.get(`${type}-animation`)
         animation = animationString || animation;
 
         const colorString = urlParams.get(`${type}-color`)
@@ -114,13 +114,13 @@ export class SettingsManager {
             color = `#${colorString}`
 
         const imageSourceString = urlParams.get(`${type}-images`)
-        if (imageSourceString) {
+        if (imageSourceString !== undefined && imageSourceString !== null) {
             imageSourceNames = imageSourceString.split(",")
         }
         const imageSources = imageSourceNames.map((key: string) => this.getImage(key)).filter((url: string): url is string => url !== null);
 
         const audioSourceString = urlParams.get(`${type}-audios`)
-        if (audioSourceString) {
+        if (audioSourceString !== undefined && audioSourceString !== null) {
             audioSourceNames = audioSourceString.split(",")
         }
         const audioSources = audioSourceNames.map((key: string) => this.getAudio(key)).filter((url: string): url is string => url !== null);
