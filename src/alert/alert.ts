@@ -1,4 +1,4 @@
-import type { AlertConfig } from "../settingsManager";
+import type { AlertConfig, MediaData } from "../settingsManager";
 import { applyAnimation, removeAnimationFromElement } from "../animation";
 import { stringToHue } from "../utility/utils";
 
@@ -44,12 +44,12 @@ export class Alert {
         this.text = ""
     };
 
-    private pickRandom(arr?: string[]): string {
+    private pickRandom(arr?: MediaData[]): string {
         if (!arr || arr.length === 0)
             return ""
 
         const index = Math.floor(Math.random() * arr.length);
-        return arr[index];
+        return arr[index].link;
     }
 
     display(alertContainer: HTMLElement): Promise<void> {

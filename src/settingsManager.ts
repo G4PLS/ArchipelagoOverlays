@@ -1,6 +1,11 @@
 type AnimationKeyframes = Record<string, Record<string, string | number>>;
 import { loadAnimations } from "./animation";
 
+export interface MediaData {
+    name: string;
+    link: string;
+}
+
 export interface AnimationConfig {
     name: string;
     duration: number;
@@ -12,8 +17,8 @@ export interface AnimationConfig {
 export interface AlertConfig {
     name: string;
     color: string;
-    audioSources: string[];
-    imageSources: string[];
+    audioSources: MediaData[];
+    imageSources: MediaData[];
     timeout: number;
     animation?: string;
 }
@@ -130,12 +135,68 @@ export class SettingsManager {
         };
     }
 
-    getAudio(name: string) {
-        return this.config?.audios?.[name] ?? null;
+    getAudios() {
+        const audios = this.config?.audios;
+
+        if (!audios)
+            return [];
+
+        const results: MediaData[] = [];
+
+        for (const audioName in audios) {
+            const audio = this.getAudio(audioName)
+
+            if (!audio)
+                continue;
+
+            results.push(audio);
+        }
+
+        return results;
     }
 
-    getImage(name: string) {
-        return this.config?.images?.[name] ?? null;
+    getAudio(name: string): MediaData | null {
+        const config = this.config?.audios?.[name];
+
+        if (!config)
+            return null;
+
+        return {
+            name: name,
+            link: config
+        }
+    }
+
+    getImages() {
+        const images = this.config?.images;
+
+        if (!images)
+            return [];
+
+        const results: MediaData[] = [];
+
+        for (const imageName in images) {
+            const image = this.getImage(imageName)
+
+            if (!image)
+                continue;
+
+            results.push(image);
+        }
+
+        return results;
+    }
+
+    getImage(name: string): MediaData | null {
+        const config = this.config?.images?.[name];
+
+        if (!config)
+            return null;
+
+        return {
+            name: name,
+            link: config
+        }
     }
 
     getAnimations(): AnimationConfig[] {
