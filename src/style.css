@@ -33,30 +33,8 @@ h1 {
   text-align: center;
 }
 
-.alert-animation {
-  opacity: 0;
-  animation-name: alertAnimation;
-  animation-duration: 2s;
-  animation-fill-mode: forwards;
-}
-
 #alert-container {
   text-align: center;       /* centers inline and block children horizontally */
   width: fit-content;       /* optional, shrinks container to content width */
   margin: 0 auto;           /* center the container itself horizontally if needed */
-}
-
-@keyframes alertAnimation {
-  0% {
-    opacity: 0;
-  }
-  20% {
-    opacity: 1;
-  }
-  60% {
-    opacity: 1
-  }
-  80% {
-    opacity: 0;
-  }
 }

@@ -1,5 +1,5 @@
 type AnimationKeyframes = Record<string, Record<string, string | number>>;
-import { loadAnimations } from "./animation";
+import { loadAnimations } from "./utility/animation";
 
 export interface MediaData {
     name: string;
@@ -40,13 +40,14 @@ export class SettingsManager {
 
     private async getLocalConfig(path: string) {
         try {
-            const response = await fetch(path);
+
+            const response = await fetch(`${import.meta.env.BASE_URL}${path}`);
 
             if (!response.ok)
                 return null;
 
             const fileContent = await response.text();
-            const parsedConfig = JSON.parse(fileContent) as RootConfig;
+            const parsedConfig = JSON.parse(fileContent);
             return parsedConfig;
         }
         catch (error) {
@@ -69,12 +70,12 @@ export class SettingsManager {
         const alerts = this.config?.alerts;
 
         if (!alerts)
-            return []
+            return [];
 
-        const results: AlertConfig[] = []
+        const results: AlertConfig[] = [];
 
         for (const type in alerts) {
-            const alertConfig = this.getAlert(type)
+            const alertConfig = this.getAlert(type);
 
             if (!alertConfig)
                 continue;
@@ -95,33 +96,33 @@ export class SettingsManager {
 
         let timeout = config?.timeout ?? 2500;
         let animation = config?.animation ?? "";
-        let color = config?.color ?? "rgb(255,255,255)"
-        let imageSourceNames = config?.["image-sources"] || []
-        let audioSourceNames = config?.["audio-sources"] || []
+        let color = config?.color ?? "rgb(255,255,255)";
+        let imageSourceNames = config?.["image-sources"] || [];
+        let audioSourceNames = config?.["audio-sources"] || [];
 
-        const timeoutString = urlParams.get(`${type}-timeout`)
+        const timeoutString = urlParams.get(`${type}-timeout`);
         if (timeoutString) {
-            const parsedDuration = parseInt(timeoutString, 10)
+            const parsedDuration = parseInt(timeoutString, 10);
             if (parsedDuration > 0)
                 timeout = parsedDuration;
         }
 
-        const animationString = urlParams.get(`${type}-animation`)
+        const animationString = urlParams.get(`${type}-animation`);
         animation = animationString || animation;
 
-        const colorString = urlParams.get(`${type}-color`)
+        const colorString = urlParams.get(`${type}-color`);
         if (colorString)
-            color = `#${colorString}`
+            color = `#${colorString}`;
 
-        const imageSourceString = urlParams.get(`${type}-images`)
+        const imageSourceString = urlParams.get(`${type}-images`);
         if (imageSourceString !== undefined && imageSourceString !== null) {
-            imageSourceNames = imageSourceString.split(",")
+            imageSourceNames = imageSourceString.split(",");
         }
         const imageSources = imageSourceNames.map((key: string) => this.getImage(key)).filter((url: string): url is string => url !== null);
 
-        const audioSourceString = urlParams.get(`${type}-audios`)
+        const audioSourceString = urlParams.get(`${type}-audios`);
         if (audioSourceString !== undefined && audioSourceString !== null) {
-            audioSourceNames = audioSourceString.split(",")
+            audioSourceNames = audioSourceString.split(",");
         }
         const audioSources = audioSourceNames.map((key: string) => this.getAudio(key)).filter((url: string): url is string => url !== null);
 
@@ -144,7 +145,7 @@ export class SettingsManager {
         const results: MediaData[] = [];
 
         for (const audioName in audios) {
-            const audio = this.getAudio(audioName)
+            const audio = this.getAudio(audioName);
 
             if (!audio)
                 continue;
@@ -164,7 +165,7 @@ export class SettingsManager {
         return {
             name: name,
             link: config
-        }
+        };
     }
 
     getImages() {
@@ -176,7 +177,7 @@ export class SettingsManager {
         const results: MediaData[] = [];
 
         for (const imageName in images) {
-            const image = this.getImage(imageName)
+            const image = this.getImage(imageName);
 
             if (!image)
                 continue;
@@ -196,7 +197,7 @@ export class SettingsManager {
         return {
             name: name,
             link: config
-        }
+        };
     }
 
     getAnimations(): AnimationConfig[] {
@@ -218,9 +219,9 @@ export class SettingsManager {
 
                 let duration = animationConfig.duration;
 
-                const urlDurationString = urlParams.get(`${animationName}-duration`)
+                const urlDurationString = urlParams.get(`${animationName}-duration`);
                 if (urlDurationString) {
-                    const parsedDuration = parseInt(urlDurationString, 10)
+                    const parsedDuration = parseInt(urlDurationString, 10);
                     if (parsedDuration > 0)
                         duration = parsedDuration;
                 }

@@ -1,41 +1,7 @@
 {
     "images": {
         "goal": "https://cdn.pixabay.com/photo/2025/06/19/07/59/allgau-9668453_1280.jpg",
-        "trap": "https://cdn.pixabay.com/photo/2012/04/14/12/52/trap-33819_1280.png",
-        "goal1": "https://cdn.pixabay.com/photo/2025/06/19/07/59/allgau-9668453_1280.jpg",
-        "goal2": "https://cdn.pixabay.com/photo/2025/06/19/07/59/allgau-9668453_1280.jpg",
-        "goal3": "https://cdn.pixabay.com/photo/2025/06/19/07/59/allgau-9668453_1280.jpg",
-        "goal4": "https://cdn.pixabay.com/photo/2025/06/19/07/59/allgau-9668453_1280.jpg",
-        "goal5": "https://cdn.pixabay.com/photo/2025/06/19/07/59/allgau-9668453_1280.jpg",
-        "goal56": "https://cdn.pixabay.com/photo/2025/06/19/07/59/allgau-9668453_1280.jpg",
-        "goal76": "https://cdn.pixabay.com/photo/2025/06/19/07/59/allgau-9668453_1280.jpg",
-        "goal7": "https://cdn.pixabay.com/photo/2025/06/19/07/59/allgau-9668453_1280.jpg",
-        "goal8": "https://cdn.pixabay.com/photo/2025/06/19/07/59/allgau-9668453_1280.jpg",
-        "goal9": "https://cdn.pixabay.com/photo/2025/06/19/07/59/allgau-9668453_1280.jpg",
-        "goal0": "https://cdn.pixabay.com/photo/2025/06/19/07/59/allgau-9668453_1280.jpg",
-        "goalfd": "https://cdn.pixabay.com/photo/2025/06/19/07/59/allgau-9668453_1280.jpg",
-        "goalf": "https://cdn.pixabay.com/photo/2025/06/19/07/59/allgau-9668453_1280.jpg",
-        "goalew": "https://cdn.pixabay.com/photo/2025/06/19/07/59/allgau-9668453_1280.jpg",
-        "goaldv": "https://cdn.pixabay.com/photo/2025/06/19/07/59/allgau-9668453_1280.jpg",
-        "goalxvb": "https://cdn.pixabay.com/photo/2025/06/19/07/59/allgau-9668453_1280.jpg",
-        "goalfe": "https://cdn.pixabay.com/photo/2025/06/19/07/59/allgau-9668453_1280.jpg",
-        "goalsa": "https://cdn.pixabay.com/photo/2025/06/19/07/59/allgau-9668453_1280.jpg",
-        "goalcxv": "https://cdn.pixabay.com/photo/2025/06/19/07/59/allgau-9668453_1280.jpg",
-        "goalwe": "https://cdn.pixabay.com/photo/2025/06/19/07/59/allgau-9668453_1280.jpg",
-        "goala": "https://cdn.pixabay.com/photo/2025/06/19/07/59/allgau-9668453_1280.jpg",
-        "goald": "https://cdn.pixabay.com/photo/2025/06/19/07/59/allgau-9668453_1280.jpg",
-        "goalb": "https://cdn.pixabay.com/photo/2025/06/19/07/59/allgau-9668453_1280.jpg",
-        "goal65": "https://cdn.pixabay.com/photo/2025/06/19/07/59/allgau-9668453_1280.jpg",
-        "goalk": "https://cdn.pixabay.com/photo/2025/06/19/07/59/allgau-9668453_1280.jpg",
-        "goal8j": "https://cdn.pixabay.com/photo/2025/06/19/07/59/allgau-9668453_1280.jpg",
-        "goalj": "https://cdn.pixabay.com/photo/2025/06/19/07/59/allgau-9668453_1280.jpg",
-        "goalnhm": "https://cdn.pixabay.com/photo/2025/06/19/07/59/allgau-9668453_1280.jpg",
-        "goalvfd": "https://cdn.pixabay.com/photo/2025/06/19/07/59/allgau-9668453_1280.jpg",
-        "goalas": "https://cdn.pixabay.com/photo/2025/06/19/07/59/allgau-9668453_1280.jpg",
-        "goaler": "https://cdn.pixabay.com/photo/2025/06/19/07/59/allgau-9668453_1280.jpg",
-        "goalbg": "https://cdn.pixabay.com/photo/2025/06/19/07/59/allgau-9668453_1280.jpg",
-        "goalert": "https://cdn.pixabay.com/photo/2025/06/19/07/59/allgau-9668453_1280.jpg",
-        "goaldf": "https://cdn.pixabay.com/photo/2025/06/19/07/59/allgau-9668453_1280.jpg"
+        "trap": "https://cdn.pixabay.com/photo/2012/04/14/12/52/trap-33819_1280.png"
     },
     "audios": {
         "ad-ding": "https://cdn.pixabay.com/download/audio/2025/07/04/audio_9dcd152e4d.mp3?filename=new-notification-021-370045.mp3",
@@ -123,7 +89,56 @@
             "audio-sources": [],
             "image-sources": [],
             "timeout": 950,
-            "animation":"fade-out"
+            "animation": "fade-out"
+        },
+        "progression-hint": {
+            "color": "#FFFFFF",
+            "audio-sources": [],
+            "image-sources": [],
+            "timeout": 950,
+            "animation": "fade-out"
+        },
+        "trap-hint": {
+            "color": "#FFFFFF",
+            "audio-sources": [],
+            "image-sources": [],
+            "timeout": 950,
+            "animation": "fade-out"
+        },
+        "usefull-hint": {
+            "color": "#FFFFFF",
+            "audio-sources": [],
+            "image-sources": [],
+            "timeout": 950,
+            "animation": "fade-out"
+        },
+        "normal-hint": {
+            "color": "#FFFFFF",
+            "audio-sources": [],
+            "image-sources": [],
+            "timeout": 950,
+            "animation": "fade-out"
+        },
+        "undefined-hint": {
+            "color": "#FFFFFF",
+            "audio-sources": [],
+            "image-sources": [],
+            "timeout": 950,
+            "animation": "fade-out"
+        },
+        "connected": {
+            "color": "#FFFFFF",
+            "audio-sources": [],
+            "image-sources": [],
+            "timeout": 950,
+            "animation": "fade-out"
+        },
+        "disconnected": {
+            "color": "#FFFFFF",
+            "audio-sources": [],
+            "image-sources": [],
+            "timeout": 950,
+            "animation": "fade-out"
         }
     },
     "animations": {

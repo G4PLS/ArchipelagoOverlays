@@ -13,6 +13,8 @@ body {
     display: flex;
     flex-direction: column;
     gap: 12px;
+    height: 100vh;
+    overflow-y: scroll;
 }
 
 .config-panel input {
@@ -24,7 +26,6 @@ body {
 .preview-panel {
     width: 60%;
     height: 100vh;
-    position: sticky;
     top: 0;
     display: flex;
     flex-direction: column;

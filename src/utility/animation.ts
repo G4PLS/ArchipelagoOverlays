@@ -1,10 +1,10 @@
-import type {AnimationConfig} from "./settingsManager";
+import type { AnimationConfig } from "../SettingsManager";
 
 let styleTag = document.getElementById("dynamic-animation-styles") as HTMLElement | null;
 
 if (!styleTag) {
     styleTag = document.createElement("style");
-    styleTag.id = "dynamic-animation-styles"
+    styleTag.id = "dynamic-animation-styles";
     document.head.appendChild(styleTag);
 }
 
@@ -23,7 +23,7 @@ interface Animation {
 }
 
 function generateAnimationCss(animationConfig: AnimationConfig): Animation {
-    const {name, duration, keyframes, timingFunction, iterationCount} = animationConfig;
+    const { name, duration, keyframes, timingFunction, iterationCount } = animationConfig;
 
     const keyframeLines: string[] = [`@keyframes ${name} {`];
     for (const [percent, props] of Object.entries(keyframes)) {

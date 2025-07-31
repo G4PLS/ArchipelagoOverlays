@@ -4,11 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Alert Config</title>
-    <link rel="stylesheet" href="src/alertConfig.css" />
 </head>
 
 <body>
-
     <!-- CONFIG FORM (LEFT) -->
     <div class="config-panel">
         <!-- Archipelago Connection -->
@@ -28,8 +26,19 @@
             <input type="password" placeholder="Password" id="archipelago-password">
         </div>
 
-        <!-- Font Settings -->
+        <!-- Styling Settings -->
         <div class="settings-box">
+            <h2>Image Settings</h2>
+
+            <label for="image-size-width">Width</label>
+            <input type="number" id="image-size-width" min="0" value="100">
+
+            <label for="image-size-height">Height</label>
+            <input type="number" id="image-size-height" min="0" value="100">
+
+            <label for="image-contrast">Contrast (%)</label>
+            <input type="number" id="image-contrast" min="0" max="500" value="100">
+
             <h2>Font Settings</h2>
 
             <label for="font">Font Family</label>
@@ -93,8 +102,6 @@
         <button class="generate-url-button" id="generate-url-button">Generate URL</button>
     </div>
 
-
-
     <!-- ALERT PREVIEW (RIGHT) -->
     <div class="preview-panel">
         <div id="alert-container">
@@ -110,68 +117,4 @@
 
 </html>
 
-<script type="module" src="/src/alert/alertConfigApp.ts"></script>
-
-<script>
-    const inputFont = document.getElementById('font-input');
-    const styleSelect = document.getElementById('font-style');
-    const strokeWidthInput = document.getElementById('stroke-width');
-    const preview = document.getElementById('preview');
-    const shadowSelect = document.getElementById('shadow-select');
-    const fontSizeSpin = document.getElementById('font-size');
-
-    const shadowMap = {
-        none: "none",
-        small: "1px 1px 2px rgba(0,0,0,0.5)",
-        medium: "2px 2px 4px rgba(0,0,0,0.6)",
-        large: "4px 4px 6px rgba(0,0,0,0.7)"
-    };
-
-    function updatePreview() {
-        const font = inputFont.value;
-        const fontSize = fontSizeSpin.value;
-        const style = styleSelect.value;
-        const strokeWidth = strokeWidthInput.value;
-        const shadow = shadowSelect.value;
-
-        preview.style.fontSize = `${fontSize}px`;
-        preview.style.fontFamily = font;
-        preview.style.fontWeight = "normal";
-        preview.style.fontStyle = "normal";
-        preview.style.webkitTextStroke = "0px"; // reset stroke
-        preview.style.textShadow = "none"; // reset shadow
-
-        // Font style
-        if (style === "bold") {
-            preview.style.fontWeight = "bold";
-        } else if (style === "italic") {
-            preview.style.fontStyle = "italic";
-        } else if (style === "bold_italic") {
-            preview.style.fontWeight = "bold";
-            preview.style.fontStyle = "italic";
-        }
-
-        // Stroke
-        preview.style.webkitTextStroke = `${strokeWidth}px black`;
-        preview.style.color = "white";
-
-        // Shadow
-        const shadowMap = {
-            none: "none",
-            small: "1px 1px 2px rgba(0,0,0,0.5)",
-            medium: "2px 2px 4px rgba(0,0,0,0.6)",
-            large: "4px 4px 6px rgba(0,0,0,0.7)"
-        };
-        preview.style.textShadow = shadowMap[shadow] || "none";
-    }
-
-    // Update preview on all relevant inputs
-    inputFont.addEventListener('input', updatePreview);
-    styleSelect.addEventListener('change', updatePreview);
-    strokeWidthInput.addEventListener('input', updatePreview);
-    shadowSelect.addEventListener('change', updatePreview);
-    fontSizeSpin.addEventListener('change', updatePreview);
-
-    // Initial update
-    updatePreview();
-</script>
+<script type="module" src="/Alerts/src/alertConfigApp.ts"></script>

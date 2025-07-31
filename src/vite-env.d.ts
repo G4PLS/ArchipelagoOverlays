@@ -1,1 +1,1 @@
-// vite.config.js
+/// <reference types="vite/client" />

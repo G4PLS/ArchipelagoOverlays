@@ -1,8 +1,11 @@
-import { removeAnimationFromElement } from "../animation";
-import { SettingsManager, type AlertConfig, type AnimationConfig } from "../settingsManager";
+import { SettingsManager, type AlertConfig, type AnimationConfig } from "@/SettingsManager";
+import { URLParser } from "@/URLParser";
+import "@/alertConfig.css";
+
+const urlParser = URLParser.getInstance();
+await urlParser.initializeDefaultParams();
 
 const settingsManager = SettingsManager.getInstance();
-await settingsManager.loadConfig("/config.json")
 
 const animations = settingsManager.getAnimations();
 const alerts = settingsManager.getAlerts();
@@ -53,16 +56,16 @@ function createTabGroup<T>(
 
 function createAlertSettings(container: HTMLElement, alert: AlertConfig) {
     addInput(container, `${alert.name}-color`, "Color", "color", alert.color);
-    addInput(container, `${alert.name}-timeout`, "Timeout (ms)", "number", alert.timeout?.toString(), { min: "0", step: "100" })
+    addInput(container, `${alert.name}-timeout`, "Timeout (ms)", "number", alert.timeout?.toString(), { min: "0", step: "100" });
     addSelect(container, `${alert.name}-animation`, "Animation", animations.map(a => a.name), alert.animation || "");
     addTagSelector(container, `${alert.name}-images`, "Images", images.map(image => image.name), alert.imageSources?.map(image => image.name));
     addTagSelector(container, `${alert.name}-audios`, "Audios", audios.map(audio => audio.name), alert.audioSources?.map(audio => audio.name));
 }
 
 function createAnimationSettings(container: HTMLElement, animation: AnimationConfig) {
-    addInput(container, `${animation.name}-duration`, "Duration (ms)", "number", animation.duration?.toString(), { min: "0", step: "100" })
+    addInput(container, `${animation.name}-duration`, "Duration (ms)", "number", animation.duration?.toString(), { min: "0", step: "100" });
     addSelect(container, `${animation.name}-timing-function`, "Timing Function", ["ease-in", "ease-out", "ease-in-out", "linear", "step-start", "step-end"], animation.timingFunction);
-    addInput(container, `${animation.name}-iterations`, "Iterations", "number", animation.iterationCount.toString(), {min: "1", max:"100", step:"1"});
+    addInput(container, `${animation.name}-iterations`, "Iterations", "number", animation.iterationCount.toString(), { min: "1", max: "100", step: "1" });
 }
 
 function addInput(container: HTMLElement, id: string, labelText: string, type: string, value: string, attributes: Record<string, string> = {}) {
@@ -183,8 +186,8 @@ function addTagSelector(
     const mainContainer = document.createElement("div");
     mainContainer.classList.add("tag-main-container");
 
-    mainContainer.appendChild(tagContainer)
-    mainContainer.appendChild(select)
+    mainContainer.appendChild(tagContainer);
+    mainContainer.appendChild(select);
 
     // Append everything
     container.appendChild(label);
@@ -229,115 +232,125 @@ function initTagInput(idPrefix: string, initialTags: string[] = []) {
     });
 }
 
-
 function generateUrl() {
-    const baseUrl = "http://localhost:5173/alert";
-    const params = new URLSearchParams();
-
     // ARCHIPELAGO
     const archipelagoUrlElement: HTMLInputElement = document.getElementById("archipelago-url") as HTMLInputElement;
     if (archipelagoUrlElement) {
-        const fullUrl = archipelagoUrlElement.value;
-
-        const parts = fullUrl.split(":");
-
-        if (parts.length == 1) {
-            params.set("url", fullUrl);
-        }
-        else if (parts.length == 2) {
-            params.set("url", parts[0])
-            params.set("port", parts[1])
-        }
+        urlParser.archipelagoParams.url = archipelagoUrlElement.value;
     }
 
     const archipelagoSlotElement = Array.from(document.querySelectorAll(`#archipelago-slot-tags .tag`))
-            .map(tag => tag.textContent || "");
+        .map(tag => tag.textContent || "");
     if (archipelagoSlotElement) {
-        params.set(`slots`, archipelagoSlotElement.join(","));
+        urlParser.archipelagoParams.slots = archipelagoSlotElement;
     }
 
     const archipelagoPasswordElement: HTMLInputElement = document.getElementById("archipelago-password") as HTMLInputElement;
     if (archipelagoPasswordElement) {
-        params.set("password", archipelagoPasswordElement.value);
+        urlParser.archipelagoParams.password = archipelagoPasswordElement.value;
     }
 
     // FONT
     const fontElement: HTMLSelectElement = document.getElementById("font") as HTMLSelectElement;
     if (fontElement) {
-        params.set("font", fontElement.value);
+        urlParser.fontParams.font = fontElement.value;
     }
 
     const fontStyleElement: HTMLSelectElement = document.getElementById("font-style") as HTMLSelectElement;
     if (fontStyleElement) {
-        params.set("font-style", fontStyleElement.value);
+        urlParser.fontParams.style = fontStyleElement.value;
     }
 
     const fontSizeElement: HTMLInputElement = document.getElementById("font-size") as HTMLInputElement;
     if (fontSizeElement) {
-        params.set("font-size", fontSizeElement.value);
+        urlParser.fontParams.size = fontSizeElement.value;
     }
 
     const strokeWidthElement: HTMLSelectElement = document.getElementById("stroke-width") as HTMLSelectElement;
     if (strokeWidthElement) {
-        params.set("stroke-width", strokeWidthElement.value);
+        urlParser.fontParams.strokeWidth = strokeWidthElement.value;
     }
 
     const shadowElement: HTMLSelectElement = document.getElementById("shadow-select") as HTMLSelectElement;
     if (shadowElement) {
-        params.set("shadow-select", shadowElement.value);
+        urlParser.fontParams.shadow = shadowElement.value;
+    }
+
+    const imageWidthElement: HTMLInputElement = document.getElementById("image-size-width") as HTMLInputElement;
+    if (imageWidthElement) {
+        urlParser.imageParams.width = imageWidthElement.value;
+    }
+
+    const imageHeightElement: HTMLInputElement = document.getElementById("image-size-height") as HTMLInputElement;
+    if (imageHeightElement) {
+        urlParser.imageParams.height = imageHeightElement.value;
+    }
+
+    const imageContrastElement: HTMLInputElement = document.getElementById("image-contrast") as HTMLInputElement;
+    if (imageContrastElement) {
+        urlParser.imageParams.contrast = imageContrastElement.value;
     }
 
     // ALERTS
     alerts.forEach(alert => {
+        if (!urlParser.alertParams.has(alert.name)) {
+            urlParser.alertParams.set(alert.name, null);
+        }
+
+        const alertParams = urlParser.alertParams.get(alert.name);
+
         const colorElement: HTMLInputElement = document.getElementById(`${alert.name}-color`) as HTMLInputElement;
         if (colorElement && colorElement.value.toLowerCase() !== alert.color.toLowerCase()) {
-            params.set(`${alert.name}-color`, colorElement.value.replace(/^#/, ""));
+            alertParams.color = colorElement.value.replace(/^#/, "");
         }
 
         const timeoutElement: HTMLInputElement = document.getElementById(`${alert.name}-timeout`) as HTMLInputElement;
         if (timeoutElement && Number(timeoutElement.value) !== alert.timeout) {
-            params.set(`${alert.name}-timeout`, timeoutElement.value);
+            alertParams.timeout = timeoutElement.value;
         }
 
         const animationElement: HTMLSelectElement = document.getElementById(`${alert.name}-animation`) as HTMLSelectElement;
         if (animationElement && animationElement.value !== alert.animation) {
-            params.set(`${alert.name}-animation`, animationElement.value);
+            alertParams.animation = animationElement.value;
         }
 
         const audioTags = Array.from(document.querySelectorAll(`#${alert.name}-audios-tags .tag`))
             .map(tag => tag.textContent || "");
         const defaultAudios = alert.audioSources.map(a => a.name);
         if (JSON.stringify(audioTags) !== JSON.stringify(defaultAudios)) {
-            params.set(`${alert.name}-audios`, audioTags.join(","));
+            alertParams.audios = audioTags;
         }
 
         const imageTags = Array.from(document.querySelectorAll(`#${alert.name}-images-tags .tag`))
             .map(tag => tag.textContent || "");
         const defaultImages = alert.imageSources.map(i => i.name);
         if (JSON.stringify(imageTags) !== JSON.stringify(defaultImages)) {
-            params.set(`${alert.name}-images`, imageTags.join(","));
+            alertParams.images = imageTags;
         }
     });
 
     // ANIMATIONS
     animations.forEach(animation => {
+        if (!urlParser.animationParams.has(animation.name)) {
+            urlParser.animationParams.set(animation.name, null);
+        }
+
+        const animationParams = urlParser.animationParams.get(alert.name);
+
         const durationElement: HTMLInputElement = document.getElementById(`${animation.name}-duration`) as HTMLInputElement;
         if (durationElement && Number(durationElement.value) !== animation.duration) {
-            params.set(`${animation.name}-duration`, durationElement.value);
+            animationParams.duration = durationElement.value;
         }
     });
 
-    const finalUrl = `${baseUrl}?${params.toString()}`;
-    console.log(finalUrl);
-    return finalUrl;
+    return urlParser.constructUrl();
 }
 
-createTabGroup("alert-tabs", "alert-tab-container", alerts, alert => alert.name, createAlertSettings)
-createTabGroup("animation-tabs", "animation-tab-container", animations, animation => animation.name, createAnimationSettings)
-initTagInput("archipelago-slot")
+createTabGroup("alert-tabs", "alert-tab-container", alerts, alert => alert.name, createAlertSettings);
+createTabGroup("animation-tabs", "animation-tab-container", animations, animation => animation.name, createAnimationSettings);
+initTagInput("archipelago-slot");
 
 document.getElementById("generate-url-button")?.addEventListener("click", () => {
     const url = generateUrl();
-    navigator.clipboard.writeText(url);
+    navigator.clipboard.writeText(url.toString());
 });
-
