@@ -32,4 +32,27 @@ export class ConnectionManager {
     private hookEvents(client: Client, slot: string) {
         this.hookEvent(client, slot);
     }
+
+    public static async testConnections(archipelagoUrl: string, slots: string[], password?: string): Promise<Map<string, boolean>> {
+        if (!slots)
+            return null;
+
+        const map: Map<string, boolean> = new Map<string, boolean>();
+
+        for(const slot of slots) {
+            const client = new Client();
+
+            try {
+                await client.login(archipelagoUrl, slot, undefined, {password: password||""});
+
+                map.set(slot, true);
+            } 
+            catch(error) {
+                console.error(error);
+                map.set(slot, false);
+            }
+        }
+
+        return map;
+    }
 }

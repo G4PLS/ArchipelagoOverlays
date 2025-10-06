@@ -24,8 +24,10 @@
 
             <label for="archipelago-password">Password</label>
             <input type="password" placeholder="Password" id="archipelago-password">
-        </div>
 
+            <button id="test-connection-button">Test Connection</button>
+        </div>
+        
         <!-- Styling Settings -->
         <div class="settings-box">
             <h2>Image Settings</h2>
@@ -81,25 +83,32 @@
             </select>
         </div>
 
+        <div class="settings-box">
+            <label for="config-select">Config</label>
+            <select id="config-select"></select>
+        </div>
+
+        <!-- Alert Settings -->
         <div class="settings-box" style="grid-column: 1 / -1;">
             <h2>Alert Settings</h2>
 
             <div class="tab-group">
-                <div id="alert-tabs"></div>
-                <div id="alert-tab-container"></div>
+                <div class="tab-container" id="alert-tabs"></div>
+                <div class="tab-content-container" id="alert-tab-container"></div>
             </div>
         </div>
 
+        <!-- Animation Settings -->
         <div class="settings-box" style="grid-column: 1 / -1;">
             <h2>Animation Settings</h2>
 
             <div class="tab-group">
-                <div id="animation-tabs"></div>
-                <div id="animation-tab-container"></div>
+                <div class="tab-container" id="animation-tabs"></div>
+                <div class="tab-content-container" id="animation-tab-container"></div>
             </div>
         </div>
 
-        <button class="generate-url-button" id="generate-url-button">Generate URL</button>
+        <button id="generate-url-button">Generate URL</button>
     </div>
 
     <!-- ALERT PREVIEW (RIGHT) -->
@@ -108,9 +117,6 @@
             <img id="alert-image" />
             <audio id="alert-audio"></audio>
             <h1 id="alert-text">Alert Preview</h1>
-        </div>
-        <div class="url-display">
-            Generated URL will appear here
         </div>
     </div>
 </body>

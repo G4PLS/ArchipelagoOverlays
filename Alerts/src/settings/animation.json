@@ -1,0 +1,28 @@
+{
+    "fade-in": {
+        "duration": 2500,
+        "timing": "linear",
+        "iterations": 1,
+        "keyframes": {
+            "0%": {
+                "opacity": 0
+            },
+            "100%": {
+                "opacity": 1
+            }
+        }
+    },
+    "fade-out": {
+        "duration": 2500,
+        "timing": "linear",
+        "iterations": 1,
+        "keyframes": {
+            "0%": {
+                "opacity": 1
+            },
+            "100%": {
+                "opacity": 0
+            }
+        }
+    }
+}

@@ -1,3 +1,4 @@
+import { AnimationManager } from "./settings/AnimationManager";
 import { SettingsManager } from "./SettingsManager";
 
 interface AlertParams {
@@ -91,6 +92,8 @@ export class URLParser {
     public async initializeDefaultParams() {
         this.configParams = "config";
 
+        const animationManager = AnimationManager.getInstance();
+
         const settingsManager = SettingsManager.getInstance();
         await settingsManager.loadConfig(`/${this.configParams}.json`);
 
@@ -119,7 +122,7 @@ export class URLParser {
             });
         }
 
-        for (const animation of settingsManager.getAnimations()) {
+        for (const animation of animationManager.getAnimations()) {
             this.animationParams.set(animation.name, {
                 name: alert.name,
                 duration: null,

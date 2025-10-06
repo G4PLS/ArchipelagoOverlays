@@ -1,3 +1,18 @@
+/*
+import { AlertManager } from "./AlertManager";
+import { AnimationManager } from "@/settings/AnimationManager";
+
+import animationConfig from "./settings/animation.json"
+
+const animationManager = AnimationManager.getInstance();
+animationManager.load(animationConfig);
+
+const alertManager = AlertManager.getInstance();
+alertManager.load();
+*/
+
+
+
 import type { Client, ConnectedPacket, Hint, Item, MessageNode, Player } from "archipelago.js";
 import { ConnectAlert, CountdownAlert, DeathAlert, DisconnectAlert, GoalAlert, HintAlert, ItemAlert, type Alert } from "./Alert";
 import { ConnectionManager } from "@/ConnectionManager";
@@ -6,6 +21,16 @@ import { SettingsManager } from "@/SettingsManager";
 import { URLParser } from "@/URLParser";
 import "@/style.css";
 import { itemFlagToString } from "@/utility/utils";
+import { AnimationManager } from "@/settings/AnimationManager";
+import animationConfig from './settings/animation.json';
+import alertconfig from './settings/alerts/base.json'
+import { AlertManager } from "./AlertManager";
+
+const animationManager = AnimationManager.getInstance();
+animationManager.load(animationConfig);
+
+const alertManager = AlertManager.getInstance();
+alertManager.load(alertconfig);
 
 const urlParser = URLParser.getInstance();
 await urlParser.deconstructCurrentParams();

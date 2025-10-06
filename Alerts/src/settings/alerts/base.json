@@ -10,11 +10,11 @@
     "alerts": {
         "progression-item": {
             "color": "#FF00FF",
-            "audio-sources": [
+            "audios": [
                 "ad-ding",
                 "ad-goal"
             ],
-            "image-sources": [
+            "images": [
                 "trap"
             ],
             "timeout": 2500,
@@ -22,19 +22,18 @@
         },
         "trap-item": {
             "color": "#FF0000",
-            "audio-sources": [
+            "audios": [
                 "ad-goal"
             ],
-            "image-sources": [
-                ""
+            "images": [
             ],
             "timeout": 2500,
             "animation": "fade-in"
         },
         "useful-item": {
             "color": "#00FF00",
-            "audio-sources": [],
-            "image-sources": [
+            "audios": [],
+            "images": [
                 "goal"
             ],
             "timeout": 2500,
@@ -42,10 +41,9 @@
         },
         "normal-item": {
             "color": "#FFFFFF",
-            "audio-sources": [
-                ""
+            "audios": [
             ],
-            "image-sources": [
+            "images": [
                 "goal"
             ],
             "timeout": 2500,
@@ -53,10 +51,10 @@
         },
         "undefined-item": {
             "color": "#FFFFFF",
-            "audio-sources": [
+            "audios": [
                 "goal"
             ],
-            "image-sources": [
+            "images": [
                 "trap"
             ],
             "timeout": 2500,
@@ -64,10 +62,10 @@
         },
         "deathlink": {
             "color": "#FF0000",
-            "audio-sources": [
+            "audios": [
                 "ding"
             ],
-            "image-sources": [
+            "images": [
                 "trap"
             ],
             "timeout": 2500,
@@ -75,10 +73,10 @@
         },
         "goal": {
             "color": "#FF0000",
-            "audio-sources": [
+            "audios": [
                 "ding"
             ],
-            "image-sources": [
+            "images": [
                 "goal"
             ],
             "timeout": 2500,
@@ -86,87 +84,59 @@
         },
         "countdown": {
             "color": "#FFFFFF",
-            "audio-sources": [],
-            "image-sources": [],
+            "audios": [],
+            "images": [],
             "timeout": 950,
             "animation": "fade-out"
         },
         "progression-hint": {
             "color": "#FFFFFF",
-            "audio-sources": [],
-            "image-sources": [],
+            "audios": [],
+            "images": [],
             "timeout": 950,
             "animation": "fade-out"
         },
         "trap-hint": {
             "color": "#FFFFFF",
-            "audio-sources": [],
-            "image-sources": [],
+            "audios": [],
+            "images": [],
             "timeout": 950,
             "animation": "fade-out"
         },
         "usefull-hint": {
             "color": "#FFFFFF",
-            "audio-sources": [],
-            "image-sources": [],
+            "audios": [],
+            "images": [],
             "timeout": 950,
             "animation": "fade-out"
         },
         "normal-hint": {
             "color": "#FFFFFF",
-            "audio-sources": [],
-            "image-sources": [],
+            "audios": [],
+            "images": [],
             "timeout": 950,
             "animation": "fade-out"
         },
         "undefined-hint": {
             "color": "#FFFFFF",
-            "audio-sources": [],
-            "image-sources": [],
+            "audios": [],
+            "images": [],
             "timeout": 950,
             "animation": "fade-out"
         },
         "connected": {
             "color": "#FFFFFF",
-            "audio-sources": [],
-            "image-sources": [],
+            "audios": [],
+            "images": [],
             "timeout": 950,
             "animation": "fade-out"
         },
         "disconnected": {
             "color": "#FFFFFF",
-            "audio-sources": [],
-            "image-sources": [],
+            "audios": [],
+            "images": [],
             "timeout": 950,
             "animation": "fade-out"
-        }
-    },
-    "animations": {
-        "fade-in": {
-            "duration": 2000,
-            "timing-function": "linear",
-            "iteration-count": 1,
-            "keyframes": {
-                "0%": {
-                    "opacity": 0
-                },
-                "100%": {
-                    "opacity": 1
-                }
-            }
-        },
-        "fade-out": {
-            "duration": 2000,
-            "timing-function": "linear",
-            "iteration-count": 1,
-            "keyframes": {
-                "0%": {
-                    "opacity": 1
-                },
-                "100%": {
-                    "opacity": 0
-                }
-            }
         }
     }
 }

@@ -4,6 +4,7 @@ export class DisplayManager<T extends DisplayManagerItem> {
     queue: Queue<T> = new Queue<T>();
     displayContainer: HTMLElement;
     isAnimating: boolean = false;
+    private currentAnimatingItem: T;
 
     constructor(displayContainer: HTMLElement) {
         this.displayContainer = displayContainer;
@@ -32,6 +33,7 @@ export class DisplayManager<T extends DisplayManagerItem> {
         const item: T = this.queue.pop();
 
         if (item) {
+            this.currentAnimatingItem = item;
             await item.display(this.displayContainer);
             this.isAnimating = false;
             this.displayContainer.style.display = "none";
@@ -40,6 +42,15 @@ export class DisplayManager<T extends DisplayManagerItem> {
 
         this.displayContainer.style.display = "none";
         this.isAnimating = false;
+    }
+
+    cancel() {
+        if (!this.currentAnimatingItem)
+            return;
+
+        this.currentAnimatingItem.cancel();
+        this.isAnimating = false;
+        this.displayContainer.style.display = "none";
     }
 
     lockQueue() {
@@ -52,5 +63,11 @@ export class DisplayManager<T extends DisplayManagerItem> {
 }
 
 export abstract class DisplayManagerItem {
+    protected timeout: number;
+
     abstract display(displayContainer: HTMLElement): Promise<void>;
+
+    cancel() {
+        clearTimeout(this.timeout);
+    }
 }

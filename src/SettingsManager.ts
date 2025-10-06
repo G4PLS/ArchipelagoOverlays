@@ -1,17 +1,6 @@
-type AnimationKeyframes = Record<string, Record<string, string | number>>;
-import { loadAnimations } from "./utility/animation";
-
 export interface MediaData {
     name: string;
     link: string;
-}
-
-export interface AnimationConfig {
-    name: string;
-    duration: number;
-    timingFunction: string;
-    iterationCount: number;
-    keyframes: AnimationKeyframes;
 }
 
 export interface AlertConfig {
@@ -58,12 +47,6 @@ export class SettingsManager {
 
     async loadConfig(path: string) {
         this.config = await this.getLocalConfig(path);
-
-        const animations = this.getAnimations();
-        if (!animations)
-            return;
-
-        loadAnimations(animations);
     }
 
     getAlerts(): AlertConfig[] {
@@ -198,46 +181,5 @@ export class SettingsManager {
             name: name,
             link: config
         };
-    }
-
-    getAnimations(): AnimationConfig[] {
-        const animations = this.config?.animations ?? null;
-
-        if (!animations)
-            return [];
-
-        let finalAnimations: AnimationConfig[] = [];
-
-        const urlParams = new URLSearchParams(window.location.search);
-
-        for (const animationName in animations) {
-            if (animations.hasOwnProperty(animationName)) {
-                const animationConfig = animations[animationName];
-
-                if (!animationConfig)
-                    continue;
-
-                let duration = animationConfig.duration;
-
-                const urlDurationString = urlParams.get(`${animationName}-duration`);
-                if (urlDurationString) {
-                    const parsedDuration = parseInt(urlDurationString, 10);
-                    if (parsedDuration > 0)
-                        duration = parsedDuration;
-                }
-
-                const animation: AnimationConfig = {
-                    name: animationName,
-                    duration: duration ?? 2500,
-                    timingFunction: animationConfig["timing-function"] ?? "linear",
-                    iterationCount: animationConfig["iteration-count"] ?? 1,
-                    keyframes: animationConfig.keyframes
-                };
-
-                finalAnimations.push(animation);
-            }
-        }
-
-        return finalAnimations;
     }
 }

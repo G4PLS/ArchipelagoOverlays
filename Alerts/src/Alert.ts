@@ -1,10 +1,9 @@
-import {
-    applyAnimation,
-    removeAnimationFromElement,
-} from "@/utility/animation";
 import type { AlertConfig } from "@/SettingsManager";
 import { pickRandom, stringToHue } from "@/utility/utils";
 import { DisplayManagerItem } from "@/display/DisplayManager";
+import { AnimationManager } from "@/settings/AnimationManager";
+
+const animationManager = AnimationManager.getInstance();
 
 export class Alert extends DisplayManagerItem {
     alertConfig: AlertConfig;
@@ -23,6 +22,7 @@ export class Alert extends DisplayManagerItem {
         return new Promise<void>((resolve) => {
             const imageElement: HTMLImageElement | null =
                 displayContainer.querySelector("#alert-image");
+
             if (this.alertConfig.imageSources && imageElement) {
                 const sourceString = pickRandom(this.alertConfig.imageSources);
 
@@ -49,11 +49,11 @@ export class Alert extends DisplayManagerItem {
             }
 
             if (this.alertConfig.animation)
-                applyAnimation(displayContainer, this.alertConfig.animation);
+                animationManager.applyAnimation(displayContainer, this.alertConfig.animation)
 
-            setTimeout(() => {
+            this.timeout = setTimeout(() => {
                 if (this.alertConfig.animation) {
-                    removeAnimationFromElement(displayContainer);
+                    animationManager.removeAnimation(displayContainer);
 
                     if (audioElement) {
                         audioElement.pause();
