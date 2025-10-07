@@ -1,7 +1,7 @@
 {
-  "name": "apobs",
+  "name": "archipelagoalerts",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -9,8 +9,8 @@
     "preview": "vite preview"
   },
   "devDependencies": {
-    "typescript": "~5.8.3",
-    "vite": "^7.0.4"
+    "typescript": "~5.9.3",
+    "vite": "^7.1.7"
   },
   "dependencies": {
     "archipelago.js": "^2.0.4"

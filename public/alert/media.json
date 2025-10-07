@@ -1,0 +1,10 @@
+{
+    "images": {
+        "goal": "https://cdn.pixabay.com/photo/2025/06/19/07/59/allgau-9668453_1280.jpg",
+        "trap": "https://cdn.pixabay.com/photo/2012/04/14/12/52/trap-33819_1280.png"
+    },
+    "audios": {
+        "ad-ding": "https://cdn.pixabay.com/download/audio/2025/07/04/audio_9dcd152e4d.mp3?filename=new-notification-021-370045.mp3",
+        "ad-goal": "https://cdn.pixabay.com/download/audio/2025/06/02/audio_f91dce208a.mp3?filename=new-notification-09-352705.mp3"
+    }
+}

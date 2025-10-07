@@ -1,0 +1,34 @@
+{
+    "progression-item": {
+        "translations": {
+            "de": "{{target}} hat {{item}}",
+            "en": "{{target}} got {{item}} {{peter}}"
+        },
+        "style": {
+            "target": {
+                "color": "#FFFFFF"
+            },
+            "item": {
+                "color": "#FF00FF"
+            }
+        },
+        "audios": [
+            "ad-goal",
+            "ad-ding"
+        ],
+        "images": [
+            "trap"
+        ],
+        "timeout": 2500,
+        "animation": "fade-in-fade-out"
+    },
+    "trap-item": {
+        "color": "#FF0000",
+        "audios": [
+            "ad-goal"
+        ],
+        "images": [],
+        "timeout": 2500,
+        "animation": "fade-in"
+    }
+}
