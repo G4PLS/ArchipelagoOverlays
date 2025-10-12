@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/ArchipelagoOverlays/favicon.svg" type="image/svg+xml" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Archipelago Overlays - Alerts Config</title>
+    <script type="module" crossorigin src="/ArchipelagoOverlays/assets/config-fU7QIUGN.js"></script>
+    <link rel="modulepreload" crossorigin href="/ArchipelagoOverlays/assets/modulepreload-polyfill-B5Qt9EMX.js">
+    <link rel="modulepreload" crossorigin href="/ArchipelagoOverlays/assets/archipelagoConnection-Dge9kncS.js">
+    <link rel="stylesheet" crossorigin href="/ArchipelagoOverlays/assets/config-DiHMINTL.css">
+  </head>
+  <body>
+    <main>
+      <!-- Config -->
+      <section id="config-section" aria-label="Config">
+        <!-- Archipelago settings -->
+        <fieldset class="grid-columns-2">
+          <legend>Archipelago Settings</legend>
+
+          <label for="archipelago-url-input">URL</label>
+          <input
+            id="archipelago-url-input"
+            type="text"
+            placeholder="archipelago.gg:43741"
+          />
+
+          <label for="archipelago-slot-input-container">Slot</label>
+          <div
+            class="chip-input-container"
+            id="archipelago-slot-input-container"
+          >
+            <div
+              class="chip-container"
+              id="archipelago-slot-chips-container"
+            ></div>
+            <input
+              class="chip-input"
+              id="archipelago-slot-input"
+              type="text"
+              placeholder="Player1"
+            />
+          </div>
+
+          <label for="archipelago-password-input">Password</label>
+          <input
+            id="archipelago-password-input"
+            type="password"
+            placeholder="Password"
+          />
+        </fieldset>
+
+        <fieldset class="grid-columns-2">
+          <legend>Font Settings</legend>
+
+          <label for="font-family-select">Font Family</label>
+          <select id="font-family-select"></select>
+
+          <label for="font-style-select">Font Style</label>
+          <select id="font-style-select"></select>
+
+          <label for="font-size-input">Font Size</label>
+          <input
+            id="font-size-input"
+            type="number"
+            min="0"
+            max="100"
+            step="1"
+            value="12"
+          />
+
+          <label for="font-shadow-select">Shadow</label>
+          <select id="font-shadow-select"></select>
+        </fieldset>
+
+        <fieldset>
+          <legend>Alert Settings</legend>
+
+          <div class="tab-container" id="alert-settings-container">
+            <div
+              class="tab-selection-container"
+              id="alert-tabs-container"
+            ></div>
+            <div
+              class="grid-columns-2 tab-content-container"
+              id="alert-tab-content-container"
+            >
+              <label for="alert-timeout-input">Timeout (ms)</label>
+              <input
+                id="alert-timeout-input"
+                type="number"
+                min="0"
+                step="100"
+              />
+
+              <label for="alert-image-select">Images</label>
+              <div
+                class="tag-select-container"
+                id="alert-image-select-container"
+              >
+                <div
+                  class="tag-container"
+                  id="alert-image-select-tag-container"
+                ></div>
+                <select class="tag-select" id="alert-image-select">
+                  <option value="" disabled selected>Select a tag</option>
+                </select>
+              </div>
+
+              <label for="alert-audio-select">Audios</label>
+              <div
+                class="tag-select-container"
+                id="alert-audio-select-container"
+              >
+                <div
+                  class="tag-container"
+                  id="alert-audio-select-tag-container"
+                ></div>
+                <select class="tag-select" id="alert-audio-select">
+                  <option value="" disabled selected>Select a tag</option>
+                </select>
+              </div>
+            </div>
+
+            <details>
+              <summary>Animation Settings</summary>
+
+              <div class="grid-columns-2 center-text">
+                <label for="alert-animation-select">Animation</label>
+                <select id="alert-animation-select"></select>
+
+                <label for="alert-animation-duration-input"
+                  >Duration (ms)</label
+                >
+                <input
+                  id="alert-animation-duration-input"
+                  type="number"
+                  min="0"
+                  step="100"
+                />
+
+                <label for="alert-animation-timing">Timing Function</label>
+                <select id="alert-animation-timing"></select>
+
+                <label for="alert-animation-iterations">Iterations</label>
+                <input
+                  id="alert-animation-iterations"
+                  type="number"
+                  min="0"
+                  step="1"
+                />
+              </div>
+            </details>
+          </div>
+        </fieldset>
+
+        <div id="url">
+          <input id="url-input" placeholder="Generated Config URL" type="text" />
+          <button id="generate-url" title="Generates the URL">
+            <img src="/ArchipelagoOverlays/assets/images/refresh.svg" alt="Generate" class="icon">
+          </button>
+          <button id="load-url-button" title="Loads the URL into the Config">
+            <img src="/ArchipelagoOverlays/assets/images/load.svg" alt="Load from URL" class="icon">
+          </button>
+          <button id="copy-button" title="Copies the URL into the Clipboard">
+            <img src="/ArchipelagoOverlays/assets/images/copy.svg" alt="Copy to Clipboard" class="icon">
+          </button>
+        </div>
+      </section>
+
+      <!-- Preview -->
+      <section id="preview-section">
+        <div class="alert-container">
+          <img
+            class="alert-image"
+            src="https://cdn.pixabay.com/photo/2025/06/19/07/59/allgau-9668453_1280.jpg"
+          />
+          <h1 class="alert-text">ALERT TEXT</h1>
+          <audio class="alert-audio"></audio>
+        </div>
+        <div id="alert-preview-controls">
+          <label for="alert-preview-alert-select">Alert</label>
+          <select id="alert-preview-alert-select"></select>
+
+          <button id="play-preview" class="icon" title="Plays the current selected Alert">
+            <img src="/ArchipelagoOverlays/assets/images/play.svg" alt="Play Alert" class="icon">
+          </button>
+          <button id="stop-preview" class="icon" title="Stops the currently playing Alert">
+            <img src="/ArchipelagoOverlays/assets/images/stop.svg" alt="Stop Alert" class="icon">
+          </button>
+        </div>
+      </section>
+    </main>
+
+  </body>
+</html>
