@@ -4,11 +4,10 @@
     "useDefineForClassFields": true,
     "module": "ESNext",
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "types": ["vite/client"],
     "skipLibCheck": true,
-
-    "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]            // Maps @/anything → src/anything
+      "@/*": ["./src/*"]
     },
 
     /* Bundler mode */
@@ -27,5 +26,5 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src", "Alerts", "vite.config.ts"]
+  "include": ["src", "vite.config.ts"]
 }

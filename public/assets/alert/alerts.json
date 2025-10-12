@@ -1,0 +1,87 @@
+{
+    "load": {
+        "alert-reference": "Alert",
+        "timeout": 1500,
+        "translations": {
+            "en": "Archipelago Overlays"
+        },
+        "style": {},
+        "audio-references": [],
+        "image-references": ["icon"],
+        "animation": {
+            "reference": "fade-in-fade-out",
+            "duration": 0,
+            "iterations": 1,
+            "timing": "linear"
+        }
+    },
+    "test-alert": {
+        "alert-reference": "ItemAlert",
+        "timeout": 1234,
+        "translations": {
+            "en": "{{target}} got {{item}}"
+        },
+        "style": {
+            "target": {
+                "color":"#FF0000"
+            },
+            "item": {
+                "color":"#FF00FF"
+            }
+        },
+        "audio-references": ["ad-goal", "ad-ding"],
+        "image-references": ["trap", "goal"],
+        "animation": {
+            "reference": "fade-in-fade-out",
+            "duration": 0,
+            "iterations": 1,
+            "timing": "linear"
+        }
+    },
+    "progression-item": {
+        "alert-reference": "ItemAlert",
+        "timeout": 1000,
+        "translations": {
+            "en": "{{target}} got {{item}}"
+        },
+        "style": {
+            "target": {
+                "color":"#FF0000"
+            },
+            "item": {
+                "color":"#FF00FF"
+            }
+        },
+        "audio-references": ["ad-goal"],
+        "image-references": ["trap"],
+        "animation": {
+            "reference": "fade-in",
+            "duration": 5000,
+            "iterations": 20,
+            "timing": "ease-out"
+        }
+    },
+    "trap-item": {
+        "alert-reference": "ItemAlert",
+        "timeout": 2500,
+        "translations": {
+            "en": "{{target}} got {{item}}"
+        },
+        "style": {
+            "target": {
+                "color":"#FF0000"
+            },
+            "item": {
+                "color":"#FF00FF"
+            }
+        },
+        "audio-references": [],
+        "image-references": [],
+        "animation": {
+            "reference": "fade-out",
+            "duration": 500,
+            "iterations": 5,
+            "timing": "ease-in"
+        }
+    }
+}

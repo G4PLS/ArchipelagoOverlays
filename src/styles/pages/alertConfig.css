@@ -1,0 +1,120 @@
+@import "../style.css";
+@import "../components/chip.css";
+@import "../components/tab.css";
+@import "../components/tag.css";
+@import "../components/alert.css";
+
+main {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    overflow: hidden;
+}
+
+section {
+  overflow: hidden;
+}
+
+.center-text {
+  align-items: center;
+}
+
+.grid-columns-2 {
+  display: grid;
+  grid-template-columns: 0.5fr 2fr;
+  gap: 0.5rem;
+}
+
+.grid-columns-span-2 {
+  grid-column: span 2;
+}
+
+fieldset {
+  align-items: center;
+  border-radius: 10px;
+}
+
+legend {
+  font-weight: bold;
+  font-size: x-large;
+}
+
+input, select {
+  padding: 8px;
+  font-size: 1rem;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+label {
+  text-align: right;
+  font-weight: bold;
+  font-size: larger;
+}
+
+details > summary {
+  font-size: larger;
+  font-weight: bold;
+}
+
+details > * {
+  font-size: smaller;
+}
+
+#config-section {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+#preview-section {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.alert-container {
+  flex: 1;
+  opacity: 1;
+}
+
+.alert-text {
+  font-size: clamp(1rem, 3vw, 3rem);
+}
+
+.alert-image {
+  width: clamp(128px, 50%, 512px);
+  height: auto;
+  object-fit: contain;
+}
+
+#alert-preview-controls {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+}
+
+#alert-preview-controls button {
+  height: 100%;
+  border-radius: 10px;
+  border: 1px solid gray;
+}
+
+#alert-preview-controls button:hover {
+  cursor: pointer;
+  background-color: #007bff;
+}
+
+#url {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+}
