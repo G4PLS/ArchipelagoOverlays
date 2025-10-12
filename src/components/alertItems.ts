@@ -47,8 +47,6 @@ export class Alert extends DisplayItem {
   }
 
   async display(displayContainer: HTMLElement) {
-    console.log("DISPLAYING", this.slot, this.config);
-
     return new Promise<void>((resolve) => {
       this.resolveDisplay = resolve;
 
@@ -86,13 +84,19 @@ export class Alert extends DisplayItem {
     const imageElement: HTMLImageElement | null =
       displayContainer.querySelector(".alert-image");
 
-    if (this.config.imageReferences.length > 0 && imageElement) {
+    if (this.config.imageReferences && imageElement) {
       const key = pickRandom<string>(this.config.imageReferences);
 
       const src = getImage(key);
 
-      if (src === "" || src === undefined) imageElement.removeAttribute("src");
-      else imageElement.src = src;
+      if (src === "" || src === undefined) {
+        imageElement.removeAttribute("src");
+        imageElement.style.visibility = "hidden";
+      } 
+      else {
+        imageElement.src = src;
+        imageElement.style.visibility = "";
+      }
     }
   }
 
@@ -125,16 +129,73 @@ export class Alert extends DisplayItem {
   }
 }
 
+export class ConnectionFailedAlert extends Alert {
+  constructor(slot: string, config: AlertData) {
+    super(slot, config, {
+      slot: slot
+    });
+  }
+}
+
+export class ConnectedAlert extends Alert {
+  constructor(slot: string, config: AlertData) {
+    super(slot, config, {
+      slot: slot
+    });
+  }
+}
+
+export class DisconnectAlert extends Alert {
+  constructor(slot: string, config: AlertData) {
+    super(slot, config, {
+      slot: slot
+    });
+  }
+}
+
 export class ItemAlert extends Alert {
-  constructor(
-    itemName: string,
-    sender: string,
-    slot: string,
-    alertConfig: AlertData
-  ) {
-    super(slot, alertConfig, {
-      target: sender,
-      item: itemName,
+  constructor(slot: string, config: AlertData, itemName: string, sender: string) {
+    super(slot, config, {
+      slot,
+      sender,
+      item: itemName
+    });
+  }
+}
+
+export class DeathAlert extends Alert {
+  constructor(slot: string, config: AlertData, sender: string, deathReason: string) {
+    super(slot, config, {
+      slot,
+      sender,
+      reason: deathReason
+    });
+  }
+}
+
+export class GoalAlert extends Alert {
+  constructor(slot: string, config: AlertData, playerName: string, gameName: string) {
+    super(slot, config, {
+      player: playerName,
+      game: gameName
+    });
+  }
+}
+
+export class CountdownAlert extends Alert {
+  constructor(slot: string, config: AlertData, currentCounter: string) {
+    super(slot, config, {
+      countdown: currentCounter
+    });
+  }
+}
+
+export class HintAlert extends Alert {
+  constructor(slot: string, config: AlertData, sender: string, hint: string) {
+    super(slot, config, {
+      slot,
+      sender,
+      hint
     });
   }
 }

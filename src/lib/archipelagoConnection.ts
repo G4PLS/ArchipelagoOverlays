@@ -60,13 +60,15 @@ export function getArchipelagoConfig(): ArchipelagoConfig {
 
 const clients: Map<string, Client> = new Map();
 
-export function connect(archipelagoUrl: string, slots: string[], password?: string, addHooks?: (client:Client, slot: string) => void) {
-    if (!slots || slots.length === 0)
+export function connect(archipelagoConfig?: ArchipelagoConfig, addHooks?: (client:Client, slot: string) => void) {
+    const apConfig = archipelagoConfig || config;
+    
+    if (!apConfig.slots || apConfig.slots.length === 0)
         return;
 
 
-    for (const slot of slots)
-        createClient(archipelagoUrl, slot, password, addHooks);
+    for (const slot of apConfig.slots)
+        createClient(apConfig.url, slot, apConfig.password, addHooks);
 }
 
 async function createClient(archipelagoUrl: string, slot: string, password?: string, addHooks?: (client:Client, slot: string) => void) {
