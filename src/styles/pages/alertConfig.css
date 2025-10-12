@@ -91,7 +91,6 @@ details > * {
   width: clamp(128px, 50%, 512px);
   height: auto;
   object-fit: contain;
-  background-color: red;
 }
 
 #alert-preview-controls {

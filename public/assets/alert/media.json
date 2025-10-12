@@ -1,5 +1,6 @@
 {
     "images": {
+        "icon": "/favicon.svg",
         "goal": "https://cdn.pixabay.com/photo/2025/06/19/07/59/allgau-9668453_1280.jpg",
         "trap": "https://cdn.pixabay.com/photo/2012/04/14/12/52/trap-33819_1280.png"
     },

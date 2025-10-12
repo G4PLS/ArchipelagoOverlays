@@ -7,11 +7,11 @@ const configs: Map<string, AlertData> = new Map();
 const overrides: Map<string, AlertData> = new Map();
 
 export async function loadAlert(path: string) {
-  await loadConfig<AlertConfig>(path, createConfigs, deconstructUrlParams);
+  await loadConfig<AlertConfig>(path, createConfigs, deconstructAlertUrlParams);
   console.log("ALERTS", configs, overrides);
 }
 
-export function deconstructUrlParams(params?: URLSearchParams) {
+export function deconstructAlertUrlParams(params?: URLSearchParams) {
   const searchParams: URLSearchParams =
     params || new URL(window.location.href).searchParams;
 
@@ -47,8 +47,8 @@ export function deconstructUrlParams(params?: URLSearchParams) {
   }
 }
 
-export function constructUrlParams(): URLSearchParams {
-  const searchParams: URLSearchParams = new URLSearchParams();
+export function constructAlertUrlParams(params?: URLSearchParams): URLSearchParams {
+    const searchParams: URLSearchParams = params || new URLSearchParams();
 
   for (const [name, base] of configs) {
     const override = overrides.get(name);

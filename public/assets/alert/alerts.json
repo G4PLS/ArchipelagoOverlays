@@ -1,7 +1,22 @@
 {
+    "load": {
+        "alert-reference": "Alert",
+        "timeout": 1500,
+        "translations": {
+            "en": "Archipelago Alerts"
+        },
+        "style": {},
+        "audio-references": [],
+        "image-references": ["icon"],
+        "animation": {
+            "reference": "fade-in-fade-out",
+            "duration": 0,
+            "iterations": 1,
+            "timing": "linear"
+        }
+    },
     "test-alert": {
         "alert-reference": "ItemAlert",
-        "text-only": false,
         "timeout": 1234,
         "translations": {
             "en": "{{target}} got {{item}}"
@@ -25,7 +40,6 @@
     },
     "progression-item": {
         "alert-reference": "ItemAlert",
-        "text-only": false,
         "timeout": 1000,
         "translations": {
             "en": "{{target}} got {{item}}"
@@ -49,7 +63,6 @@
     },
     "trap-item": {
         "alert-reference": "ItemAlert",
-        "text-only": true,
         "timeout": 2500,
         "translations": {
             "en": "{{target}} got {{item}}"
