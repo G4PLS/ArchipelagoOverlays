@@ -9,79 +9,138 @@
         "audio-references": [],
         "image-references": ["icon"],
         "animation": {
-            "reference": "fade-in-fade-out",
+            "reference": "fade-in-out",
             "duration": 0,
             "iterations": 1,
             "timing": "linear"
         }
     },
-    "test-alert": {
-        "alert-reference": "ItemAlert",
-        "timeout": 1234,
+    "connected": {
+        "alert-reference": "ConnectedAlert",
+        "timeout": 2500,
         "translations": {
-            "en": "{{target}} got {{item}}"
+            "en": "{{slot}} connected!"
         },
-        "style": {
-            "target": {
-                "color":"#FF0000"
-            },
-            "item": {
-                "color":"#FF00FF"
-            }
-        },
-        "audio-references": ["ad-goal", "ad-ding"],
-        "image-references": ["trap", "goal"],
+        "style": {},
+        "audio-references": [],
+        "image-references": [],
         "animation": {
-            "reference": "fade-in-fade-out",
+            "reference": "fade-in-out",
             "duration": 0,
             "iterations": 1,
             "timing": "linear"
         }
     },
-    "progression-item": {
-        "alert-reference": "ItemAlert",
-        "timeout": 1000,
+    "disconnect": {
+        "alert-reference": "DisconnectAlert",
+        "timeout": 2500,
         "translations": {
-            "en": "{{target}} got {{item}}"
+            "en": "{{slot}} disconnected!"
         },
-        "style": {
-            "target": {
-                "color":"#FF0000"
-            },
-            "item": {
-                "color":"#FF00FF"
-            }
-        },
-        "audio-references": ["ad-goal"],
-        "image-references": ["trap"],
+        "style": {},
+        "audio-references": [],
+        "image-references": [],
         "animation": {
-            "reference": "fade-in",
-            "duration": 5000,
-            "iterations": 20,
-            "timing": "ease-out"
+            "reference": "fade-in-out",
+            "duration": 0,
+            "iterations": 1,
+            "timing": "linear"
         }
     },
-    "trap-item": {
+    "failed-connection": {
+        "alert-reference": "ConnectionFailedAlert",
+        "timeout": 2500,
+        "translations": {
+            "en": "{{slot}} failed to connect"
+        },
+        "style": {},
+        "audio-references": [],
+        "image-references": [],
+        "animation": {
+            "reference": "fade-in-out",
+            "duration": 0,
+            "iterations": 1,
+            "timing": "linear"
+        }
+    },
+    "item": {
         "alert-reference": "ItemAlert",
         "timeout": 2500,
         "translations": {
-            "en": "{{target}} got {{item}}"
+            "en": "{{slot}} recieved {{item}} from {{sender}}"
         },
-        "style": {
-            "target": {
-                "color":"#FF0000"
-            },
-            "item": {
-                "color":"#FF00FF"
-            }
+        "style": {},
+        "audio-references": [],
+        "image-references": [],
+        "animation": {
+            "reference": "fade-in-out",
+            "duration": 0,
+            "iterations": 1,
+            "timing": "linear"
+        }
+    },
+    "death": {
+        "alert-reference": "DeathAlert",
+        "timeout": 2500,
+        "translations": {
+            "en": "{{slot}} died because of {{reason}} from {{sender}}"
         },
+        "style": {},
+        "audio-references": [],
+        "image-references": [],
+        "animation": {
+            "reference": "fade-in-out",
+            "duration": 0,
+            "iterations": 1,
+            "timing": "linear"
+        }
+    },
+    "goal": {
+        "alert-reference": "GoalAlert",
+        "timeout": 2500,
+        "translations": {
+            "en": "{{player}} reached the Goal in {{game}}"
+        },
+        "style": {},
+        "audio-references": [],
+        "image-references": [],
+        "animation": {
+            "reference": "fade-in-out",
+            "duration": 0,
+            "iterations": 1,
+            "timing": "linear"
+        }
+    },
+    "countdown": {
+        "alert-reference": "CountdownAlert",
+        "timeout": 1000,
+        "translations": {
+            "en": "{{countdown}}"
+        },
+        "style": {},
         "audio-references": [],
         "image-references": [],
         "animation": {
             "reference": "fade-out",
-            "duration": 500,
-            "iterations": 5,
-            "timing": "ease-in"
+            "duration": 0,
+            "iterations": 1,
+            "timing": "linear"
+        }
+    },
+    "hint": {
+        "alert-reference": "HintAlert",
+        "timeout": 2500,
+        "translations": {
+            "en": "{{slot}} recieved this hint: {{hint}}, from {{sender}}"
+        },
+        "style": {},
+        "audio-references": [],
+        "image-references": [],
+        "animation": {
+            "reference": "fade-in-out",
+            "duration": 0,
+            "iterations": 1,
+            "timing": "linear"
         }
     }
 }
