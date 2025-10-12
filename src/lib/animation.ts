@@ -2,63 +2,29 @@
 import { loadConfig } from "@/utils/configLoader";
 
 import type {
-  AnimationConfig,
-  AnimationData,
-  AnimationKeyframes,
+  AnimationConfig
 } from "@/types/animation";
+import type { AlertAnimationConfig } from "@/types/alertSettings";
 
-const configs: Map<string, AnimationData> = new Map();
-const overrides: Map<string, AnimationData> = new Map();
+const loadedAnimations: string[] = [];
 
 export async function loadAnimation(path: string) {
-  await loadConfig<AnimationConfig>(path, createConfigs, deconstructUrlParams)
-
-  console.log("ANIMATION", configs, overrides);
-}
-
-function deconstructUrlParams() {
-  const searchParams: URLSearchParams = new URL(window.location.href).searchParams;
-
-  for (const [animationName, _] of configs) {
-    const duration = searchParams.get(`${animationName}-duration`);
-    const iterations = searchParams.get(`${animationName}-iterations`);
-    const timing = searchParams.get(`${animationName}-timing`);
-
-    overrides.set(animationName, {
-      name: animationName,
-      duration: duration,
-      iterations: iterations,
-      timing: timing
-    });
-  }
+  await loadConfig<AnimationConfig>(path, createConfigs);
 }
 
 function createConfigs(config: Record<string, AnimationConfig>) {
   const allKeyframesCss: string[] = [];
 
   Object.entries(config).forEach(([name, entry]) => {
-    const css = createKeyframeCss(name, entry.keyframes);
+    const css = createKeyframeCss(name, entry);
     allKeyframesCss.push(css);
-    
-    configs.set(name, {
-      name: name,
-      duration: entry.duration.toString(),
-      timing: entry.timing,
-      iterations: entry.iterations.toString(),
-    });
-
-    overrides.set(name, {
-      name: name,
-      duration: entry.duration.toString(),
-      timing: entry.timing,
-      iterations: entry.iterations.toString(),
-    });
+    loadedAnimations.push(name);
   });
 
   applyKeyframeCss(allKeyframesCss.join("\n"));
 }
 
-function createKeyframeCss(name: string, keyframes: AnimationKeyframes) {
+function createKeyframeCss(name: string, keyframes: AnimationConfig) {
   const keyframeLines: string[] = [`@keyframes ${name} {`];
 
   for (const [percent, props] of Object.entries(keyframes)) {
@@ -86,31 +52,18 @@ function applyKeyframeCss(css: string) {
   styleTag.textContent = css + "\n";
 }
 
-function getAnimation(name: string): AnimationData | null {
-  const config = configs.get(name);
-  const override = overrides.get(name);
-
-  return {
-    name: override.name ?? config.name,
-    duration: override.duration ?? config.duration,
-    timing: override.timing ?? config.timing,
-    iterations: override.iterations ?? config.iterations,
-  }
+export function getAnimationNames(): string[] {
+  return loadedAnimations;
 }
 
-export function getAnimations() {
-  return configs;
-}
+export function applyAnimation(element: HTMLElement, animation: AlertAnimationConfig) {
+  if (!element || !animation) 
+    return;
 
-export function applyAnimation(element: HTMLElement, name: string) {
-  const animation = getAnimation(name);
-
-  if (!element || !animation) return;
-
-  element.style.animationName = animation.name;
+  element.style.animationName = animation.reference;
   element.style.animationDuration = `${animation.duration}ms`;
   element.style.animationTimingFunction = animation.timing;
-  element.style.animationIterationCount = animation.iterations;
+  element.style.animationIterationCount = animation.iterations.toString();
   element.offsetWidth;
 }
 

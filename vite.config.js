@@ -7,6 +7,7 @@ export default defineConfig({
       input: {
         main: resolve(__dirname, 'index.html'),
         alert: resolve(__dirname, 'alert/index.html'),
+        config: resolve(__dirname, 'alert/config.html'),
       },
     },
   },

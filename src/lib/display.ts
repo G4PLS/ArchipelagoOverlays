@@ -51,9 +51,9 @@ export class Display<T extends DisplayItem> {
 
             this.currentAnimatingItem = item;
 
-            this.displayContainer.style.display = "";
+            this.displayContainer.style.visibility = "";
             await item.display(this.displayContainer);
-            this.displayContainer.style.display = "none";
+            this.displayContainer.style.visibility = "hidden";
         }
     }
 
@@ -62,8 +62,10 @@ export class Display<T extends DisplayItem> {
             return;
 
         this.currentAnimatingItem.cancel();
-        this.isAnimating = false;
-        this.displayContainer.style.display = "none";
+        this.currentAnimatingItem = null;
+        this.displayContainer.style.visibility = "hidden";
+
+        this.displayItem();
     }
 
     lockQueue() {

@@ -22,6 +22,6 @@ async function createClient(archipelagoUrl: string, slot: string, password?: str
 
         clients.set(slot, client);
     } catch(error) {
-        console.log(error);
+        console.error(error);
     }
 } 

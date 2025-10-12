@@ -1,4 +1,4 @@
-import '@/styles/alert.css'
+import '@/styles/pages/alert.css'
 import { Alert, ItemAlert } from '@/components/alertItems';
 import { Display } from '@/lib/display';
 import {loadAnimation} from '@/lib/animation'

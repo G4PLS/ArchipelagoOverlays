@@ -1,11 +1,4 @@
-export type AnimationKeyframes = Record<string, Record<string, string|number>>;
-
-export interface AnimationConfig {
-    duration: number;
-    timing: string;
-    iterations: number;
-    keyframes: AnimationKeyframes;
-}
+export type AnimationConfig = Record<string, Record<string, string|number>>;
 
 export interface AnimationData {
     name: string;

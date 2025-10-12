@@ -15,7 +15,12 @@
 body {
   margin: 0;
   display: flex;
-  place-items: center;
   min-width: 320px;
   height: 100vh;
+}
+
+button .icon {
+  width: 2rem;
+  height: 2rem;
+  vertical-align: middle;
 }

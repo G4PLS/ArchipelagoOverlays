@@ -21,6 +21,14 @@ function createMediaEntries(map: Map<string, string>, media: Media) {
     })
 }
 
+export function getImageNames() {
+    return Array.from(images.keys());
+}
+
+export function getAudioNames() {
+    return Array.from(audios.keys());
+}
+
 export function getAudio(name: string) {
     return audios.get(name);
 }

@@ -1,34 +1,74 @@
 {
-    "progression-item": {
+    "test-alert": {
+        "alert-reference": "ItemAlert",
+        "text-only": false,
+        "timeout": 1234,
         "translations": {
-            "de": "{{target}} hat {{item}}",
-            "en": "{{target}} got {{item}} {{peter}}"
+            "en": "{{target}} got {{item}}"
         },
         "style": {
             "target": {
-                "color": "#FFFFFF"
+                "color":"#FF0000"
             },
             "item": {
-                "color": "#FF00FF"
+                "color":"#FF00FF"
             }
         },
-        "audios": [
-            "ad-goal",
-            "ad-ding"
-        ],
-        "images": [
-            "trap"
-        ],
-        "timeout": 2500,
-        "animation": "fade-in-fade-out"
+        "audio-references": ["ad-goal", "ad-ding"],
+        "image-references": ["trap", "goal"],
+        "animation": {
+            "reference": "fade-in-fade-out",
+            "duration": 0,
+            "iterations": 1,
+            "timing": "linear"
+        }
+    },
+    "progression-item": {
+        "alert-reference": "ItemAlert",
+        "text-only": false,
+        "timeout": 1000,
+        "translations": {
+            "en": "{{target}} got {{item}}"
+        },
+        "style": {
+            "target": {
+                "color":"#FF0000"
+            },
+            "item": {
+                "color":"#FF00FF"
+            }
+        },
+        "audio-references": ["ad-goal"],
+        "image-references": ["trap"],
+        "animation": {
+            "reference": "fade-in",
+            "duration": 5000,
+            "iterations": 20,
+            "timing": "ease-out"
+        }
     },
     "trap-item": {
-        "color": "#FF0000",
-        "audios": [
-            "ad-goal"
-        ],
-        "images": [],
+        "alert-reference": "ItemAlert",
+        "text-only": true,
         "timeout": 2500,
-        "animation": "fade-in"
+        "translations": {
+            "en": "{{target}} got {{item}}"
+        },
+        "style": {
+            "target": {
+                "color":"#FF0000"
+            },
+            "item": {
+                "color":"#FF00FF"
+            }
+        },
+        "audio-references": [],
+        "image-references": [],
+        "animation": {
+            "reference": "fade-out",
+            "duration": 500,
+            "iterations": 5,
+            "timing": "ease-in"
+        }
     }
 }

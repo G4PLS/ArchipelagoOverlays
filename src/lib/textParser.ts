@@ -22,9 +22,16 @@ export function parseText(
   style: StyleMap,
   translations: Translation
 ): string {
+  if (!translations)
+    return "";
+
   const text = translations[lang];
 
-  if (!text) return;
+  if (!text)
+    return "";
+
+  if (!variables)
+    return text;
 
   const formattedText = text.replace(/{{(\w+)}}/g, (_, key) => {
     // Only allow keys defined in TranslationVariables
