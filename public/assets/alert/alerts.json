@@ -3,7 +3,7 @@
         "alert-reference": "Alert",
         "timeout": 1500,
         "translations": {
-            "en": "Archipelago Alerts"
+            "en": "Archipelago Overlays"
         },
         "style": {},
         "audio-references": [],
