@@ -47,9 +47,9 @@ import { StrToNumber } from "@/utils/stringToNumber";
 loadFont();
 loadLanguage();
 loadArchipelagoConfig();
-await loadMedia("/assets/alert/media.json");
-await loadAnimation("/assets/alert/animations.json");
-await loadAlert("/assets/alert/alerts.json");
+await loadMedia("/ArchipelagoOverlays/assets/alert/media.json");
+await loadAnimation("/ArchipelagoOverlays/assets/alert/animations.json");
+await loadAlert("/ArchipelagoOverlays/assets/alert/alerts.json");
 
 const alerts = getAlerts();
 const animations = getAnimationNames();
