@@ -184,12 +184,13 @@ export function getAlert(name: string): AlertData {
   };
 }
 
-export function getAlerts(): {
-  configs: Map<string, AlertData>;
-  overrides: Map<string, AlertData>;
-} {
-  return {
-    configs,
-    overrides,
-  };
+export function getAlerts(): AlertData[] {
+  const alerts: AlertData[] = [];
+
+  for(const [name, _] of configs) {
+    const alert = getAlert(name);
+    alerts.push(alert);
+  }
+
+  return alerts;
 }

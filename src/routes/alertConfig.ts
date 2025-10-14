@@ -1,9 +1,3 @@
-/*
-TODOS:
-Create some more dynamic elements like:
-  - select -> Should be able to define dynamic options and have a callback that triggers on "change"
-*/
-
 import "@/styles/pages/alertConfig.css";
 
 import { Alert } from "@/components/alertItems";
@@ -224,7 +218,7 @@ const alertAnimationIterations = new Input(
 const alertTab = new TabGroup({
   contentContainer: document.querySelector("#alert-tab-content-container"),
   tabContainer: document.querySelector("#alert-tabs-container"),
-  tabs: Array.from(alerts.overrides.keys()),
+  tabs: alerts.map(alert => alert.name),
   initialTab: "",
   onTabActivated: (tabId: string, _: HTMLElement) => {
     selectedAlert = getAlert(tabId);
@@ -260,10 +254,7 @@ const alertTab = new TabGroup({
 
 const alertPreview = new Select(
   document.querySelector("#alert-preview-alert-select"),
-  Array.from(alerts.overrides.keys()).map((alert) => ({
-    text: alert,
-    value: alert,
-  })),
+  alerts.map(alert => ({text: alert.name, value: alert.name})),
   undefined,
   undefined,
   undefined
