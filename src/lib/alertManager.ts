@@ -34,7 +34,6 @@ export function deconstructAlertUrlParams(params?: URLSearchParams) {
       alertReference: undefined,
       timeout: timeout,
       translations: undefined,
-      style: undefined, // Can be edited later
       audioReferences: audios,
       imageReferences: images,
       animation: {
@@ -101,7 +100,6 @@ function createConfigs(config: Record<string, AlertConfig>) {
       alertReference: entry["alert-reference"],
       timeout: entry.timeout,
       translations: entry.translations,
-      style: entry.style,
       audioReferences: entry["audio-references"],
       imageReferences: entry["image-references"],
       animation: entry.animation,
@@ -112,7 +110,6 @@ function createConfigs(config: Record<string, AlertConfig>) {
       alertReference: undefined,
       timeout: undefined,
       translations: undefined,
-      style: undefined,
       audioReferences: undefined,
       imageReferences: undefined,
       animation: {
@@ -138,7 +135,6 @@ export function setAlertOverride(
     alertReference: undefined,
     timeout: override?.timeout ?? alert.timeout,
     translations: undefined,
-    style: undefined, // Can be edited later
     audioReferences: override?.audioReferences ?? alert.audioReferences,
     imageReferences: override?.imageReferences ?? alert.imageReferences,
     animation: {
@@ -171,7 +167,6 @@ export function getAlert(name: string): AlertData {
     alertReference: config.alertReference,
     timeout: override?.timeout ?? config.timeout,
     translations: config.translations,
-    style: config.style, // Can be edited later
     audioReferences: override?.audioReferences ?? config.audioReferences,
     imageReferences: override?.imageReferences ?? config.imageReferences,
     animation: {

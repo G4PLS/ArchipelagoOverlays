@@ -72,7 +72,7 @@ export class Alert extends DisplayItem {
     if (textElement) {
       const text = parseText(
         this.variables,
-        this.config.style,
+        this.config.name,
         this.config.translations
       );
 

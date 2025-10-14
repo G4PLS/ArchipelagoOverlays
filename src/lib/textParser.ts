@@ -1,4 +1,4 @@
-import { type StyleMap, type Translation } from "@/types/alertSettings";
+import { type Translation } from "@/types/alertSettings";
 import type { TranslationVariables } from "@/types/translationVariables";
 
 /*
@@ -19,7 +19,7 @@ export function loadLanguage() {
 
 export function parseText(
   variables: TranslationVariables,
-  style: StyleMap,
+  alertName: string,
   translations: Translation
 ): string {
   if (!translations)
@@ -41,9 +41,7 @@ export function parseText(
     }
 
     const value = variables[key as keyof TranslationVariables] ?? "";
-    const styleCss = style[key] ? `color: ${style[key].color};` : "";
-    const idCss = key;
-    return `<span id="${idCss}" style="${styleCss}">${value}</span>`;
+    return `<span class="variable ${key} ${alertName}-${key}">${value}</span>`
   });
   return formattedText;
 }

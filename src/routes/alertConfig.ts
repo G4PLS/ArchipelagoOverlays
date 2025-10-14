@@ -1,6 +1,6 @@
 import "@/styles/pages/alertConfig.css";
 
-import { Alert } from "@/components/alertItems";
+import { Alert, ItemAlert } from "@/components/alertItems";
 import { ChipsInput } from "@/components/chipsInput";
 import { Input } from "@/components/dynamic/input";
 import { Select } from "@/components/dynamic/select";
@@ -323,3 +323,8 @@ copyButton.addEventListener("click", () => {
 });
 
 //#endregion
+
+
+(window as any).test = () => {
+  display.push(new ItemAlert("SLOT", getAlert("item"), "Sword", "Peter"));
+}
