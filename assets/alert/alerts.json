@@ -5,7 +5,6 @@
         "translations": {
             "en": "Archipelago Overlays"
         },
-        "style": {},
         "audio-references": [],
         "image-references": ["icon"],
         "animation": {
@@ -21,7 +20,6 @@
         "translations": {
             "en": "{{slot}} connected!"
         },
-        "style": {},
         "audio-references": [],
         "image-references": [],
         "animation": {
@@ -37,7 +35,6 @@
         "translations": {
             "en": "{{slot}} disconnected!"
         },
-        "style": {},
         "audio-references": [],
         "image-references": [],
         "animation": {
@@ -53,7 +50,6 @@
         "translations": {
             "en": "{{slot}} failed to connect"
         },
-        "style": {},
         "audio-references": [],
         "image-references": [],
         "animation": {
@@ -69,7 +65,6 @@
         "translations": {
             "en": "{{slot}} recieved {{item}} from {{sender}}"
         },
-        "style": {},
         "audio-references": [],
         "image-references": [],
         "animation": {
@@ -85,7 +80,6 @@
         "translations": {
             "en": "{{slot}} died because of {{reason}} from {{sender}}"
         },
-        "style": {},
         "audio-references": [],
         "image-references": [],
         "animation": {
@@ -101,7 +95,6 @@
         "translations": {
             "en": "{{player}} reached the Goal in {{game}}"
         },
-        "style": {},
         "audio-references": [],
         "image-references": [],
         "animation": {
@@ -117,7 +110,6 @@
         "translations": {
             "en": "{{countdown}}"
         },
-        "style": {},
         "audio-references": [],
         "image-references": [],
         "animation": {
@@ -133,7 +125,6 @@
         "translations": {
             "en": "{{slot}} recieved this hint: {{hint}}, from {{sender}}"
         },
-        "style": {},
         "audio-references": [],
         "image-references": [],
         "animation": {
