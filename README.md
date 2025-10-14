@@ -33,7 +33,7 @@ Overlays will have an Configuration page where you can generate a URL that can t
 Clone and run locally using Yarn + Vite:
 
 ```bash
-git clone X
+git clone https://github.com/G4PLS/ArchipelagoOverlays.git
 cd ArchipelagoOverlays
 yarn install
 yarn dev
