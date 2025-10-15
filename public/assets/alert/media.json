@@ -1,8 +1,11 @@
 {
     "images": {
         "icon": "/ArchipelagoOverlays/favicon.svg",
-        "goal": "https://cdn.pixabay.com/photo/2025/06/19/07/59/allgau-9668453_1280.jpg",
-        "trap": "https://cdn.pixabay.com/photo/2012/04/14/12/52/trap-33819_1280.png"
+        "gift": "https://cdn.pixabay.com/animation/2023/06/13/15/13/15-13-48-916_256.gif",
+        "key": "https://cdn.pixabay.com/animation/2023/06/13/15/13/15-13-53-6_256.gif",
+        "trophy": "https://cdn.pixabay.com/animation/2023/06/13/15/13/15-13-22-874_256.gif",
+        "mail": "https://cdn.pixabay.com/animation/2023/06/13/15/12/15-12-30-808_256.gif",
+        "worldwideweb": "https://cdn.pixabay.com/animation/2023/06/13/15/13/15-13-52-82_256.gif"
     },
     "audios": {
         "ad-ding": "https://cdn.pixabay.com/download/audio/2025/07/04/audio_9dcd152e4d.mp3?filename=new-notification-021-370045.mp3",

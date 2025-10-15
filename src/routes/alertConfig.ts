@@ -47,6 +47,7 @@ await loadAlert("/ArchipelagoOverlays/assets/alert/alerts.json");
 
 const alerts = getAlerts();
 const animations = getAnimationNames();
+const baseUrl = `${window.location.origin}${import.meta.env.BASE_URL}`;
 
 const availableFonts = Object.entries(getAvailableFonts()).map((entry) => ({
   text: entry[1],
@@ -287,19 +288,20 @@ const generateInput: HTMLInputElement = document.querySelector("#url-input");
 const generateButton: HTMLButtonElement =
   document.querySelector("#generate-url");
 generateButton.addEventListener("click", () => {
-  const params = new URLSearchParams();
+  const url = new URL(`${baseUrl}alert/`)
 
-  constructArchipelagoUrlParams(params);
-  constructFontUrlParams(params);
-  constructAlertUrlParams(params);
+  constructArchipelagoUrlParams(url.searchParams);
+  constructFontUrlParams(url.searchParams);
+  constructAlertUrlParams(url.searchParams);
 
-  generateInput.value = params.toString();
+  generateInput.value = url.toString();
 });
 
 const loadButton: HTMLButtonElement =
   document.querySelector("#load-url-button");
 loadButton.addEventListener("click", () => {
-  const params = new URLSearchParams(generateInput.value);
+  const url = new URL(generateInput.value);
+  const params = url.searchParams;
 
   deconstructArchipelagoUrlParams(params);
   archipelagoUrl.setValue(getArchipelagoConfig().url);

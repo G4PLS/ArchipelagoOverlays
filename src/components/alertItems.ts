@@ -57,7 +57,7 @@ export class Alert extends DisplayItem {
 
       this.timeout = setTimeout(() => {
         removeAnimation(displayContainer);
-        
+        this.removeImage(displayContainer);
         this.resolveDisplay = undefined;
 
         resolve();
@@ -98,6 +98,17 @@ export class Alert extends DisplayItem {
         imageElement.style.visibility = "";
       }
     }
+  }
+
+  private removeImage(displayContainer: HTMLElement) {
+    const imageElement: HTMLImageElement | null =
+      displayContainer.querySelector(".alert-image");
+
+    if (!imageElement)
+      return;
+
+    imageElement.src = "";
+    imageElement.removeAttribute("src");
   }
 
   private setAudio(displayContainer: HTMLElement) {

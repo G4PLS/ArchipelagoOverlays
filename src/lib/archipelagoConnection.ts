@@ -1,4 +1,5 @@
 import type { ArchipelagoConfig } from "@/types/archipelagoSettings";
+import { addToSearchParamIfNoMatch } from "@/utils/addToSearchParamIfMatch";
 import { Client } from "archipelago.js";
 
 //#region Configuration
@@ -37,9 +38,9 @@ export function constructArchipelagoUrlParams(params?: URLSearchParams) {
     if (!config)
         return searchParams;
 
-    searchParams.set("archipelago-url", config.url);
-    searchParams.set("archipelago-slots", config.slots.join(","));
-    searchParams.set("archipelago-password", config.password);
+    addToSearchParamIfNoMatch(params, "archipelago-url", config.url, null);
+    addToSearchParamIfNoMatch(params, "archipelago-slots", config.slots, []);
+    addToSearchParamIfNoMatch(params, "archipelago-password", config.password, null);
 }
 
 export function setArchipelagoSettings(override: Partial<ArchipelagoConfig>) {
