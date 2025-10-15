@@ -21,7 +21,7 @@
             "en": "{{slot}} connected!"
         },
         "audio-references": [],
-        "image-references": [],
+        "image-references": ["worldwideweb"],
         "animation": {
             "reference": "fade-in-out",
             "duration": 0,
@@ -66,7 +66,7 @@
             "en": "{{slot}} recieved {{item}} from {{sender}}"
         },
         "audio-references": [],
-        "image-references": [],
+        "image-references": ["gift"],
         "animation": {
             "reference": "fade-in-out",
             "duration": 0,
@@ -96,7 +96,7 @@
             "en": "{{player}} reached the Goal in {{game}}"
         },
         "audio-references": [],
-        "image-references": [],
+        "image-references": ["trophy"],
         "animation": {
             "reference": "fade-in-out",
             "duration": 0,
@@ -126,7 +126,7 @@
             "en": "{{slot}} recieved this hint: {{hint}}, from {{sender}}"
         },
         "audio-references": [],
-        "image-references": [],
+        "image-references": ["mail"],
         "animation": {
             "reference": "fade-in-out",
             "duration": 0,
