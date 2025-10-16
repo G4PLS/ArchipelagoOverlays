@@ -1,14 +1,14 @@
 {
     "load": {
         "alert-reference": "Alert",
-        "timeout": 1500,
+        "timeout": 1000,
         "translations": {
             "en": "Archipelago Overlays"
         },
         "audio-references": [],
         "image-references": ["icon"],
         "animation": {
-            "reference": "fade-in-out",
+            "reference": "fade-out",
             "duration": 0,
             "iterations": 1,
             "timing": "linear"
