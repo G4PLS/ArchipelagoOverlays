@@ -1,4 +1,4 @@
-import { Alert, ConnectedAlert, CountdownAlert, DisconnectAlert, GoalAlert, ItemAlert } from '@/components/alertItems';
+import { Alert, ConnectedAlert, ConnectionFailedAlert, CountdownAlert, DeathAlert, DisconnectAlert, GoalAlert, HintAlert, ItemAlert } from '@/components/alertItems';
 import { getAlert, loadAlert } from '@/lib/alertManager';
 import { loadAnimation } from '@/lib/animation';
 import { connect, loadArchipelagoConfig } from '@/lib/archipelagoConnection';
@@ -7,7 +7,7 @@ import { loadFont } from '@/lib/font';
 import { loadMedia } from '@/lib/media';
 import { loadLanguage } from '@/lib/textParser';
 import '@/styles/pages/alert.css';
-import type { Client, ConnectedPacket, Item, MessageNode, Player } from 'archipelago.js';
+import type { Client, ConnectedPacket, Hint, Item, MessageNode, Player } from 'archipelago.js';
 
 const container: HTMLDivElement = document.querySelector(".alert-container")!;
 
@@ -60,9 +60,38 @@ connect(undefined, (client: Client, slot: string) => {
     client.items.on("itemsReceived", (items: Item[], index: number) => {
         if (index != 0) {
             for (const item of items) {
-                const alertData = getAlert("item");
+                let alertData = getAlert("undefined-item");
+
+                if (item.filler)
+                    alertData = getAlert("filler-item");
+                else if (item.progression)
+                    alertData = getAlert("progression-item");
+                else if (item.useful)
+                    alertData = getAlert("useful-item");
+                else if (item.trap)
+                    alertData = getAlert("trap-item");
+
                 alertDisplay.push(new ItemAlert(slot, alertData, item.name, item.sender.name));
             }
         }
     });
-})
+
+    client.items.on("hintReceived", (hint: Hint) => {
+        let alertData = getAlert("hint");
+
+        if (hint.found)
+            alertData = getAlert("hint-found"); 
+
+        const item = hint.item;
+
+        alertDisplay.push(new HintAlert(slot, alertData, item.sender.name, item.name, item.locationName))
+    });
+
+    client.deathLink.on("deathReceived", (source: string, _time: number, cause?: string) => {
+        const alertData = getAlert("death");
+        alertDisplay.push(new DeathAlert(slot, alertData, source, cause || "undefined"))
+    });
+}, (slot: string) => {
+    const alertData = getAlert("failed-connection");
+    alertDisplay.push(new ConnectionFailedAlert(slot, alertData))
+});

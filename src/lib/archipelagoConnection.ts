@@ -61,18 +61,17 @@ export function getArchipelagoConfig(): ArchipelagoConfig {
 
 const clients: Map<string, Client> = new Map();
 
-export function connect(archipelagoConfig?: ArchipelagoConfig, addHooks?: (client:Client, slot: string) => void) {
+export function connect(archipelagoConfig?: ArchipelagoConfig, addHooks?: (client:Client, slot: string) => void, connectionFailed?: (slot: string) => void) {
     const apConfig = archipelagoConfig || config;
     
     if (!apConfig.slots || apConfig.slots.length === 0)
         return;
 
-
     for (const slot of apConfig.slots)
-        createClient(apConfig.url, slot, apConfig.password, addHooks);
+        createClient(apConfig.url, slot, apConfig.password, addHooks, connectionFailed);
 }
 
-async function createClient(archipelagoUrl: string, slot: string, password?: string, addHooks?: (client:Client, slot: string) => void) {
+async function createClient(archipelagoUrl: string, slot: string, password?: string, addHooks?: (client:Client, slot: string) => void, connectionFailed?: (slot: string) => void) {
     const client = new Client();
 
     try {
@@ -84,6 +83,9 @@ async function createClient(archipelagoUrl: string, slot: string, password?: str
         clients.set(slot, client);
     } catch(error) {
         console.error(error);
+        
+        if (connectionFailed)
+            connectionFailed(slot);
     }
 }
 

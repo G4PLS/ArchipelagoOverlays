@@ -8,4 +8,5 @@ export interface TranslationVariables {
     countdown?: string;
     hint?: string;
     player?: string;
+    location?: string;
 }

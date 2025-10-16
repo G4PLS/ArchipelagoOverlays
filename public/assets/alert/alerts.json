@@ -59,21 +59,6 @@
             "timing": "linear"
         }
     },
-    "item": {
-        "alert-reference": "ItemAlert",
-        "timeout": 2500,
-        "translations": {
-            "en": "{{slot}} recieved {{item}} from {{sender}}"
-        },
-        "audio-references": [],
-        "image-references": ["gift"],
-        "animation": {
-            "reference": "fade-in-out",
-            "duration": 0,
-            "iterations": 1,
-            "timing": "linear"
-        }
-    },
     "death": {
         "alert-reference": "DeathAlert",
         "timeout": 2500,
@@ -123,10 +108,85 @@
         "alert-reference": "HintAlert",
         "timeout": 2500,
         "translations": {
-            "en": "{{slot}} recieved this hint: {{hint}}, from {{sender}}"
+            "en": "{{slot}} recieved a hint from {{sender}}: {{item}} can be found here {{location}}"
         },
         "audio-references": [],
         "image-references": ["mail"],
+        "animation": {
+            "reference": "fade-in-out",
+            "duration": 0,
+            "iterations": 1,
+            "timing": "linear"
+        }
+    },
+    "hint-found": {
+        "alert-reference": "HintAlert",
+        "timeout": 2500,
+        "translations": {
+            "en": "{{slot}} recieved a hint from {{sender}}: {{item}} can be found here {{location}}. It has already been found"
+        },
+        "audio-references": [],
+        "image-references": ["mail"],
+        "animation": {
+            "reference": "fade-in-out",
+            "duration": 0,
+            "iterations": 1,
+            "timing": "linear"
+        }
+    },
+    "undefined-item": {
+        "alert-reference": "ItemAlert",
+        "timeout": 2500,
+        "translations": {
+            "en": "{{slot}} recieved {{item}} from {{sender}}"
+        },
+        "audio-references": [],
+        "image-references": ["gift"],
+        "animation": {
+            "reference": "fade-in-out",
+            "duration": 0,
+            "iterations": 1,
+            "timing": "linear"
+        }
+    },
+    "progression-item": {
+        "alert-reference": "ItemAlert",
+        "timeout": 2500,
+        "translations": {
+            "en": "{{slot}} recieved {{item}} from {{sender}}"
+        },
+        "audio-references": [],
+        "image-references": ["gift"],
+        "animation": {
+            "reference": "fade-in-out",
+            "duration": 0,
+            "iterations": 1,
+            "timing": "linear"
+        }
+    },
+    "useful-item": {
+        "alert-reference": "ItemAlert",
+        "timeout": 2500,
+        "translations": {
+            "en": "{{slot}} recieved {{item}} from {{sender}}"
+        },
+        "audio-references": [],
+        "image-references": ["gift"],
+        "animation": {
+            "reference": "fade-in-out",
+            "duration": 0,
+            "iterations": 1,
+            "timing": "linear"
+        }
+    },
+    "trap-item": {
+        "alert-reference": "ItemAlert",
+        "timeout": 2500,
+        "translations": {
+            "en": "{{slot}} recieved {{item}} from {{sender}}"
+        },
+        "audio-references": [],
+        "image-references": ["gift"],
         "animation": {
             "reference": "fade-in-out",
             "duration": 0,
