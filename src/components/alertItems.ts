@@ -21,8 +21,11 @@ export class Alert extends DisplayItem {
   }
 
   cancel(): void {
+    super.cancel();
+
     const audioElement =
       document.querySelector<HTMLAudioElement>(".alert-audio");
+      
     if (audioElement) {
       audioElement.pause();
       audioElement.currentTime = 0;
@@ -33,14 +36,10 @@ export class Alert extends DisplayItem {
     const container = document.querySelector<HTMLElement>(".alert-container");
     if (container) {
       removeAnimation(container);
+
+      this.removeImage(container);
+      this.removeText(container);
     }
-
-    // Optionally clear image/text
-    const img = document.querySelector<HTMLImageElement>(".alert-image");
-    if (img) img.removeAttribute("src");
-
-    const text = document.querySelector<HTMLElement>(".alert-text");
-    if (text) text.innerHTML = "";
 
     if (this.resolveDisplay)
       this.resolveDisplay();
@@ -57,7 +56,9 @@ export class Alert extends DisplayItem {
 
       this.timeout = setTimeout(() => {
         removeAnimation(displayContainer);
+        this.removeText(displayContainer);
         this.removeImage(displayContainer);
+
         this.resolveDisplay = undefined;
 
         resolve();
@@ -69,15 +70,31 @@ export class Alert extends DisplayItem {
     const textElement: HTMLHeadingElement | null =
       displayContainer.querySelector(".alert-text");
 
-    if (textElement) {
-      const text = parseText(
+    if (!textElement)
+      return;
+
+    const text = parseText(
         this.variables,
         this.config.name,
         this.config.translations
       );
 
-      if (text !== null) textElement.innerHTML = text;
-    }
+      if (text === null) 
+        return;
+
+      textElement.innerHTML = text;
+      textElement.classList.add(this.config.name);
+  }
+
+  private removeText(displayContainer: HTMLElement) {
+    const textElement: HTMLHeadingElement | null =
+      displayContainer.querySelector(".alert-text");
+
+    if (!textElement)
+      return;
+
+    textElement.innerHTML = "";
+    textElement.className = "alert-text";
   }
 
   private setImage(displayContainer: HTMLElement) {
@@ -202,11 +219,12 @@ export class CountdownAlert extends Alert {
 }
 
 export class HintAlert extends Alert {
-  constructor(slot: string, config: AlertData, sender: string, hint: string) {
+  constructor(slot: string, config: AlertData, sender: string, item: string, location: string) {
     super(slot, config, {
       slot,
       sender,
-      hint
+      item,
+      location
     });
   }
 }
