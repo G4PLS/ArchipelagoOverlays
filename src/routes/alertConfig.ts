@@ -270,7 +270,18 @@ playButton.addEventListener("click", () => {
   if (!alert) return;
 
   display.cancel();
-  display.push(new Alert("SLOT", alert));
+  display.push(new Alert("SLOT", alert, {
+    slot: "SLOT",
+    countdown: "COUNTDOWN",
+     game: "GAME",
+     hint: "HINT",
+     item: "ITEM",
+     player: "PLAYER",
+     reason: "REASON",
+     sender: "SENDER",
+     target: "TARGET",
+     location: "LOCATION"
+  }));
 });
 
 const stopButton = document.querySelector("#stop-preview");
