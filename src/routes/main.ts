@@ -1,1 +1,0 @@
-import '@/styles/pages/main.css'
