@@ -43,7 +43,7 @@ const timingFunctions = ["linear", "ease-in-out", "ease-in", "ease-out"];
 
 let selectedAlert: AlertData = null;
 
-const display = new Display<Alert>(document.querySelector(".alert-container"));
+const display = new Display<Alert>(document.querySelector(".alert"));
 display.push(new Alert("", getAlert("load")));
 
 //#region PREVIEW 

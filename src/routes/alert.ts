@@ -9,7 +9,7 @@ import { loadLanguage } from '@/lib/textParser';
 import '@/styles/pages/alert.css';
 import type { Client, ConnectedPacket, Hint, Item, MessageNode, Player } from 'archipelago.js';
 
-const container: HTMLDivElement = document.querySelector(".alert-container")!;
+const container: HTMLDivElement = document.querySelector(".alert")!;
 
 loadArchipelagoConfig();
 loadFont();

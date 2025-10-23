@@ -29,6 +29,10 @@
 
 /* PAGE STYLE */
 
+label {
+    color: var(--text-color-lighter);
+}
+
 main {
     display: flex;
     flex-direction: row;
@@ -55,7 +59,8 @@ section > fieldset {
 section > fieldset > legend {
     font-weight: 800;
     font-size: x-large;
-    text-shadow: 2px 2px 1px var(--fg-dark);
+    color: var(--text-color-light);
+    text-shadow: 2px 2px 1px var(--text-color-darker);
 }
 
 #config-section {
@@ -75,7 +80,7 @@ section > fieldset > legend {
     gap: 2rem;
 }
 
-.alert-container {
+.alert {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -84,13 +89,13 @@ section > fieldset > legend {
     opacity: 1;
 }
 
-.alert-image {
+.alert__image {
   width: clamp(128px, 50%, 512px);
   height: auto;
   object-fit: contain;
 }
 
-.alert-text {
+.alert__text {
   font-size: clamp(1rem, 3vw, 3rem);
 }
 
@@ -120,14 +125,6 @@ section > fieldset > legend {
     align-items: center;
     justify-content: center;
 }
-
-
-
-
-
-
-
-
 
 .collapsible-input {
     border-radius: var(--border-radius);

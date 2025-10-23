@@ -24,7 +24,7 @@ export class Alert extends DisplayItem {
     super.cancel();
 
     const audioElement =
-      document.querySelector<HTMLAudioElement>(".alert-audio");
+      document.querySelector<HTMLAudioElement>(".alert__audio");
       
     if (audioElement) {
       audioElement.pause();
@@ -33,7 +33,7 @@ export class Alert extends DisplayItem {
     }
 
     // Remove animation
-    const container = document.querySelector<HTMLElement>(".alert-container");
+    const container = document.querySelector<HTMLElement>(".alert");
     if (container) {
       removeAnimation(container);
 
@@ -46,6 +46,11 @@ export class Alert extends DisplayItem {
   }
 
   async display(displayContainer: HTMLElement) {
+    if (!this.config) {
+      console.error("CONFIG WAS NOT DEFINED!", this.slot);
+      return;
+    }
+
     return new Promise<void>((resolve) => {
       this.resolveDisplay = resolve;
 
@@ -58,6 +63,7 @@ export class Alert extends DisplayItem {
         removeAnimation(displayContainer);
         this.removeText(displayContainer);
         this.removeImage(displayContainer);
+        this.removeAudio(displayContainer);
 
         this.resolveDisplay = undefined;
 
@@ -68,7 +74,7 @@ export class Alert extends DisplayItem {
 
   private setText(displayContainer: HTMLElement) {
     const textElement: HTMLHeadingElement | null =
-      displayContainer.querySelector(".alert-text");
+      displayContainer.querySelector(".alert__text");
 
     if (!textElement)
       return;
@@ -88,18 +94,18 @@ export class Alert extends DisplayItem {
 
   private removeText(displayContainer: HTMLElement) {
     const textElement: HTMLHeadingElement | null =
-      displayContainer.querySelector(".alert-text");
+      displayContainer.querySelector(".alert__text");
 
     if (!textElement)
       return;
 
     textElement.innerHTML = "";
-    textElement.className = "alert-text";
+    textElement.className = "alert__text";
   }
 
   private setImage(displayContainer: HTMLElement) {
     const imageElement: HTMLImageElement | null =
-      displayContainer.querySelector(".alert-image");
+      displayContainer.querySelector(".alert__image");
 
     if (this.config.imageReferences && imageElement) {
       const key = pickRandom<string>(this.config.imageReferences);
@@ -119,7 +125,7 @@ export class Alert extends DisplayItem {
 
   private removeImage(displayContainer: HTMLElement) {
     const imageElement: HTMLImageElement | null =
-      displayContainer.querySelector(".alert-image");
+      displayContainer.querySelector(".alert__image");
 
     if (!imageElement)
       return;
@@ -130,13 +136,12 @@ export class Alert extends DisplayItem {
 
   private setAudio(displayContainer: HTMLElement) {
     const audioElement: HTMLAudioElement | null =
-      displayContainer.querySelector(".alert-audio");
+      displayContainer.querySelector(".alert__audio");
 
     if (this.config.audioReferences.length > 0 && audioElement) {
       const key = pickRandom<string>(this.config.audioReferences);
 
       const media = getAudio(key);
-      console.log("SETTING AUDIO", media);
 
       if (media === undefined || media.mediaLink === "") {
         audioElement.pause();
@@ -146,6 +151,19 @@ export class Alert extends DisplayItem {
         audioElement.play();
       }
     }
+  }
+
+  private removeAudio(displayContainer: HTMLElement) {
+    const audioElement: HTMLAudioElement | null =
+      displayContainer.querySelector(".alert__audio");
+
+    if (!audioElement)
+      return;
+
+    audioElement.src = "";
+    audioElement.removeAttribute("src");
+    audioElement.pause();
+    audioElement.currentTime = 0;
   }
 
   private setAnimation(displayContainer: HTMLElement) {
