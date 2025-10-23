@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite'
 import {resolve } from 'path'
+import injectHTML from 'vite-plugin-html-inject'
 
 export default defineConfig({
   base: "/ArchipelagoOverlays/",
@@ -16,5 +17,6 @@ export default defineConfig({
     alias: {
       '@': resolve(__dirname, 'src')
     }
-  }
+  },
+  plugins: [injectHTML()]
 })

@@ -290,6 +290,11 @@ braces@^3.0.3:
   dependencies:
     fill-range "^7.1.1"
 
+cloc@^2.6.0-cloc:
+  version "2.6.0-cloc"
+  resolved "https://registry.yarnpkg.com/cloc/-/cloc-2.6.0-cloc.tgz#55352ef47b84f6e61102508d2df7822b4f83ab71"
+  integrity sha512-fCHPvFN6I7WmC005u99WqLxqWnWhEra0YCppc2k8lpRZrPFIEaHaNxgJ+funlSRIZMSIOqxwpt7pmEKDPFCz2g==
+
 commander@^13.0.0:
   version "13.1.0"
   resolved "https://registry.yarnpkg.com/commander/-/commander-13.1.0.tgz#776167db68c78f38dcce1f9b8d7b8b9a488abf46"
@@ -685,6 +690,11 @@ universalify@^2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/universalify/-/universalify-2.0.1.tgz#168efc2180964e6386d061e094df61afe239b18d"
   integrity sha512-gptHNQghINnc/vTGIk0SOFGFNXw7JVrlRUtConJRlvaw6DuX0wO5Jeko9sWrMBhh+PsYAZ7oXAiOnf/UKogyiw==
+
+vite-plugin-html-inject@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/vite-plugin-html-inject/-/vite-plugin-html-inject-1.1.2.tgz#97e2a596bbaf0a11b9e2e5cae5ce3ae52c05c974"
+  integrity sha512-4DWANEcAw73H5JLWTAI4EvXdSyoGqGq/Is9fTRjpF+SJLor58LNdqB+YYnK3FOLwx6LMTAn4z1hkiRyc52lYLg==
 
 vite@^7.1.7:
   version "7.1.9"
