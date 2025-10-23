@@ -149,6 +149,21 @@
             "timing": "linear"
         }
     },
+    "filler-item": {
+        "alert-reference": "ItemAlert",
+        "timeout": 2500,
+        "translations": {
+            "en": "{{slot}} recieved {{item}} from {{sender}}"
+        },
+        "audio-references": [],
+        "image-references": ["gift"],
+        "animation": {
+            "reference": "fade-in-out",
+            "duration": 0,
+            "iterations": 1,
+            "timing": "linear"
+        }
+    },
     "progression-item": {
         "alert-reference": "ItemAlert",
         "timeout": 2500,
