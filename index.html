@@ -7,38 +7,37 @@
     <title>Archipelago Overlays</title>
   </head>
   <body>
-    <header class="hero">
-      <div class="hero-content">
-        <img src="/favicon.svg" alt="Archipel Alerts Logo" class="hero-logo" />
-        <h1>Archipelago Overlays</h1>
-        <p>
-          A user-friendly tool for viewing and configuring Archipelago notifications.
-        </p>
-      </div>
-    </header>
+    <load src="src/partials/navbar.html"/>
 
     <main>
-      <section class="features">
-        <div class="feature-card">
-          <h2>Alert Overlay</h2>
-          <p>Show an Alert Overlay that triggers on when certain things happen in Archipelago</p>
+      <section id="hero">
+        <div id="hero__content">
+          <h1>Overlays for all your needs.</h1>
+          <p>Archipelago Overlays provides you with multiple overlays you might want for streaming</p>
+        </div>
+        <div id="hero__image">
 
-          <div class="button-group">
-            <a href="/ArchipelagoOverlays/alert/config" class="btn">Config</a>
-            <a href="/ArchipelagoOverlays/alert/" class="btn secondary">Overlay</a>
+        </div>
+      </section>
+
+      <section class="features">
+        <div class="features__card">
+          <div class="features__card__content">
+            <h2>Alert Overlay</h2>
+            <p>Show an Alert Overlay that triggers when certain things happen in Archipelago</p>
+          </div>
+
+          <div class="features__card__buttons">
+            <a class="features__card__primary__button" href="/alert/config">Config</a>
+            <a class="features__card__secondary__button" href="/alert/">Overlay</a>
           </div>
         </div>
       </section>
     </main>
 
-    <footer class="footer">
-      <p>
-        <a href="https://github.com/archipelalerts" target="_blank">GitHub</a> •
-        <a href="https://archipelago.gg" target="_blank">Archipelago</a> • ©
-        2025 Archipelago Overlays
-      </p>
+    <footer>
+      <p>F</p>
     </footer>
-
     <script type="module" src="/src/routes/main.ts"></script>
   </body>
 </html>

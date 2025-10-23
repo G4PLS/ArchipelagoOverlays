@@ -1,105 +1,125 @@
-@import "../style.css";
-
-body {
-  flex-direction: column;
-  background: #0d1117;
-  color: #e6edf3;
-}
+@import '../style.css';
+@import '../components/navbar.css';
 
 main {
-  flex: 1;
-}
-
-.hero {
-  background: linear-gradient(135deg, #2a2a72, #009ffd);
-  text-align: center;
-  padding: 2rem 1rem;
-}
-
-.hero-logo {
-  width: 7rem;
-}
-
-.hero h1 {
-  font-size: 2.5rem;
-  margin-bottom: 0.5rem;
-}
-
-.hero p {
-  font-size: 1.2rem;
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-.features {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
-  padding: 3rem 2rem;
-}
-.feature-card {
-  background: #161b22;
-  border-radius: 12px;
-  padding: 1.5rem;
-  text-align: center;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.feature-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
-}
-
-.button-group {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.5rem;
-  margin-top: 1rem;
-}
-
-.btn {
-  display: inline-block;
-  background-color: #238636;
-  color: white;
-  text-decoration: none;
-  padding: 0.6rem 1.2rem;
-  border-radius: 6px;
-  transition: background 0.2s;
-}
-
-.btn:hover {
-  background-color: #2ea043;
-}
-
-.btn.secondary {
-  background-color: #30363d;
-  color: #e6edf3;
-}
-
-.btn.secondary:hover {
-  background-color: #484f58;
-}
-
-.btn.disabled {
-  background-color: #21262d;
-  color: #8b949e;
-  cursor: not-allowed;
+    flex: 1;
 }
 
 footer {
-  text-align: center;
-  padding: 1.5rem;
-  background: #161b22;
-  font-size: 0.9rem;
+    background-color: var(--bg-darker);
+    padding: 0.5rem;
 }
 
-footer a {
-  color: #58a6ff;
-  text-decoration: none;
+/* HERO */
+
+#hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4rem 2rem;
+    background: linear-gradient(135deg, var(--bg-darker), var(--bg-dark));
+    color: var(--text-color);
+    gap: 2rem;
+    min-height: 60vh;
 }
 
-footer a:hover {
-  text-decoration: underline;
+#hero__content {
+    flex: 1;
+    max-width: 600px;
+}
+
+#hero__content h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+}
+
+
+#hero__content p {
+    font-size: 1.25rem;
+    margin-bottom: 2rem;
+    color: var(--text-color-light);
+}
+
+#hero__image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#hero__image::before {
+    content: "Image goes here";
+    display: block;
+    width: 100%;
+    max-width: 400px;
+    height: 300px;
+    background-color: #444;
+    color: #aaa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    border-radius: 12px;
+}
+
+.features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 300px);
+    gap: 1.5rem;
+    padding: 3rem 2rem;
+}
+
+.features__card {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    border-radius: 12px;
+    background-color: var(--fg);
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.features__card__content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    color: var(--text-color-lighter);
+}
+
+.features__card:hover {
+    transform: translate(-4px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+}
+
+.features__card__buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.features__card__primary__button {
+    display: inline-block;
+    background-color: var(--highlight);
+    color: var(--text-color-darker);
+    text-decoration: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: var(--border-radius);
+}
+
+.features__card__secondary__button {
+    display: inline-block;
+    background-color: var(--highlight-light);
+    color: var(--text-color-darker);
+    text-decoration: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: var(--border-radius);
+}
+
+.features__card__primary__button:hover,
+.features__card__secondary__button:hover {
+    background-color: var(--highlight-lighter);
 }

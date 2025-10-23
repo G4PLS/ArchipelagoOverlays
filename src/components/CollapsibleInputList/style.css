@@ -46,7 +46,7 @@
 
 .collapsible-input__list-element input {
     background-color: var(--fg);
-    color: var(--text-color-light);
+    color: var(--text-color-lighter);
 }
 
 .collapsible-input__list-element button {

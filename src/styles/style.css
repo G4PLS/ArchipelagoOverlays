@@ -1,7 +1,9 @@
 :root {
     --bg: hsl(238, 16%, 50%);
-    --bg-dark: hsl(from var(--bg) h s calc(l - 30));
     --bg-light: hsl(from var(--bg) h s calc(l + 30));
+    --bg-ligher: hsl(from var(--bg) h s calc(l + 40));
+    --bg-dark: hsl(from var(--bg) h s calc(l - 30));
+    --bg-darker: hsl(from var(--bg) h s calc(l - 40));
 
     --fg: hsl(225, 21%, 50%);
     --fg-light: hsl(from var(--fg) h s calc(l + 20));
@@ -9,15 +11,17 @@
     --fg-dark: hsl(from var(--fg) h s calc(l - 20));
     --fg-darker: hsl(from var(--fg) h s calc(l - 40));
 
-    --highlight: hsl(35, 28%, 50%);
+    --highlight: hsl(35, 50%, 50%);
     --highlight-light: hsl(from var(--highlight) h s calc(l + 20));
     --highlight-lighter: hsl(from var(--highlight) h s calc(l + 30));
     --highlight-dark: hsl(from var(--highlight) h s calc(l - 20));
     --highlight-darker: hsl(from var(--highlight) h s calc(l - 30));
 
-    --text-color: hsl(44, 100%, 50%);
-    --text-color-light: hsl(from var(--text-color) h s calc(l + 40));
+    --text-color: hsl(270, 40%, 70%);
+    --text-color-light: hsl(from var(--text-color) h calc(s - 20) calc(l + 5));
+    --text-color-lighter: hsl(from var(--text-color) h s calc(l + 50));
     --text-color-dark: hsl(from var(--text-color) h s calc(l - 40));
+    --text-color-darker: hsl(from var(--text-color) h s calc(l - 50));
 
     --border-radius: 0.25em;
 
@@ -41,7 +45,7 @@
 
 body {
     background-color: var(--bg-dark);
-    color: var(--text-color-light);
+    color: var(--text-color-dark);
     margin: 0;
     display: flex;
     flex-direction: column;
@@ -51,6 +55,7 @@ body {
 
 button {
     background-color: var(--highlight);
+    padding: 0.25rem 0.5rem;
     color: var(--text-color-dark);
     font-weight: 600;
     border: 0px solid transparent;
@@ -63,6 +68,7 @@ button:hover {
 
 input, select {
     background-color: var(--fg-lighter);
-    color: var(--text-color-dark);
+    color: var(--text-color-darker);
+    font-weight: 500;
     border: none;
 }
