@@ -1,0 +1,55 @@
+.collapsible-input__collapsible {
+    background-color: var(--fg-lighter);
+    padding: 0.25rem;
+    display: flex;
+}
+
+.collapsible-input__collapsible summary {
+    display: inline-flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.collapsible-input__collapsible summary::before {
+    display: flex;
+    align-items: center;    
+    content: ">";
+    cursor: pointer;
+    color: var(--text-color-dark);
+}
+
+.collapsible-input__collapsible[open] summary::before {
+  transform: rotate(90deg);
+}
+
+.collapsible-input__add {
+    width: 10%;
+}
+
+.collapsible-input__main {
+    border: 2px solid var(--fg-light);
+}
+
+.collapsible-input__list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    padding: 0.5rem 0 0.5rem 1.5rem;
+}
+
+.collapsible-input__list-element {
+    display: flex;
+    flex-direction: row;
+    gap: 0.3rem;
+}
+
+.collapsible-input__list-element input {
+    background-color: var(--fg);
+    color: var(--text-color-light);
+}
+
+.collapsible-input__list-element button {
+    padding: 0;
+    margin: 0;
+}

@@ -1,14 +1,6 @@
 @import "../style.css";
 @import "../components/alert.css";
 
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  height: 100vh;
-}
-
 main {
   width: 100%;
   height: 100%;

@@ -1,0 +1,50 @@
+tab-group {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem;
+    background-color: var(--fg-light);
+}
+
+.tab-group__tabs {
+    display: block;
+    padding: 0.25rem;
+    background-color: var(--highlight-lighter);
+}
+
+.tab-group__content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 0.5rem 0 0 0;
+}
+
+.tab {
+    display: inline-flex;
+    align-items: center;
+}
+
+.tab:not(:last-child)::after {
+    content: "|";
+    color: var(--text-color-light);
+}
+
+.tab__button {
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 0.5rem;
+    background-color: var(--highlight-lighter);
+    color: var(--text-color-dark);
+    padding: 0.15rem 0.35rem;
+    white-space: nowrap;
+    align-items: center;
+    font-weight: bold;
+}
+
+.tab__button:hover {
+    background-color: var(--highlight-light);
+}
+
+.tab__button.active {
+    background-color: var(--highlight);
+}

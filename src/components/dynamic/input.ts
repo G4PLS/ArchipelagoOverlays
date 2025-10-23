@@ -44,4 +44,8 @@ export class Input extends DynamicHtmlComponent<HTMLInputElement> {
     setOnChange(onChange: (value: string, element: HTMLInputElement) => void) {
         this.onChange = onChange;
     }
+
+    getValue() {
+        return this.element.value;
+    }
 }

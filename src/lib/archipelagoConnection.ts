@@ -21,9 +21,9 @@ export function loadArchipelagoConfig() {
 export function deconstructArchipelagoUrlParams(params?: URLSearchParams) {
     const searchParams: URLSearchParams = params || new URL(window.location.href).searchParams;
 
-    const url = searchParams.get("archipelago-url");
-    const slots = searchParams.get("archipelago-slots")?.split(",") || [];
-    const password = searchParams.get("archipelago-password");
+    const url = searchParams.get("ap-url");
+    const slots = searchParams.get("ap-slots")?.split(",") || [];
+    const password = searchParams.get("ap-password");
 
     config = {
         url,
@@ -38,9 +38,9 @@ export function constructArchipelagoUrlParams(params?: URLSearchParams) {
     if (!config)
         return searchParams;
 
-    addToSearchParamIfNoMatch(params, "archipelago-url", config.url, null);
-    addToSearchParamIfNoMatch(params, "archipelago-slots", config.slots, []);
-    addToSearchParamIfNoMatch(params, "archipelago-password", config.password, null);
+    addToSearchParamIfNoMatch(params, "ap-url", config.url || "", "");
+    addToSearchParamIfNoMatch(params, "ap-slots", config.slots, []);
+    addToSearchParamIfNoMatch(params, "ap-password", config.password || "", "");
 }
 
 export function setArchipelagoSettings(override: Partial<ArchipelagoConfig>) {

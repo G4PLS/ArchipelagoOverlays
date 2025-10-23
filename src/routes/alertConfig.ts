@@ -1,42 +1,19 @@
-import "@/styles/pages/alertConfig.css";
-
-import { Alert, ItemAlert } from "@/components/alertItems";
-import { ChipsInput } from "@/components/chipsInput";
-import { Input } from "@/components/dynamic/input";
-import { Select } from "@/components/dynamic/select";
-import { TabGroup } from "@/components/tabGroup";
-import { TagSelect } from "@/components/tagSelect";
-import {
-  constructAlertUrlParams,
-  deconstructAlertUrlParams,
-  getAlert,
-  getAlerts,
-  loadAlert,
-  setAlertOverride,
-} from "@/lib/alertManager";
-import { getAnimationNames, loadAnimation } from "@/lib/animation";
-import {
-  constructArchipelagoUrlParams,
-  deconstructArchipelagoUrlParams,
-  getArchipelagoConfig,
-  loadArchipelagoConfig,
-  setArchipelagoSettings,
-} from "@/lib/archipelagoConnection";
-import { Display } from "@/lib/display";
-import {
-  constructFontUrlParams,
-  deconstructFontUrlParams,
-  getAvailableFonts,
-  getAvailableShadows,
-  getAvailableStyles,
-  getFont,
-  loadFont,
-  setFontOverride,
-} from "@/lib/font";
-import { getAudioNames, getImageNames, loadMedia } from "@/lib/media";
-import { loadLanguage } from "@/lib/textParser";
-import type { AlertData } from "@/types/alertSettings";
-import { StrToNumber } from "@/utils/stringToNumber";
+import { CollapsibleInputList } from '@/components/CollapsibleInputList/collapsibleInput';
+import { MultiSelect } from '@/components/MultiSelect/multiSelect';
+import { TabGroup } from '@/components/TabGroup/tabGroup';
+import { Alert } from '@/components/alertItems';
+import { Input } from '@/components/dynamic/input';
+import { Select } from '@/components/dynamic/select';
+import { constructAlertUrlParams, deconstructAlertUrlParams, getAlert, getAlerts, loadAlert, setAlertOverride } from '@/lib/alertManager';
+import { getAnimationNames, loadAnimation } from '@/lib/animation';
+import { constructArchipelagoUrlParams, deconstructArchipelagoUrlParams, getArchipelagoConfig, loadArchipelagoConfig, setArchipelagoSettings } from '@/lib/archipelagoConnection';
+import { Display } from '@/lib/display';
+import { constructFontUrlParams, deconstructFontUrlParams, getAvailableFonts, getAvailableShadows, getAvailableStyles, getFont, loadFont, setFontOverride } from '@/lib/font';
+import { getAudioNames, getImageNames, loadMedia } from '@/lib/media';
+import { loadLanguage } from '@/lib/textParser';
+import '@/styles/pages/alertConfig.css';
+import type { AlertData } from '@/types/alertSettings';
+import { StrToNumber } from '@/utils/stringToNumber';
 
 loadFont();
 loadLanguage();
@@ -69,38 +46,68 @@ let selectedAlert: AlertData = null;
 const display = new Display<Alert>(document.querySelector(".alert-container"));
 display.push(new Alert("", getAlert("load")));
 
-//#region Archipelago
-const archipelagoUrl = new Input(
-  document.querySelector("#archipelago-url-input"),
-  getArchipelagoConfig().url,
-  "archipelago.gg:47375",
-  (value: string, _: HTMLInputElement) => {
-    setArchipelagoSettings({ url: value });
-  }
+//#region PREVIEW 
+
+const previewSelect = new Select(
+  document.querySelector("#alert-preview__select"),
+  undefined,
+  undefined,
+  undefined,
+  undefined
 );
 
-const archipelagoSlots = new ChipsInput({
-  container: document.querySelector("#archipelago-slot-chips-container"),
-  input: document.querySelector("#archipelago-slot-input"),
-  chips: getArchipelagoConfig().slots,
-  allowDuplicates: false,
-  onChange: (chips: string[]) => {
-    setArchipelagoSettings({ slots: chips });
-  },
+const previewPlayButton = document.querySelector('#alert-preview__play');
+const previewStopButton = document.querySelector('#alert-preview__stop');
+
+previewPlayButton.addEventListener('click', () => {
+  const selectedAlert = previewSelect.getValue();
+  const alert = getAlert(selectedAlert);
+
+  if (!alert) return;
+
+  display.cancel();
+  display.push(new Alert("SLOT", alert, {
+    slot: "SLOT",
+    countdown: "COUNTDOWN",
+      game: "GAME",
+      hint: "HINT",
+      item: "ITEM",
+      player: "PLAYER",
+      reason: "REASON",
+      sender: "SENDER",
+      target: "TARGET",
+      location: "LOCATION"
+  }));
 });
 
-const archipelagoPassword = new Input(
-  document.querySelector("#archipelago-password-input"),
-  getArchipelagoConfig().password,
-  "Password",
-  (value: string, _: HTMLInputElement) => {
-    setArchipelagoSettings({ password: value });
-  }
-);
+previewStopButton.addEventListener("click", () => {
+  display.cancel();
+});
 
 //#endregion
 
-//#region Font TODO
+//#region ARCHIPELAGO
+
+const apUrlInput = new Input(
+    document.querySelector('#ap-url-input'),
+    getArchipelagoConfig().url,
+    "archipelago.gg:47375",
+    undefined
+)
+
+const apSlotInput = document.querySelector('#ap-slot-input') as CollapsibleInputList;
+apSlotInput.setCurrent(getArchipelagoConfig().slots);
+
+const apPasswordInput = new Input(
+    document.querySelector('#ap-password-input'),
+    getArchipelagoConfig().password,
+    "Password...",
+    undefined
+)
+
+//#endregion
+
+//#region FONT
 
 const fontFamily = new Select(
   document.querySelector("#font-family-select"),
@@ -143,7 +150,7 @@ const fontShadow = new Select(
 
 //#endregion
 
-//#region Alerts
+//#region ALERTS
 
 const alertTimeout = new Input(
   document.querySelector("#alert-timeout-input"),
@@ -154,24 +161,20 @@ const alertTimeout = new Input(
   }
 );
 
-const alertImage = new TagSelect({
-  select: document.querySelector("#alert-image-select"),
-  tagContainer: document.querySelector("#alert-image-select-tag-container"),
-  tags: undefined,
-  selectedTags: undefined,
-  onChange: (tags: string[]) => {
-    setAlertOverride(selectedAlert.name, { imageReferences: tags });
-  },
+const alertImageSelect = document.querySelector('#alert-image-multi-select') as MultiSelect;
+alertImageSelect.addEventListener('change', (e) => {
+    if (!selectedAlert)
+        return;
+    
+    setAlertOverride(selectedAlert.name, {imageReferences: alertImageSelect.getSelected()});
 });
 
-const alertAudio = new TagSelect({
-  select: document.querySelector("#alert-audio-select"),
-  tagContainer: document.querySelector("#alert-audio-select-tag-container"),
-  tags: undefined,
-  selectedTags: undefined,
-  onChange: (tags: string[]) => {
-    setAlertOverride(selectedAlert.name, { audioReferences: tags });
-  },
+const alertAudioSelect = document.querySelector('#alert-audio-multi-select') as MultiSelect;
+alertAudioSelect.addEventListener('change', (e) => {
+    if (!selectedAlert)
+        return;
+
+    setAlertOverride(selectedAlert.name, {audioReferences: alertAudioSelect.getSelected()});
 });
 
 const alertAnimation = new Select(
@@ -184,8 +187,8 @@ const alertAnimation = new Select(
   }
 );
 
-const alertAnimationDuration = new Input(
-  document.querySelector("#alert-animation-duration-input"),
+const animationDuration = new Input(
+  document.querySelector("#animation-duration-input"),
   undefined,
   undefined,
   (value: string, _: HTMLInputElement) => {
@@ -195,8 +198,8 @@ const alertAnimationDuration = new Input(
   }
 );
 
-const alertAnimationTiming = new Select(
-  document.querySelector("#alert-animation-timing"),
+const animationTiming = new Select(
+  document.querySelector("#animation-timing-select"),
   timingFunctions.map((timing) => ({ text: timing, value: timing })),
   undefined,
   { text: "Timing", hidden: true },
@@ -205,8 +208,8 @@ const alertAnimationTiming = new Select(
   }
 );
 
-const alertAnimationIterations = new Input(
-  document.querySelector("#alert-animation-iterations"),
+const animationIterations = new Input(
+  document.querySelector("#animation-iteration-input"),
   undefined,
   undefined,
   (value: string, _: HTMLInputElement) => {
@@ -216,128 +219,88 @@ const alertAnimationIterations = new Input(
   }
 );
 
-const alertTab = new TabGroup({
-  contentContainer: document.querySelector("#alert-tab-content-container"),
-  tabContainer: document.querySelector("#alert-tabs-container"),
-  tabs: alerts.map(alert => alert.name),
-  initialTab: "",
-  onTabActivated: (tabId: string, _: HTMLElement) => {
-    selectedAlert = getAlert(tabId);
+const alertTabGroup = document.querySelector('tab-group') as TabGroup;
+
+alertTabGroup.addEventListener('tab-change', (e) => {
+    const currentTab = alertTabGroup.getCurrentTab();
+    const alertName = currentTab.value;
+
+    selectedAlert = getAlert(alertName);
 
     alertTimeout.setValue(selectedAlert.timeout.toString());
 
-    alertImage.setTags(getImageNames(), selectedAlert.imageReferences || []);
-    alertAudio.setTags(getAudioNames(), selectedAlert.audioReferences || []);
+    alertImageSelect.setOptions(getImageNames().map(img => ({label: img})), selectedAlert.imageReferences)
+    alertAudioSelect.setOptions(getAudioNames().map(img => ({label: img})), selectedAlert.audioReferences)
 
     alertAnimation.setOptions(
-      animations.map((anim) => ({ text: anim, value: anim })),
-      selectedAlert.animation.reference
+        animations.map(anim => ({text: anim, value: anim})),
+        selectedAlert.animation.reference
     );
 
-    alertAnimationDuration.setValue(
-      selectedAlert.animation.duration.toString()
-    );
+    animationDuration.setValue(selectedAlert.animation.duration.toString());
 
-    alertAnimationTiming.setOptions(
+    animationTiming.setOptions(
       timingFunctions.map((timing) => ({ text: timing, value: timing })),
       selectedAlert.animation.timing
     );
 
-    alertAnimationIterations.setValue(
-      selectedAlert.animation.iterations.toString()
+    animationIterations.setValue(selectedAlert.animation.iterations.toString());
+
+    previewSelect.setOptions(
+      alerts.map(alert => ({text: alert.name, value: alert.name})),
+      selectedAlert.name
     );
-  },
 });
+
+alertTabGroup.setTabs(alerts.map(alert => ({label: alert.name})));
 
 //#endregion
 
-//#region
+//#region URL PARSING
 
-const alertPreview = new Select(
-  document.querySelector("#alert-preview-alert-select"),
-  alerts.map(alert => ({text: alert.name, value: alert.name})),
-  undefined,
-  undefined,
-  undefined
-);
+const urlInput: HTMLInputElement = document.querySelector("#url-parser-input");
+const generateUrlButton: HTMLButtonElement = document.querySelector("#generate-url-button");
+const loadUrlButton: HTMLButtonElement = document.querySelector("#load-url-button");
+const copyUrlButton: HTMLButtonElement = document.querySelector("#copy-url-button");
 
-const playButton = document.querySelector("#play-preview");
+generateUrlButton.addEventListener('click', () => {
+    const url = new URL(`${baseUrl}alert/`);
 
-playButton.addEventListener("click", () => {
-  const selectedAlert = alertPreview.getValue();
-  const alert = getAlert(selectedAlert);
+    setArchipelagoSettings({
+      url: apUrlInput.getValue(),
+      password: apPasswordInput.getValue(),
+      slots: apSlotInput.getCurrent()
+    });
 
-  if (!alert) return;
-
-  display.cancel();
-  display.push(new Alert("SLOT", alert, {
-    slot: "SLOT",
-    countdown: "COUNTDOWN",
-     game: "GAME",
-     hint: "HINT",
-     item: "ITEM",
-     player: "PLAYER",
-     reason: "REASON",
-     sender: "SENDER",
-     target: "TARGET",
-     location: "LOCATION"
-  }));
+    constructArchipelagoUrlParams(url.searchParams);
+    constructFontUrlParams(url.searchParams);
+    constructAlertUrlParams(url.searchParams);
+    
+    urlInput.value = url.toString();
 });
 
-const stopButton = document.querySelector("#stop-preview");
+loadUrlButton.addEventListener('click', () => {
+    const url = new URL(urlInput.value);
+    const params = url.searchParams;
 
-stopButton.addEventListener("click", () => {
-  display.cancel();
+    deconstructArchipelagoUrlParams(params);
+    apUrlInput.setValue(getArchipelagoConfig().url);
+    apSlotInput.setCurrent(getArchipelagoConfig().slots);
+    apPasswordInput.setValue(getArchipelagoConfig().password);
+
+    deconstructFontUrlParams(params);
+    fontFamily.setOptions(availableFonts, getFont().family);
+    fontStyle.setOptions(availableStyles, getFont().style);
+    fontSize.setValue(getFont().size);
+    fontShadow.setOptions(availableShadows, getFont().shadow);
+    
+    deconstructAlertUrlParams(params);
+    alertTabGroup.rerender();
 });
 
-//#endregion
-
-//#region URL Parsing
-
-const generateInput: HTMLInputElement = document.querySelector("#url-input");
-
-const generateButton: HTMLButtonElement =
-  document.querySelector("#generate-url");
-generateButton.addEventListener("click", () => {
-  const url = new URL(`${baseUrl}alert/`)
-
-  constructArchipelagoUrlParams(url.searchParams);
-  constructFontUrlParams(url.searchParams);
-  constructAlertUrlParams(url.searchParams);
-
-  generateInput.value = url.toString();
-});
-
-const loadButton: HTMLButtonElement =
-  document.querySelector("#load-url-button");
-loadButton.addEventListener("click", () => {
-  const url = new URL(generateInput.value);
-  const params = url.searchParams;
-
-  deconstructArchipelagoUrlParams(params);
-  archipelagoUrl.setValue(getArchipelagoConfig().url);
-  archipelagoSlots.setChips(getArchipelagoConfig().slots);
-  archipelagoPassword.setValue(getArchipelagoConfig().password);
-
-  deconstructFontUrlParams(params);
-  fontFamily.setOptions(availableFonts, getFont().family);
-  fontStyle.setOptions(availableStyles, getFont().style);
-  fontSize.setValue(getFont().size);
-  fontShadow.setOptions(availableShadows, getFont().shadow);
-
-  deconstructAlertUrlParams(params);
-  alertTab.rerender();
-});
-
-const copyButton: HTMLButtonElement = document.querySelector("#copy-button");
-copyButton.addEventListener("click", () => {
-  if (!generateInput.value || generateInput.value === "") return;
-  navigator.clipboard.writeText(generateInput.value);
+copyUrlButton.addEventListener('click', () => {
+    if (!urlInput.value || urlInput.value === "") return;
+    navigator.clipboard.writeText(urlInput.value);
 });
 
 //#endregion
-
-
-(window as any).test = () => {
-  display.push(new ItemAlert("SLOT", getAlert("item"), "Sword", "Peter"));
-}

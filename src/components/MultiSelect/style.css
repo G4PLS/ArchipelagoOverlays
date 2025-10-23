@@ -1,0 +1,47 @@
+multi-select {
+  position: relative;
+}
+
+.multi-select__display {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  min-height: 2.5rem;
+  cursor: pointer;
+  background-color: var(--fg-lighter);
+  border-radius: var(--border-radius);
+  color: var(--text-color-dark);
+  padding: 0.25rem;
+  align-items: center;
+}
+
+.multi-select__display:empty::before {
+  content: attr(data-placeholder);
+  font-style: italic;
+}
+
+.multi-select__selected-item {
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: var(--fg-dark);
+  padding: 0.25rem;
+  color: var(--text-color-light);
+}
+
+.multi-select__options {
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+  background-color: var(--bg-dark);
+  max-height: 10rem;
+  overflow-y: auto;
+}
+
+.multi-select__option {
+  padding: 0.25rem 0.5rem;
+  cursor: pointer;
+}

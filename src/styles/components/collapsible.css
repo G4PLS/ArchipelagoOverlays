@@ -1,0 +1,40 @@
+.collapsible {
+    width: 100%;
+    border-radius: var(--border-radius, 4px);
+}
+
+.collapsible summary {
+    cursor: pointer;
+    font-weight: 500;
+    list-style: none; 
+    outline: none;
+    color: var(--text-color-dark);
+    padding: 0.1rem 0.3rem;
+    background-color: var(--fg-lighter);
+    border-radius: var(--border-radius);
+    user-select: none;
+}
+
+.collapsible[open] summary {
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
+}
+
+.collapsible summary:hover {
+    background-color: var(--fg-lighter);
+}
+
+.collapsible summary::before {
+    content: ">";
+}
+
+.collapsible[open] {
+    background-color: var(--fg-dark);
+}
+
+.collapsible[open] summary::before {
+    transform: rotateX(90deg);
+}
+
+.collapsible-content-container {
+    padding: 1rem;
+}

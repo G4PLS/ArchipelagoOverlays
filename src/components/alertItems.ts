@@ -104,14 +104,14 @@ export class Alert extends DisplayItem {
     if (this.config.imageReferences && imageElement) {
       const key = pickRandom<string>(this.config.imageReferences);
 
-      const src = getImage(key);
+      const media = getImage(key);
 
-      if (src === "" || src === undefined) {
+      if (media === undefined || media.mediaLink === "") {
         imageElement.removeAttribute("src");
         imageElement.style.visibility = "hidden";
       } 
       else {
-        imageElement.src = src;
+        imageElement.src = media.mediaLink;
         imageElement.style.visibility = "";
       }
     }
@@ -135,13 +135,14 @@ export class Alert extends DisplayItem {
     if (this.config.audioReferences.length > 0 && audioElement) {
       const key = pickRandom<string>(this.config.audioReferences);
 
-      const src = getAudio(key);
+      const media = getAudio(key);
+      console.log("SETTING AUDIO", media);
 
-      if (src === "" || src === undefined) {
+      if (media === undefined || media.mediaLink === "") {
         audioElement.pause();
         audioElement.removeAttribute("src");
       } else {
-        audioElement.src = src;
+        audioElement.src = media.mediaLink;
         audioElement.play();
       }
     }

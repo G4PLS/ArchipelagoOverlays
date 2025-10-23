@@ -1,24 +1,31 @@
-import type { Media, MediaConfig } from "@/types/media";
+import type { MediaConfig, MediaData, MediaJson } from "@/types/media";
 import { loadSingleConfig } from "@/utils/configLoader";
 
-const images: Map<string, string> = new Map();
-const audios: Map<string, string> = new Map();
+const images: Map<string, MediaData> = new Map();
+const audios: Map<string, MediaData> = new Map();
 
 export async function loadMedia(path: string) {
-    await loadSingleConfig<MediaConfig>(path, createMedia);
+    await loadSingleConfig<MediaJson>(path, createMedia);
 
     console.log("MEDIA", images, audios)
 }
 
-function createMedia(config: MediaConfig) {
+function createMedia(config: MediaJson) {
     createMediaEntries(images, config.images);
     createMediaEntries(audios, config.audios);
 }
 
-function createMediaEntries(map: Map<string, string>, media: Media) {
-    Object.entries(media).forEach(([name, link]) => {
-        map.set(name, link);
-    })
+function createMediaEntries(map: Map<string, MediaData>, media: Record<string, MediaConfig>) {
+    Object.entries(media).forEach(([name, config]) => {
+        map.set(name, {
+            mediaName: name,
+            mediaLink: config["media-link"],
+            author: config.author,
+            authorLink: config["author-link"],
+            foundAt: config["found-at"],
+            license: config.license
+        });
+    });
 }
 
 export function getImageNames() {
