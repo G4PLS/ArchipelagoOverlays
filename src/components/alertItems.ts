@@ -118,6 +118,7 @@ export class Alert extends DisplayItem {
       } 
       else {
         imageElement.src = media.mediaLink;
+        imageElement.classList.add(this.config.name);
         imageElement.style.visibility = "";
       }
     }
@@ -132,6 +133,7 @@ export class Alert extends DisplayItem {
 
     imageElement.src = "";
     imageElement.removeAttribute("src");
+    imageElement.className = "alert__image";
   }
 
   private setAudio(displayContainer: HTMLElement) {

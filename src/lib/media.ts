@@ -23,7 +23,8 @@ function createMediaEntries(map: Map<string, MediaData>, media: Record<string, M
             author: config.author,
             authorLink: config["author-link"],
             foundAt: config["found-at"],
-            license: config.license
+            license: config.license,
+            licenseLink: config["license-link"]
         });
     });
 }
@@ -32,14 +33,22 @@ export function getImageNames() {
     return Array.from(images.keys());
 }
 
-export function getAudioNames() {
-    return Array.from(audios.keys());
-}
-
-export function getAudio(name: string) {
-    return audios.get(name);
+export function getImages() {
+    return Array.from(images.values());
 }
 
 export function getImage(name: string) {
     return images.get(name);
+}
+
+export function getAudioNames() {
+    return Array.from(audios.keys());
+}
+
+export function getAudios() {
+    return Array.from(audios.values());
+}
+
+export function getAudio(name: string) {
+    return audios.get(name);
 }

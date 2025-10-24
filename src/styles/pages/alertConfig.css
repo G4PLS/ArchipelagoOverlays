@@ -139,6 +139,7 @@ section > fieldset > legend {
   gap: 0.5rem;
   padding: 0.3rem;
   background-color: var(--fg);
+  max-height: 2rem;
 }
 
 .url-parser__input {
@@ -150,4 +151,9 @@ section > fieldset > legend {
     display: flex;
     align-items: center;
     justify-content: center;
+    height: 100%;
+}
+
+.url-parser__button img {
+    height: 100%;
 }

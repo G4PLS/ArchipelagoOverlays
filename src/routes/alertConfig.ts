@@ -262,20 +262,26 @@ const urlInput: HTMLInputElement = document.querySelector("#url-parser-input");
 const generateUrlButton: HTMLButtonElement = document.querySelector("#generate-url-button");
 const loadUrlButton: HTMLButtonElement = document.querySelector("#load-url-button");
 const copyUrlButton: HTMLButtonElement = document.querySelector("#copy-url-button");
+const openUrlButton: HTMLButtonElement = document.querySelector("#open-url-button");
+
+function generateUrl(): URL {
+  const url = new URL(`${baseUrl}alert/`);
+
+  setArchipelagoSettings({
+    url: apUrlInput.getValue(),
+    password: apPasswordInput.getValue(),
+    slots: apSlotInput.getCurrent()
+  });
+
+  constructArchipelagoUrlParams(url.searchParams);
+  constructFontUrlParams(url.searchParams);
+  constructAlertUrlParams(url.searchParams);
+
+  return url;
+}
 
 generateUrlButton.addEventListener('click', () => {
-    const url = new URL(`${baseUrl}alert/`);
-
-    setArchipelagoSettings({
-      url: apUrlInput.getValue(),
-      password: apPasswordInput.getValue(),
-      slots: apSlotInput.getCurrent()
-    });
-
-    constructArchipelagoUrlParams(url.searchParams);
-    constructFontUrlParams(url.searchParams);
-    constructAlertUrlParams(url.searchParams);
-    
+    const url = generateUrl();
     urlInput.value = url.toString();
 });
 
@@ -302,5 +308,16 @@ copyUrlButton.addEventListener('click', () => {
     if (!urlInput.value || urlInput.value === "") return;
     navigator.clipboard.writeText(urlInput.value);
 });
+
+openUrlButton.addEventListener('click', () => {
+  let url = urlInput.value;
+  if (!url) {
+    const generatedUrl = generateUrl();
+    url = generatedUrl.toString();
+    urlInput.value = url;
+  }
+
+  window.open(url, "_blank");
+})
 
 //#endregion

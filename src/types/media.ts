@@ -4,6 +4,7 @@ export interface MediaConfig {
     "author-link": string;
     "found-at": string;
     license: string;
+    "license-link": string;
 }
 
 export interface MediaData {
@@ -13,6 +14,7 @@ export interface MediaData {
     authorLink?: string;
     foundAt?: string;
     license?: string;
+    licenseLink?: string;
 }
 
 export interface MediaJson {

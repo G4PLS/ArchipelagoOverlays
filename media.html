@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Archipelago Overlays</title>
+  </head>
+  <body>
+    <template id="media-card-template">
+      <div class="media-card">
+          <p class="media-card__name"></p>
+          <div class="media-card__image">
+            <a>
+              <img>
+            </a>
+          </div>
+
+          <div class="media-card__content">
+              <a class="media-card__author">AUTHOR</a>
+              <a class="media-card__license">LICENCE</a>
+          </div>
+      </div>
+    </template>
+
+    <load src="src/partials/navbar.html"/>
+
+    <main>
+      <section>
+        <h2>Images</h2>
+
+        <div class="media-grid" id="image-grid">
+        </div>
+      </section>
+
+      <section>
+        <h2>Audios</h2>
+
+        <div class="media-grid" id="audio-grid">
+        </div>
+      </section>
+    </main>
+
+    <load src="src/partials/footer.html"/>
+
+    <script type="module" src="/src/routes/media.ts"></script>
+  </body>
+</html>
