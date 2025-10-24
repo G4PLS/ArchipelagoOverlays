@@ -5,10 +5,28 @@
     <link rel="icon" href="/ArchipelagoOverlays/favicon.svg" type="image/svg+xml" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Archipelago Overlays</title>
-    <script type="module" crossorigin src="/ArchipelagoOverlays/assets/modulepreload-polyfill-B5Qt9EMX.js"></script>
-    <link rel="stylesheet" crossorigin href="/ArchipelagoOverlays/assets/main-BMMGqkep.css">
+    <script type="module" crossorigin src="/ArchipelagoOverlays/assets/media-C6g1opvm.js"></script>
+    <link rel="modulepreload" crossorigin href="/ArchipelagoOverlays/assets/modulepreload-polyfill-B5Qt9EMX.js">
+    <link rel="modulepreload" crossorigin href="/ArchipelagoOverlays/assets/media--Xp9gBCU.js">
+    <link rel="stylesheet" crossorigin href="/ArchipelagoOverlays/assets/media-ClajnaO9.css">
   </head>
   <body>
+    <template id="media-card-template">
+      <div class="media-card">
+          <p class="media-card__name"></p>
+          <div class="media-card__image">
+            <a>
+              <img>
+            </a>
+          </div>
+
+          <div class="media-card__content">
+              <a class="media-card__author">AUTHOR</a>
+              <a class="media-card__license">LICENCE</a>
+          </div>
+      </div>
+    </template>
+
     <header id="navbar">
   <div id="navbar__logo">
     <a href="/">
@@ -31,27 +49,17 @@
 
 
     <main>
-      <section id="hero">
-        <div id="hero__content">
-          <h1>Overlays for all your needs.</h1>
-          <p>Archipelago Overlays provides you with multiple overlays you might want for streaming</p>
-        </div>
-        <div id="hero__image">
+      <section>
+        <h2>Images</h2>
 
+        <div class="media-grid" id="image-grid">
         </div>
       </section>
 
-      <section class="features">
-        <div class="features__card">
-          <div class="features__card__content">
-            <h2>Alert Overlay</h2>
-            <p>Show an Alert Overlay that triggers when certain things happen in Archipelago</p>
-          </div>
+      <section>
+        <h2>Audios</h2>
 
-          <div class="features__card__buttons">
-            <a class="features__card__primary__button" href="/ArchipelagoOverlays/alert/config">Config</a>
-            <a class="features__card__secondary__button" href="/ArchipelagoOverlays/alert/">Overlay</a>
-          </div>
+        <div class="media-grid" id="audio-grid">
         </div>
       </section>
     </main>
@@ -77,5 +85,6 @@
 
     <p>&copy; 2025 GAPLS / ArchipelagoOverlays. Licensed under <a href="/LICENSE" target="_blank" rel="noopener noreferrer">MIT License</a>.</p>
 </footer>
+
   </body>
 </html>

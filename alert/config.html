@@ -5,10 +5,11 @@
     <link rel="icon" href="/ArchipelagoOverlays/favicon.svg" type="image/svg+xml" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Archipelago Overlays</title>
-    <script type="module" crossorigin src="/ArchipelagoOverlays/assets/config-xabdSD9B.js"></script>
+    <script type="module" crossorigin src="/ArchipelagoOverlays/assets/config-CnSswLXm.js"></script>
     <link rel="modulepreload" crossorigin href="/ArchipelagoOverlays/assets/modulepreload-polyfill-B5Qt9EMX.js">
-    <link rel="modulepreload" crossorigin href="/ArchipelagoOverlays/assets/font-ChhDdG-0.js">
-    <link rel="stylesheet" crossorigin href="/ArchipelagoOverlays/assets/config-BuVwGvxO.css">
+    <link rel="modulepreload" crossorigin href="/ArchipelagoOverlays/assets/media--Xp9gBCU.js">
+    <link rel="modulepreload" crossorigin href="/ArchipelagoOverlays/assets/font-CNtGzVmX.js">
+    <link rel="stylesheet" crossorigin href="/ArchipelagoOverlays/assets/config-CHiivi1h.css">
   </head>
   <body>
     <main>
@@ -97,17 +98,19 @@
               <button class="url-parser__button border-radius" id="copy-url-button">
                 <img src="/ArchipelagoOverlays/assets/images/copy.svg" alt="Copy to Clipboard" class="icon">
               </button>
+              <button class="url-parser__button border-radius" id="open-url-button">
+                <img src="/ArchipelagoOverlays/favicon_dark.svg" alt="Open Alert">
+              </button>
             </div>
         </section>
 
         <section id="preview-section">
-          <div class="alert-container">
-            <img
-              class="alert-image"
-            />
-            <h1 class="alert-text">ALERT TEXT</h1>
-            <audio class="alert-audio"></audio>
-          </div>
+          <div class="alert">
+  <img class="alert__image" />
+  <h1 class="alert__text">ALERT TEXT</h1>
+  <audio class="alert__audio"></audio>
+</div>
+
           <div class="border-radius" id="alert-preview">
             <label for="alert-preview__select">Alert</label>
             <select class="border-radius" id="alert-preview__select"></select>

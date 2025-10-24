@@ -5,42 +5,49 @@
             "author": "G4PLS",
             "author-link": "https://github.com/G4PLS/ArchipelagoOverlays/blob/main/public/favicon.svg",
             "found-at": "Archipelago Overlays",
-            "license": ""
+            "license-link": ""
+        },
+        "empty": {
+            "media-link": "/ArchipelagoOverlays/assets/images/empty.svg",
+            "author": "G4PLS",
+            "author-link": "https://github.com/G4PLS/ArchipelagoOverlays/blob/main/public/assets/images/empty.svg",
+            "found-at": "Archipelago Overlays",
+            "license-link": ""
         },
         "gift": {
             "media-link": "https://cdn.pixabay.com/animation/2023/06/13/15/13/15-13-48-916_256.gif",
             "author": "Dakernet",
             "author-link": "https://pixabay.com/gifs/gift-present-gifting-6631/",
             "found-at": "Pixabay",
-            "license": "https://pixabay.com/service/license-summary/"
+            "license-link": "https://pixabay.com/service/license-summary/"
         },
         "key": {
             "media-link": "https://cdn.pixabay.com/animation/2023/06/13/15/13/15-13-53-6_256.gif",
             "author": "Dakernet",
             "author-link": "https://pixabay.com/gifs/key-unlock-rotating-6633/",
             "found-at": "Pixabay",
-            "license": "https://pixabay.com/service/license-summary/"
+            "license-link": "https://pixabay.com/service/license-summary/"
         },
         "trophy": {
             "media-link": "https://cdn.pixabay.com/animation/2023/06/13/15/13/15-13-22-874_256.gif",
             "author": "Dakernet",
             "author-link": "https://pixabay.com/gifs/cup-champions-trophy-6614/",
             "found-at": "Pixabay",
-            "license": "https://pixabay.com/service/license-summary/"
+            "license-link": "https://pixabay.com/service/license-summary/"
         },
         "mail": {
             "media-link": "https://cdn.pixabay.com/animation/2023/06/13/15/12/15-12-30-808_256.gif",
             "author": "Dakernet",
             "author-link": "https://pixabay.com/gifs/envelope-message-messaging-e-mail-6586/",
             "found-at": "Pixabay",
-            "license": "https://pixabay.com/service/license-summary/"
+            "license-link": "https://pixabay.com/service/license-summary/"
         },
         "worldwideweb": {
             "media-link": "https://cdn.pixabay.com/animation/2023/06/13/15/13/15-13-52-82_256.gif",
             "author": "Dakernet",
             "author-link": "https://pixabay.com/gifs/internet-news-world-wide-web-6632/",
             "found-at": "Pixabay",
-            "license": "https://pixabay.com/service/license-summary/"
+            "license-link": "https://pixabay.com/service/license-summary/"
         }
     },
     "audios": {
@@ -49,7 +56,7 @@
             "author": "fressound_community",
             "author-link": "https://pixabay.com/sound-effects/ding-36029/",
             "found-at": "Pixabay",
-            "license": "https://pixabay.com/service/license-summary/"
+            "license-link": "https://pixabay.com/service/license-summary/"
         }
     }
 }
