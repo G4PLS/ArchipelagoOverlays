@@ -10,10 +10,11 @@ const audios = getAudios();
 const imageGrid: HTMLElement = document.querySelector("#image-grid");
 const audioGrid: HTMLElement = document.querySelector("#audio-grid");
 
-function createMediaCard(data: MediaData, container: HTMLElement) {
-    const template = document.querySelector('#media-card-template') as HTMLTemplateElement;
+const mediaCardTemplate = document.querySelector('#media-card-template') as HTMLTemplateElement;
+const mediaPlayerTemplate = document.querySelector('#media-card__player-template') as HTMLTemplateElement;
 
-    const clonedMediaCard = template.content.cloneNode(true) as DocumentFragment;
+function createMediaCard(data: MediaData) {
+    const clonedMediaCard = mediaCardTemplate.content.cloneNode(true) as DocumentFragment;
 
     const nameElement: HTMLAnchorElement = clonedMediaCard.querySelector(".media-card__name");
     const imageElement: HTMLImageElement = clonedMediaCard.querySelector(".media-card__image img");
@@ -45,13 +46,62 @@ function createMediaCard(data: MediaData, container: HTMLElement) {
         licenseElement.title = data.license ?? "LICENSE"
     }
 
-    container.appendChild(clonedMediaCard);
+    return clonedMediaCard;
+}
+
+function appendMediaPlayer(data: MediaData, fragment: DocumentFragment) {
+    const clonedMediaPlayer = mediaPlayerTemplate.content.cloneNode(true) as DocumentFragment;
+
+    const imageContainer: HTMLDivElement = fragment.querySelector('.media-card__image');
+    const imageElement: HTMLImageElement = fragment.querySelector(".media-card__image img");
+    const mediaButton: HTMLButtonElement = clonedMediaPlayer.querySelector('.media-card__player__button');
+    const mediaButtonImage: HTMLImageElement = clonedMediaPlayer.querySelector('.media-card__player__button img');
+    const audioElement: HTMLAudioElement = clonedMediaPlayer.querySelector('.media-card__player audio');
+
+    imageElement.src = "/ArchipelagoOverlays/assets/images/headphones.svg";
+    audioElement.src = data.mediaLink;
+
+    function updateButtonIcon(playing: boolean) {
+        if (playing)
+            mediaButtonImage.src = "/ArchipelagoOverlays/assets/images/stop.svg";
+        else
+            mediaButtonImage.src = "/ArchipelagoOverlays/assets/images/play.svg";
+    }
+
+    mediaButton.addEventListener('click', () => {
+        if(audioElement.paused) {
+            audioElement.play();
+            audioElement.volume = 0.5;
+        }
+        else {
+            audioElement.pause()
+            audioElement.currentTime = 0;
+        }
+    })
+
+    audioElement.addEventListener('playing', () => {
+        updateButtonIcon(true);
+    })
+
+    audioElement.addEventListener('pause', () => {
+        updateButtonIcon(false);
+    });
+
+    audioElement.addEventListener('ended', () => {
+        updateButtonIcon(false);
+    })
+
+    imageContainer.appendChild(clonedMediaPlayer);
 }
 
 for (const image of images) {
-    createMediaCard(image, imageGrid);
+    const card = createMediaCard(image);
+    imageGrid.appendChild(card);
 }
 
 for (const audio of audios) {
-    createMediaCard(audio, audioGrid);
+    const card = createMediaCard(audio);
+    appendMediaPlayer(audio, card);
+
+    audioGrid.appendChild(card);
 }

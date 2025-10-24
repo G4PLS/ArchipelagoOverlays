@@ -11,15 +11,24 @@
       <div class="media-card">
           <p class="media-card__name"></p>
           <div class="media-card__image">
-            <a>
+            <a target="_blank">
               <img>
             </a>
           </div>
 
           <div class="media-card__content">
-              <a class="media-card__author">AUTHOR</a>
-              <a class="media-card__license">LICENCE</a>
+              <a class="media-card__author" target="_blank">AUTHOR</a>
+              <a class="media-card__license" target="_blank">LICENCE</a>
           </div>
+      </div>
+    </template>
+    
+    <template id="media-card__player-template">
+      <div class="media-card__player">
+        <button class="media-card__player__button">
+          <img src="/assets/images/play.svg" alt="Headphones">
+        </button>
+        <audio></audio>
       </div>
     </template>
 
