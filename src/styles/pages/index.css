@@ -16,7 +16,7 @@ main {
     background: linear-gradient(135deg, var(--bg-darker), var(--bg-dark));
     color: var(--text-color);
     gap: 2rem;
-    min-height: 60vh;
+    min-height: 55vh;
 }
 
 #hero__content {
