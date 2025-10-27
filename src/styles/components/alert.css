@@ -1,22 +1,23 @@
 .alert {
-    color: white;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: fit-content;
-    opacity: 0;
     width: 100%;
     height: 100%;
+    color: white;
+    opacity: 0;
+    gap: 0.25rem;
+    container-name: alert;
+    container-type: inline-size;
 }
 
 .alert__text {
   font-weight: bolder;
-  font-size: xx-large;
+  font-size: 5vh;
   text-align: center;
 }
 
 .alert__image {
-    width: 512px;
-    height: 512px;
+  height: 70%;
 }
