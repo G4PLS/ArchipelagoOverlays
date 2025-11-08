@@ -1,6 +1,5 @@
 {
     "load": {
-        "alert-reference": "Alert",
         "timeout": 1000,
         "translations": {
             "en": "Archipelago Overlays"
@@ -15,7 +14,6 @@
         }
     },
     "connected": {
-        "alert-reference": "ConnectedAlert",
         "timeout": 2500,
         "translations": {
             "en": "{{slot}} connected!"
@@ -30,7 +28,6 @@
         }
     },
     "disconnect": {
-        "alert-reference": "DisconnectAlert",
         "timeout": 2500,
         "translations": {
             "en": "{{slot}} disconnected!"
@@ -45,7 +42,6 @@
         }
     },
     "failed-connection": {
-        "alert-reference": "ConnectionFailedAlert",
         "timeout": 2500,
         "translations": {
             "en": "{{slot}} failed to connect"
@@ -60,7 +56,6 @@
         }
     },
     "death": {
-        "alert-reference": "DeathAlert",
         "timeout": 2500,
         "translations": {
             "en": "{{slot}} died because of {{reason}} from {{sender}}"
@@ -75,7 +70,6 @@
         }
     },
     "goal": {
-        "alert-reference": "GoalAlert",
         "timeout": 2500,
         "translations": {
             "en": "{{player}} reached the Goal in {{game}}"
@@ -90,7 +84,6 @@
         }
     },
     "countdown": {
-        "alert-reference": "CountdownAlert",
         "timeout": 1000,
         "translations": {
             "en": "{{countdown}}"
@@ -105,7 +98,6 @@
         }
     },
     "hint": {
-        "alert-reference": "HintAlert",
         "timeout": 2500,
         "translations": {
             "en": "{{slot}} recieved a hint from {{sender}}: {{item}} can be found here {{location}}"
@@ -120,7 +112,6 @@
         }
     },
     "hint-found": {
-        "alert-reference": "HintAlert",
         "timeout": 2500,
         "translations": {
             "en": "{{slot}} recieved a hint from {{sender}}: {{item}} can be found here {{location}}. It has already been found"
@@ -135,7 +126,6 @@
         }
     },
     "undefined-item": {
-        "alert-reference": "ItemAlert",
         "timeout": 2500,
         "translations": {
             "en": "{{slot}} recieved {{item}} from {{sender}}"
@@ -150,7 +140,6 @@
         }
     },
     "filler-item": {
-        "alert-reference": "ItemAlert",
         "timeout": 2500,
         "translations": {
             "en": "{{slot}} recieved {{item}} from {{sender}}"
@@ -165,7 +154,6 @@
         }
     },
     "progression-item": {
-        "alert-reference": "ItemAlert",
         "timeout": 2500,
         "translations": {
             "en": "{{slot}} recieved {{item}} from {{sender}}"
@@ -180,7 +168,6 @@
         }
     },
     "useful-item": {
-        "alert-reference": "ItemAlert",
         "timeout": 2500,
         "translations": {
             "en": "{{slot}} recieved {{item}} from {{sender}}"
@@ -195,7 +182,6 @@
         }
     },
     "trap-item": {
-        "alert-reference": "ItemAlert",
         "timeout": 2500,
         "translations": {
             "en": "{{slot}} recieved {{item}} from {{sender}}"

@@ -1,11 +1,9 @@
-import { getAudios, getImages, loadMedia } from '@/lib/media';
+import { getMedias } from '@/lib/media';
 import '@/styles/pages/media.css';
-import type { MediaData } from '@/types/media';
+import type { MediaItemInstance } from '@/types/media';
 
-await loadMedia("/ArchipelagoOverlays/assets/alert/media.json");
-
-const images = getImages();
-const audios = getAudios();
+const images = getMedias("image");
+const audios = getMedias("audio");
 
 const imageGrid: HTMLElement = document.querySelector("#image-grid");
 const audioGrid: HTMLElement = document.querySelector("#audio-grid");
@@ -13,7 +11,7 @@ const audioGrid: HTMLElement = document.querySelector("#audio-grid");
 const mediaCardTemplate = document.querySelector('#media-card-template') as HTMLTemplateElement;
 const mediaPlayerTemplate = document.querySelector('#media-card__player-template') as HTMLTemplateElement;
 
-function createMediaCard(data: MediaData) {
+function createMediaCard(data: MediaItemInstance) {
     const clonedMediaCard = mediaCardTemplate.content.cloneNode(true) as DocumentFragment;
 
     const nameElement: HTMLAnchorElement = clonedMediaCard.querySelector(".media-card__name");
@@ -49,7 +47,7 @@ function createMediaCard(data: MediaData) {
     return clonedMediaCard;
 }
 
-function appendMediaPlayer(data: MediaData, fragment: DocumentFragment) {
+function appendMediaPlayer(data: MediaItemInstance, fragment: DocumentFragment) {
     const clonedMediaPlayer = mediaPlayerTemplate.content.cloneNode(true) as DocumentFragment;
 
     const imageContainer: HTMLDivElement = fragment.querySelector('.media-card__image');

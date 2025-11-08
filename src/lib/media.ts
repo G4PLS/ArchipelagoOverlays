@@ -1,21 +1,18 @@
-import type { MediaConfig, MediaData, MediaJson } from "@/types/media";
-import { loadSingleConfig } from "@/utils/configLoader";
+import media from '@/data/media.json';
+import type { MediaItemConfig, MediaItemInstance, MediaType } from '@/types/media';
 
-const images: Map<string, MediaData> = new Map();
-const audios: Map<string, MediaData> = new Map();
+const mediaStores: Record<MediaType, Map<string, MediaItemInstance>> = {
+    audio: new Map(),
+    image: new Map()
+};
 
-export async function loadMedia(path: string) {
-    await loadSingleConfig<MediaJson>(path, createMedia);
-
-    console.log("MEDIA", images, audios)
+function initializeMedia() {
+    createMediaEntries(mediaStores.image, media.images);
+    createMediaEntries(mediaStores.audio, media.audios);
+    console.log("INITIALIZED MEDIA");
 }
 
-function createMedia(config: MediaJson) {
-    createMediaEntries(images, config.images);
-    createMediaEntries(audios, config.audios);
-}
-
-function createMediaEntries(map: Map<string, MediaData>, media: Record<string, MediaConfig>) {
+function createMediaEntries(map: Map<string, MediaItemInstance>, media: Record<string, MediaItemConfig>) {
     Object.entries(media).forEach(([name, config]) => {
         map.set(name, {
             mediaName: name,
@@ -25,30 +22,42 @@ function createMediaEntries(map: Map<string, MediaData>, media: Record<string, M
             foundAt: config["found-at"],
             license: config.license,
             licenseLink: config["license-link"]
-        });
-    });
+        })
+    })
 }
 
-export function getImageNames() {
-    return Array.from(images.keys());
+export function reload() {
+    Object.entries(mediaStores).forEach(([_, value]) => {
+        value.clear();
+    })
+    initializeMedia();
 }
 
-export function getImages() {
-    return Array.from(images.values());
+export function getMedia(mediaType: MediaType, name: string) {
+    const store = mediaStores[mediaType];
+
+    if (!store)
+        return undefined;
+
+    return store.get(name);
 }
 
-export function getImage(name: string) {
-    return images.get(name);
+export function getMedias(mediaType: MediaType): MediaItemInstance[] {
+    const store = mediaStores[mediaType];
+
+    if (!store)
+        return [];
+
+    return Array.from(store.values());
 }
 
-export function getAudioNames() {
-    return Array.from(audios.keys());
+export function getMediaNames(mediaType: MediaType): string[] {
+    const store = mediaStores[mediaType];
+
+    if (!store)
+        return [];
+
+    return Array.from(store.keys());
 }
 
-export function getAudios() {
-    return Array.from(audios.values());
-}
-
-export function getAudio(name: string) {
-    return audios.get(name);
-}
+initializeMedia();

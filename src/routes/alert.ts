@@ -1,27 +1,24 @@
-import { Alert, ConnectedAlert, ConnectionFailedAlert, CountdownAlert, DeathAlert, DisconnectAlert, GoalAlert, HintAlert, ItemAlert } from '@/components/alertItems';
-import { getAlert, loadAlert } from '@/lib/alertManager';
-import { loadAnimation } from '@/lib/animation';
-import { connect, loadArchipelagoConfig } from '@/lib/archipelagoConnection';
+import { Alert, ConnectedAlert, ConnectionFailedAlert, CountdownAlert, DeathAlert, DisconnectAlert, GoalAlert, HintAlert, ItemAlert } from '@/lib/displayItems/alertItems';
 import { Display } from '@/lib/display';
-import { loadFont } from '@/lib/font';
-import { loadMedia } from '@/lib/media';
-import { loadLanguage } from '@/lib/textParser';
 import '@/styles/pages/alert.css';
 import type { Client, ConnectedPacket, Hint, Item, MessageNode, Player } from 'archipelago.js';
+import { getAlert } from '@/lib/alert';
+import { connect } from '@/lib/archipelago/connection';
+import { deconstructUrl } from '@/utils/urlParser';
+import { alertUrlParser } from '@/urlParsers/alert';
+import { getArchipelagoConfig } from '@/lib/archipelago/config';
+import { initializeAnimations } from '@/lib/animation';
+import animationConfig from '@/data/animations.json';
 
 const container: HTMLDivElement = document.querySelector(".alert")!;
 
-loadArchipelagoConfig();
-loadFont();
-loadLanguage();
-await loadMedia("/ArchipelagoOverlays/assets/alert/media.json");
-await loadAnimation("/ArchipelagoOverlays/assets/alert/animations.json");
-await loadAlert("/ArchipelagoOverlays/assets/alert/alerts.json");
+initializeAnimations(animationConfig);
+deconstructUrl(alertUrlParser);
 
 const alertDisplay = new Display<Alert>(container);
 alertDisplay.push(new Alert("", getAlert("load")));
 
-connect(undefined, (client: Client, slot: string) => {
+connect(getArchipelagoConfig(), (client: Client, slot: string) => {
     client.socket.on("connected", (_: ConnectedPacket) => {
         const alertData = getAlert("connected");
 

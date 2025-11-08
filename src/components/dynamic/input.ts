@@ -8,8 +8,8 @@ export class Input extends DynamicHtmlComponent<HTMLInputElement> {
     constructor(element: HTMLInputElement, initialValue?: string, placeholder?: string, onChange?: (value: string, element: HTMLInputElement) => void) {
         super(element);
 
-        this.initialValue = initialValue;
-        this.placeholder = placeholder
+        this.initialValue = initialValue ?? "";
+        this.placeholder = placeholder ?? "";
         this.onChange = onChange;
 
         this.initialize();
@@ -33,12 +33,12 @@ export class Input extends DynamicHtmlComponent<HTMLInputElement> {
     }
 
     setValue(value: string) {
-        this.element.value = value;
+        this.element.value = value ?? "";
     }
 
     setPlaceholder(placeholder: string) {
-        this.placeholder = placeholder;
-        this.element.placeholder = placeholder;
+        this.placeholder = placeholder ?? "";
+        this.element.placeholder = placeholder ?? "";
     }
 
     setOnChange(onChange: (value: string, element: HTMLInputElement) => void) {

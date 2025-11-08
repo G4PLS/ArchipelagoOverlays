@@ -1,127 +1,96 @@
-import type { FontConfig } from "@/types/fontSettings";
-import { addToSearchParamIfNoMatch } from "@/utils/addToSearchParamIfMatch";
+import type { FontData, FontInstance } from "@/types/font";
+import { addIfNoMatch } from "@/utils/searchParams";
 
-let fontConfig: FontConfig;
-let fontConfigOverride: FontConfig;
+const fontConfig: FontInstance = {
+  family: "Arial",
+  size: "12",
+  style: "normal",
+  shadow: "normal"
+}
 
-const availableFonts: Record<string, string> = {
-  "system-ui": "System UI",
-  "-apple-system": "Apple System",
-  "BlinkMacSystemFont": "BlinkMac System Font",
-  "SegoeUI": "Segoe UI",
-  "Roboto": "Roboto",
-  "HelveticaNeue": "Helvetica Neue",
-  "Arial": "Arial",
-  "NotoSans": "Noto Sans",
-  "LiberationSans": "Liberation Sans",
-  "Georgia": "Georgia",
-  "TimesNewRoman": "Times New Roman",
-  "Times": "Times",
-  "PalatinoLinotype": "Palatino Linotype",
-  "BookAntiqua": "Book Antiqua",
-  "Consolas": "Consolas",
-  "Menlo": "Menlo",
-  "Monaco": "Monaco",
-  "CourierNew": "Courier New",
-  "LiberationMono": "Liberation Mono",
-  "sans-serif": "Sans-serif",
-  "serif": "Serif",
-  "monospace": "Monospace"
-};
+let fontOverride: FontInstance = {
+  family: undefined,
+  size: undefined,
+  style: undefined,
+  shadow: undefined
+}
 
-const avialableStyles: Record<string, string> = {
+const fontData: FontData = {
+  availableFonts: {
+    "system-ui": "System UI",
+    "-apple-system": "Apple System",
+    "BlinkMacSystemFont": "BlinkMac System Font",
+    "SegoeUI": "Segoe UI",
+    "Roboto": "Roboto",
+    "HelveticaNeue": "Helvetica Neue",
+    "Arial": "Arial",
+    "NotoSans": "Noto Sans",
+    "LiberationSans": "Liberation Sans",
+    "Georgia": "Georgia",
+    "TimesNewRoman": "Times New Roman",
+    "Times": "Times",
+    "PalatinoLinotype": "Palatino Linotype",
+    "BookAntiqua": "Book Antiqua",
+    "Consolas": "Consolas",
+    "Menlo": "Menlo",
+    "Monaco": "Monaco",
+    "CourierNew": "Courier New",
+    "LiberationMono": "Liberation Mono",
+    "sans-serif": "Sans-serif",
+    "serif": "Serif",
+    "monospace": "Monospace"
+  },
+  avaiableStyles: {
     "normal": "Normal",
     "bold": "Bold",
     "italic": "Italic",
     "bi": "Bold + Italic"
-};
-
-const availableShadows: Record<string, string> = {
-    "normal": "None",
+  },
+  availableShadows: {
+      "normal": "None",
     "small": "Small",
     "medium": "Medium",
     "large": "Large"
+  }
 }
 
-export function loadFont() {
-    fontConfig = {
-        family: "Arial",
-        size: "12",
-        style: "normal",
-        shadow: "normal"
-    };
+export function deconstructFontParams(params: URLSearchParams) { 
+  const family = params.get("font-family");
+  const size = params.get("font-size");
+  const style = params.get("font-style");
+  const shadow = params.get("font-shadow");
 
-    fontConfigOverride = {
-        family: undefined,
-        size: undefined,
-        style: undefined,
-        shadow: undefined
-    };
-
-    deconstructFontUrlParams();
+  fontOverride = {
+    family,
+    size,
+    style,
+    shadow
+  };
 }
 
-export function deconstructFontUrlParams(params?: URLSearchParams) {
-    const searchParams: URLSearchParams = params || new URL(window.location.href).searchParams;
-
-    const family = searchParams.get("font-family");
-    const size = searchParams.get("font-size");
-    const style = searchParams.get("font-style");
-    const shadow = searchParams.get("font-shadow");
-
-    fontConfigOverride = {
-        family: family ?? fontConfig.family,
-        size: size ?? fontConfig.size,
-        style: style ?? fontConfig.style,
-        shadow: shadow ?? fontConfig.shadow
-    };
-
-    console.log("FONT", fontConfigOverride);
+export function constructFontParams(params: URLSearchParams) {
+  addIfNoMatch(params, "font-family", fontOverride.family, [fontConfig.family, undefined]);
+  addIfNoMatch(params, "font-size", fontOverride.size, [fontConfig.size, undefined]);
+  addIfNoMatch(params, "font-style", fontOverride.style, [fontConfig.style, undefined]);
+  addIfNoMatch(params, "font-shadow", fontOverride.shadow, [fontConfig.shadow, undefined]);
 }
 
-export function constructFontUrlParams(params?: URLSearchParams): URLSearchParams {
-    const searchParams: URLSearchParams = params || new URLSearchParams();
-
-    addToSearchParamIfNoMatch(searchParams, "font-family", fontConfigOverride.family, fontConfig.family);
-    addToSearchParamIfNoMatch(searchParams, "font-size", fontConfigOverride.size, fontConfig.size);
-    addToSearchParamIfNoMatch(searchParams, "font-style", fontConfigOverride.style, fontConfig.style);
-    addToSearchParamIfNoMatch(searchParams, "font-shadow", fontConfigOverride.shadow, fontConfig.shadow);
-
-    return searchParams;
+export function setFontOverride(overrideValues: Partial<FontInstance>) {
+  fontOverride = {
+    ...fontOverride,
+    ...overrideValues
+  }
 }
 
-export function setFontOverride(override: Partial<FontConfig>) {
-    const font = getFont();
-
-    fontConfigOverride = {
-        family: override.family ?? font.family,
-        size: override.size ?? font.size,
-        style: override.style ?? font.style,
-        shadow: override.shadow ?? font.shadow
-    }
+export function getFont(): FontInstance {
+  return {
+    family: fontOverride.family ?? fontConfig.family,
+    size: fontOverride.size ?? fontConfig.size,
+    style: fontOverride.style ?? fontConfig.style,
+    shadow: fontOverride.shadow ?? fontConfig.shadow,
+  }
 }
 
-export function getFont(): FontConfig {
-    return {
-        family: fontConfigOverride?.family ?? fontConfig.family,
-        size: fontConfigOverride?.size ?? fontConfig.size,
-        style: fontConfigOverride?.style ?? fontConfig.style,
-        shadow: fontConfigOverride?.shadow ?? fontConfig.shadow
-    }
-}
-
-export function getAvailableFonts(): Record<string, string> {
-    return availableFonts;
-}
-
-export function getAvailableStyles(): Record<string, string> {
-    return avialableStyles;
-}
-
-export function getAvailableShadows(): Record<string, string> {
-    return availableShadows;
-}
-
-export function getFontFromAvailableFonts(key: string): string|undefined {
-    return availableFonts[key];
+export function getFontData() {
+  return fontData;
 }

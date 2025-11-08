@@ -1,18 +1,18 @@
 import { applyAnimation, removeAnimation } from "@/lib/animation";
 import { DisplayItem } from "@/lib/display";
-import { getAudio, getImage } from "@/lib/media";
-import { parseText } from "@/lib/textParser";
-import type { AlertData } from "@/types/alertSettings";
+import type { AlertInstance } from "@/types/alert";
 import type { TranslationVariables } from "@/types/translationVariables";
-import { pickRandom } from "@/utils/arrayPickRandom";
+import { parse } from "../textParser";
+import { pickRandom } from "@/utils/pickRandom";
+import { getMedia } from "../media";
 
 export class Alert extends DisplayItem {
   slot: string;
-  config: AlertData;
+  config: AlertInstance;
   variables?: TranslationVariables;
   private resolveDisplay: () => void;
 
-  constructor(slot: string, data: AlertData, variables?: TranslationVariables) {
+  constructor(slot: string, data: AlertInstance, variables?: TranslationVariables) {
     super();
 
     this.slot = slot;
@@ -79,17 +79,13 @@ export class Alert extends DisplayItem {
     if (!textElement)
       return;
 
-    const text = parseText(
-        this.variables,
-        this.config.name,
-        this.config.translations
-      );
+    const text = parse(this.config, this.variables);
 
-      if (text === null) 
-        return;
+    if (text === null) 
+      return;
 
-      textElement.innerHTML = text;
-      textElement.classList.add(this.config.name);
+    textElement.innerHTML = text;
+    textElement.classList.add(this.config.name);
   }
 
   private removeText(displayContainer: HTMLElement) {
@@ -110,16 +106,16 @@ export class Alert extends DisplayItem {
     if (this.config.imageReferences && imageElement) {
       const key = pickRandom<string>(this.config.imageReferences);
 
-      const media = getImage(key);
+      const media = getMedia("image", key);
 
       if (media === undefined || media.mediaLink === "") {
         imageElement.removeAttribute("src");
-        imageElement.style.visibility = "hidden";
+        imageElement.style.display = "none";
       } 
       else {
         imageElement.src = media.mediaLink;
         imageElement.classList.add(this.config.name);
-        imageElement.style.visibility = "";
+        imageElement.style.display = "";
       }
     }
   }
@@ -143,7 +139,7 @@ export class Alert extends DisplayItem {
     if (this.config.audioReferences.length > 0 && audioElement) {
       const key = pickRandom<string>(this.config.audioReferences);
 
-      const media = getAudio(key);
+      const media = getMedia("audio", key);
 
       if (media === undefined || media.mediaLink === "") {
         audioElement.pause();
@@ -179,7 +175,7 @@ export class Alert extends DisplayItem {
 }
 
 export class ConnectionFailedAlert extends Alert {
-  constructor(slot: string, config: AlertData) {
+  constructor(slot: string, config: AlertInstance) {
     super(slot, config, {
       slot: slot
     });
@@ -187,7 +183,7 @@ export class ConnectionFailedAlert extends Alert {
 }
 
 export class ConnectedAlert extends Alert {
-  constructor(slot: string, config: AlertData) {
+  constructor(slot: string, config: AlertInstance) {
     super(slot, config, {
       slot: slot
     });
@@ -195,7 +191,7 @@ export class ConnectedAlert extends Alert {
 }
 
 export class DisconnectAlert extends Alert {
-  constructor(slot: string, config: AlertData) {
+  constructor(slot: string, config: AlertInstance) {
     super(slot, config, {
       slot: slot
     });
@@ -203,7 +199,7 @@ export class DisconnectAlert extends Alert {
 }
 
 export class ItemAlert extends Alert {
-  constructor(slot: string, config: AlertData, itemName: string, sender: string) {
+  constructor(slot: string, config: AlertInstance, itemName: string, sender: string) {
     super(slot, config, {
       slot,
       sender,
@@ -213,7 +209,7 @@ export class ItemAlert extends Alert {
 }
 
 export class DeathAlert extends Alert {
-  constructor(slot: string, config: AlertData, sender: string, deathReason: string) {
+  constructor(slot: string, config: AlertInstance, sender: string, deathReason: string) {
     super(slot, config, {
       slot,
       sender,
@@ -223,7 +219,7 @@ export class DeathAlert extends Alert {
 }
 
 export class GoalAlert extends Alert {
-  constructor(slot: string, config: AlertData, playerName: string, gameName: string) {
+  constructor(slot: string, config: AlertInstance, playerName: string, gameName: string) {
     super(slot, config, {
       player: playerName,
       game: gameName
@@ -232,7 +228,7 @@ export class GoalAlert extends Alert {
 }
 
 export class CountdownAlert extends Alert {
-  constructor(slot: string, config: AlertData, currentCounter: string) {
+  constructor(slot: string, config: AlertInstance, currentCounter: string) {
     super(slot, config, {
       countdown: currentCounter
     });
@@ -240,7 +236,7 @@ export class CountdownAlert extends Alert {
 }
 
 export class HintAlert extends Alert {
-  constructor(slot: string, config: AlertData, sender: string, item: string, location: string) {
+  constructor(slot: string, config: AlertInstance, sender: string, item: string, location: string) {
     super(slot, config, {
       slot,
       sender,

@@ -1,0 +1,55 @@
+#toast-container {
+    position: fixed;
+    top: 1%;
+    right: 1%;
+}
+
+.toast {
+  background-color: var(--fg-lighter);
+  color: var(--text-color-darker);
+  transform: translateY(10px);
+  animation: toast-anim 1.5s forwards;
+  width: 200px;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+  padding: 0.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.toast.error {
+    background-color: var(--error);
+}
+
+.toast.success {
+    background-color: var(--success);
+}
+
+.toast.warning {
+    background-color: var(--warning);
+}
+
+.toast::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 4px;
+    width: 0%;
+    animation: progress-bar 1.5s linear forwards;
+    background-color: black;
+}
+
+@keyframes toast-anim {
+  0% { opacity: 0; transform: translateY(10px); }
+  10% { opacity: 1; transform: translateY(0); }  /* fade-in */
+  80% { opacity: 1; transform: translateY(0); }  /* stay visible */
+  100% { opacity: 0; transform: translateY(10px); } /* fade-out */
+}
+
+@keyframes progress-bar {
+    0% {width: 100%;}
+    90% {width: 0%;}
+}

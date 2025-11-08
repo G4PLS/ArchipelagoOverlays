@@ -7,6 +7,7 @@
     <title>Archipelago Overlays</title>
   </head>
   <body>
+    <load src="src/partials/urlMigrationDialog.html" />
     <main>
         <section id="config-section">
 
@@ -82,6 +83,18 @@
                 </tab-group>
             </fieldset>
 
+            <fieldset class="border-radius">
+              <legend>CSS</legend>
+
+              <div class="css-input">
+                <textarea class="css-input__input"></textarea>
+                <div class="css-input__button-group">
+                  <button class="css-input__load border-radius">LOAD CSS</button>
+                  <button class="css-input__remove border-radius">REMOVE CSS</button>
+                </div>
+              </div>
+            </fieldset>
+
             <div class="url-parser border-radius">
               <input class="url-parser__input border-radius" id="url-parser-input" type="text">
               <button class="url-parser__button border-radius" id="generate-url-button">
@@ -100,7 +113,7 @@
         </section>
 
         <section id="preview-section">
-          <load src="src/partials/alert.html" />
+          <load src="src/partials/alertOverlay.html" />
           <div class="border-radius" id="alert-preview">
             <label for="alert-preview__select">Alert</label>
             <select class="border-radius" id="alert-preview__select"></select>

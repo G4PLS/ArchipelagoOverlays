@@ -1,13 +1,20 @@
-export interface MediaConfig {
+export type MediaType = "image" | "audio";
+
+export interface MediaItemConfig {
     "media-link": string;
-    author: string;
-    "author-link": string;
-    "found-at": string;
-    license: string;
-    "license-link": string;
+    author?: string;
+    "author-link"?: string;
+    "found-at"?: string;
+    "license"?: string;
+    "license-link"?: string;
 }
 
-export interface MediaData {
+export interface MediaConfig {
+    images: Record<string, MediaItemConfig>;
+    audios: Record<string, MediaItemConfig>;
+}
+
+export interface MediaItemInstance {
     mediaName: string;
     mediaLink: string;
     author?: string;
@@ -17,7 +24,7 @@ export interface MediaData {
     licenseLink?: string;
 }
 
-export interface MediaJson {
-    images: Record<string, MediaConfig>;
-    audios: Record<string, MediaConfig>;
+export interface MediaInstance {
+    images: Record<string, MediaItemInstance>;
+    audios: Record<string, MediaItemInstance>;
 }

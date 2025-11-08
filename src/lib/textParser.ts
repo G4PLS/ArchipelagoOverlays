@@ -1,47 +1,32 @@
-import { type Translation } from "@/types/alertSettings";
+import type { AlertInstance } from "@/types/alert";
 import type { TranslationVariables } from "@/types/translationVariables";
-
-/*
-sender: Preson that sended
-target: Person that received
-item: Item that was received
-*/
 
 const fallbackLang: string = "en";
 let lang: string = "en";
 
-export function loadLanguage() {
-    const searchParams: URLSearchParams = new URL(window.location.href).searchParams;
+export function parse(alert: AlertInstance, variables: TranslationVariables) {
+    if (!alert || !alert.translations)
+        return "";
 
-    lang = searchParams.get("lang") || fallbackLang;
-    console.log("LANGUAGE", lang);
+    const text = alert.translations[lang] || alert.translations[fallbackLang];
+
+    if (!text)
+        return "";
+
+    return replaceText(text, variables);
 }
 
-export function parseText(
-  variables: TranslationVariables,
-  alertName: string,
-  translations: Translation
-): string {
-  if (!translations)
-    return "";
+function replaceText(input: string, variables: TranslationVariables) {
+    input = input.replace(/\{\{(\w+)\}\}/g, (_, variable) => {
+        const key = variable as keyof TranslationVariables;
+        const value = variables[key] ?? key;
 
-  const text = translations[lang];
+        return `<span class=${variable}>${value}</span>`
+    });
 
-  if (!text)
-    return "";
+    input = input.replace(/\[\[(\w+):([^\]]+)\]\]/g, (_, key, value) => {
+        return `<span class=${key}>${value}</span>`
+    });
 
-  if (!variables)
-    return text;
-
-  const formattedText = text.replace(/{{(\w+)}}/g, (_, key) => {
-    // Only allow keys defined in TranslationVariables
-    if (!(key in variables)) {
-        console.error(`{{${key}}} is not defined in "${text}"`);
-        return "";
-    }
-
-    const value = variables[key as keyof TranslationVariables] ?? "";
-    return `<span class="variable ${key} ${alertName}-${key}">${value}</span>`
-  });
-  return formattedText;
+    return input;
 }

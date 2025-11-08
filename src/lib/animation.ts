@@ -1,78 +1,51 @@
-// TODO: DECONSTRUCT URL
-import { loadConfig } from "@/utils/configLoader";
-
-import type {
-  AnimationConfig
-} from "@/types/animation";
-import type { AlertAnimationConfig } from "@/types/alertSettings";
+import type { AlertAnimationInstance } from "@/types/alert";
+import type { AnimationKeyframeConfig } from "@/types/animation";
+import { applyStyles, injectStyle, removeStyles } from "@/utils/domInjector";
 
 const loadedAnimations: string[] = [];
 
-export async function loadAnimation(path: string) {
-  await loadConfig<AnimationConfig>(path, createConfigs);
+export function initializeAnimations(keyframes: AnimationKeyframeConfig) {
+    let css: string[] = [];
+
+    for (const [name, frames] of Object.entries(keyframes)) {
+        const lines = [`@keyframes ${name} {`]
+
+        for (const [percent, props] of Object.entries(frames)) {
+            const declarations = Object.entries(props).map(([prop, value]) => `${prop}:${value};`).join("");
+            lines.push(`${percent} {${declarations}}`);
+        }
+
+        lines.push("}")
+        css.push(...lines);
+        loadedAnimations.push(name);
+    }
+
+    injectStyle("ap-overlay-animations", css.join("\n"));
+
+    console.log("INITIALIZED ANIMATIONS");
 }
 
-function createConfigs(config: Record<string, AnimationConfig>) {
-  const allKeyframesCss: string[] = [];
+export function applyAnimation(element: HTMLElement, animation: AlertAnimationInstance) {
+    if (!element || !animation)
+        return;
 
-  Object.entries(config).forEach(([name, entry]) => {
-    const css = createKeyframeCss(name, entry);
-    allKeyframesCss.push(css);
-    loadedAnimations.push(name);
-  });
-
-  applyKeyframeCss(allKeyframesCss.join("\n"));
-}
-
-function createKeyframeCss(name: string, keyframes: AnimationConfig) {
-  const keyframeLines: string[] = [`@keyframes ${name} {`];
-
-  for (const [percent, props] of Object.entries(keyframes)) {
-    const declarations = Object.entries(props)
-      .map(([prop, val]) => `    ${prop}: ${val};`)
-      .join(" ");
-
-    keyframeLines.push(`  ${percent} { ${declarations} }`);
-  }
-
-  keyframeLines.push("}");
-
-  return keyframeLines.join("\n");
-}
-
-function applyKeyframeCss(css: string) {
-  let styleTag = document.querySelector("#dynamic-animation-styles");
-
-  if (!styleTag) {
-    styleTag = document.createElement("style");
-    styleTag.id = "dynamic-animation-styles";
-    document.head.appendChild(styleTag);
-  }
-
-  styleTag.textContent = css + "\n";
-}
-
-export function getAnimationNames(): string[] {
-  return loadedAnimations;
-}
-
-export function applyAnimation(element: HTMLElement, animation: AlertAnimationConfig) {
-  if (!element || !animation) 
-    return;
-
-  element.style.animationName = animation.reference;
-  element.style.animationDuration = `${animation.duration}ms`;
-  element.style.animationTimingFunction = animation.timing;
-  element.style.animationIterationCount = animation.iterations.toString();
-  element.offsetWidth;
+    applyStyles(element, {
+        "animation-name": animation.reference,
+        "animation-duration": `${animation.duration}ms`,
+        "animation-timing-function": animation.timing,
+        "animation-iteration-count": animation.iterations.toString()
+    });
 }
 
 export function removeAnimation(element: HTMLElement) {
-  if (!element) return;
+    removeStyles(element, [
+        "animation-name",
+        "animation-duration",
+        "animation-timing-function",
+        "animation-iteration-count"
+    ])
+}
 
-  element.style.animationName = "";
-  element.style.animationDuration = "";
-  element.style.animationTimingFunction = "";
-  element.style.animationIterationCount = "";
-  element.offsetWidth;
+export function getLoadedAnimations() {
+    return loadedAnimations;
 }

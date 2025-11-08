@@ -1,6 +1,8 @@
 @import '../style.css';
 @import '../components/collapsible.css';
 @import '../components/alert.css';
+@import '../components/toast.css';
+@import '../components/urlMigrationDialog.css';
 
 /* HELPER */
 
@@ -54,6 +56,7 @@ section > fieldset {
     background-color: var(--fg);
     display: flex;
     flex-direction: column;
+    max-width: 100%;
 }
 
 section > fieldset > legend {
@@ -156,4 +159,33 @@ section > fieldset > legend {
 
 .url-parser__button img {
     height: 100%;
+}
+
+
+/* CSS COMPONENT */
+
+.css-input {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.css-input__input {
+    resize: none;
+    width: 100%;
+    height: 35vh;
+    background-color: var(--fg-lighter);
+    border: none;
+    padding: 0.2rem;
+    border-radius: var(--border-radius);
+    color: var(--text-color-darker);
+    font-weight: bold;
+}
+
+.css-input__button-group {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
 }

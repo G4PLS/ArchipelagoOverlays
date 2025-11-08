@@ -1,47 +1,43 @@
-import { CollapsibleInputList } from '@/components/CollapsibleInputList/collapsibleInput';
-import { MultiSelect } from '@/components/MultiSelect/multiSelect';
-import { TabGroup } from '@/components/TabGroup/tabGroup';
-import { Alert } from '@/components/alertItems';
-import { Input } from '@/components/dynamic/input';
-import { Select } from '@/components/dynamic/select';
-import { constructAlertUrlParams, deconstructAlertUrlParams, getAlert, getAlerts, loadAlert, setAlertOverride } from '@/lib/alertManager';
-import { getAnimationNames, loadAnimation } from '@/lib/animation';
-import { constructArchipelagoUrlParams, deconstructArchipelagoUrlParams, getArchipelagoConfig, loadArchipelagoConfig, setArchipelagoSettings } from '@/lib/archipelagoConnection';
+import { getLoadedAnimations, initializeAnimations } from '@/lib/animation';
 import { Display } from '@/lib/display';
-import { constructFontUrlParams, deconstructFontUrlParams, getAvailableFonts, getAvailableShadows, getAvailableStyles, getFont, loadFont, setFontOverride } from '@/lib/font';
-import { getAudioNames, getImageNames, loadMedia } from '@/lib/media';
-import { loadLanguage } from '@/lib/textParser';
 import '@/styles/pages/alertConfig.css';
-import type { AlertData } from '@/types/alertSettings';
-import { StrToNumber } from '@/utils/stringToNumber';
 
-loadFont();
-loadLanguage();
-loadArchipelagoConfig();
-await loadMedia("/ArchipelagoOverlays/assets/alert/media.json");
-await loadAnimation("/ArchipelagoOverlays/assets/alert/animations.json");
-await loadAlert("/ArchipelagoOverlays/assets/alert/alerts.json");
+import animationConfig from '@/data/animations.json';
+import { getAlert, getAlerts, setAlertOverride } from '@/lib/alert';
+import { getFont, getFontData, setFontOverride } from '@/lib/font';
+import type { AlertInstance } from '@/types/alert';
+import { Alert } from '@/lib/displayItems/alertItems';
+import { Select } from '@/components/dynamic/select';
+import { CollapsibleInputList } from '@/components/CollapsibleInputList/collapsibleInput';
+import { Input } from '@/components/dynamic/input';
+import { getArchipelagoConfig, setArchipelagoConfig } from '@/lib/archipelago/config';
+import { stringToNumber } from '@/utils/stringToNumber';
+import { MultiSelect } from '@/components/MultiSelect/multiSelect';
+import { getMediaNames } from '@/lib/media';
+import { TabGroup } from '@/components/TabGroup/tabGroup';
+import { constructUrl, deconstructUrl, tryUrlMigration } from '@/utils/urlParser';
+import { alertUrlParser } from '@/urlParsers/alert';
+import type { MigrationDialogResult } from '@/types/migrationDialogResult';
+import { awaitDialog } from '@/utils/awaitDialog';
+import { ToastManager } from '@/components/Toast/toast';
+import { injectStyle, removeStyle } from '@/utils/domInjector';
+
+initializeAnimations(animationConfig);
+
+const toastManager = new ToastManager();
 
 const alerts = getAlerts();
-const animations = getAnimationNames();
-const baseUrl = `${window.location.origin}${import.meta.env.BASE_URL}`;
+let selectedAlert: AlertInstance = null;
 
-const availableFonts = Object.entries(getAvailableFonts()).map((entry) => ({
-  text: entry[1],
-  value: entry[0],
-}));
-const availableStyles = Object.entries(getAvailableStyles()).map((entry) => ({
-  text: entry[1],
-  value: entry[0],
-}));
-const availableShadows = Object.entries(getAvailableShadows()).map((entry) => ({
-  text: entry[1],
-  value: entry[0],
-}));
-
+const animations = getLoadedAnimations();
 const timingFunctions = ["linear", "ease-in-out", "ease-in", "ease-out"];
 
-let selectedAlert: AlertData = null;
+const fontData = getFontData();
+const availableFonts = Object.entries(fontData.availableFonts).map(( [key, value]) => ({text: value, value: key}))
+const availableStyles = Object.entries(fontData.avaiableStyles).map(( [key, value]) => ({text: value, value: key}))
+const availableShadows = Object.entries(fontData.availableShadows).map(( [key, value]) => ({text: value, value: key}))
+
+const baseUrl = `${window.location.origin}${import.meta.env.BASE_URL}`;
 
 const display = new Display<Alert>(document.querySelector(".alert"));
 display.push(new Alert("", getAlert("load")));
@@ -96,7 +92,7 @@ const apUrlInput = new Input(
 )
 
 const apSlotInput = document.querySelector('#ap-slot-input') as CollapsibleInputList;
-apSlotInput.setCurrent(getArchipelagoConfig().slots);
+apSlotInput.setCurrent(getArchipelagoConfig().slots || []);
 
 const apPasswordInput = new Input(
     document.querySelector('#ap-password-input'),
@@ -162,7 +158,7 @@ const alertTimeout = new Input(
 );
 
 const alertImageSelect = document.querySelector('#alert-image-multi-select') as MultiSelect;
-alertImageSelect.addEventListener('change', (e) => {
+alertImageSelect.addEventListener('change', (_) => {
     if (!selectedAlert)
         return;
     
@@ -193,7 +189,7 @@ const animationDuration = new Input(
   undefined,
   (value: string, _: HTMLInputElement) => {
     setAlertOverride(selectedAlert.name, {
-      animation: { duration: StrToNumber(value, 2500) },
+      animation: { duration: stringToNumber(value, 2500) },
     });
   }
 );
@@ -214,14 +210,14 @@ const animationIterations = new Input(
   undefined,
   (value: string, _: HTMLInputElement) => {
     setAlertOverride(selectedAlert.name, {
-      animation: { iterations: StrToNumber(value, 1) },
+      animation: { iterations: stringToNumber(value, 1) },
     });
   }
 );
 
 const alertTabGroup = document.querySelector('tab-group') as TabGroup;
 
-alertTabGroup.addEventListener('tab-change', (e) => {
+alertTabGroup.addEventListener('tab-change', (_) => {
     const currentTab = alertTabGroup.getCurrentTab();
     const alertName = currentTab.value;
 
@@ -229,8 +225,8 @@ alertTabGroup.addEventListener('tab-change', (e) => {
 
     alertTimeout.setValue(selectedAlert.timeout.toString());
 
-    alertImageSelect.setOptions(getImageNames().map(img => ({label: img})), selectedAlert.imageReferences)
-    alertAudioSelect.setOptions(getAudioNames().map(img => ({label: img})), selectedAlert.audioReferences)
+    alertImageSelect.setOptions(getMediaNames("image").map(img => ({label: img})), selectedAlert.imageReferences)
+    alertAudioSelect.setOptions(getMediaNames("audio").map(img => ({label: img})), selectedAlert.audioReferences)
 
     alertAnimation.setOptions(
         animations.map(anim => ({text: anim, value: anim})),
@@ -267,15 +263,13 @@ const openUrlButton: HTMLButtonElement = document.querySelector("#open-url-butto
 function generateUrl(): URL {
   const url = new URL(`${baseUrl}alert/`);
 
-  setArchipelagoSettings({
+  setArchipelagoConfig({
     url: apUrlInput.getValue(),
     password: apPasswordInput.getValue(),
     slots: apSlotInput.getCurrent()
   });
 
-  constructArchipelagoUrlParams(url.searchParams);
-  constructFontUrlParams(url.searchParams);
-  constructAlertUrlParams(url.searchParams);
+  constructUrl(alertUrlParser, url.searchParams);
 
   return url;
 }
@@ -283,41 +277,79 @@ function generateUrl(): URL {
 generateUrlButton.addEventListener('click', () => {
     const url = generateUrl();
     urlInput.value = url.toString();
+    toastManager.push({message: "Generated URL!", toastType: "success"});
 });
 
-loadUrlButton.addEventListener('click', () => {
+loadUrlButton.addEventListener('click', async () => {
     const url = new URL(urlInput.value);
     const params = url.searchParams;
 
-    deconstructArchipelagoUrlParams(params);
+    const migrated = await tryUrlMigration(alertUrlParser, params, async (urlVersion: string, parserVersion: string) => {
+      const dialog: HTMLDialogElement = document.querySelector("#url-migration-dialog");
+
+      if (!dialog)
+        return "denied";
+
+      const urlVersionSpan = dialog.querySelector("#url-migration-dialog__text__url-version");
+      const parserVersionSpan = dialog.querySelector("#url-migration-dialog__text__parser-version");
+
+      urlVersionSpan.textContent = urlVersion;
+      parserVersionSpan.textContent = parserVersion;
+
+      return await awaitDialog(dialog) as MigrationDialogResult;
+    });
+
+    if (migrated) {
+      urlInput.value = url.toString();
+      toastManager.push({message: "Migrated!", toastType: "success"});
+    } else {
+      toastManager.push({message: "Migration Failed", toastType: "error"});
+    }
+
+    deconstructUrl(alertUrlParser, params);
+    toastManager.push({message: "Loaded URL!", toastType: "success"});
+
     apUrlInput.setValue(getArchipelagoConfig().url);
     apSlotInput.setCurrent(getArchipelagoConfig().slots);
     apPasswordInput.setValue(getArchipelagoConfig().password);
 
-    deconstructFontUrlParams(params);
     fontFamily.setOptions(availableFonts, getFont().family);
     fontStyle.setOptions(availableStyles, getFont().style);
     fontSize.setValue(getFont().size);
     fontShadow.setOptions(availableShadows, getFont().shadow);
-    
-    deconstructAlertUrlParams(params);
+
     alertTabGroup.rerender();
 });
 
 copyUrlButton.addEventListener('click', () => {
     if (!urlInput.value || urlInput.value === "") return;
     navigator.clipboard.writeText(urlInput.value);
+    toastManager.push({message: "Copied!", toastType: "success"});
 });
 
 openUrlButton.addEventListener('click', () => {
-  let url = urlInput.value;
-  if (!url) {
-    const generatedUrl = generateUrl();
-    url = generatedUrl.toString();
-    urlInput.value = url;
-  }
+  const url = generateUrl().toString();
+  urlInput.value = url;
 
   window.open(url, "_blank");
+})
+
+//#endregion
+
+//#region CSS
+
+const cssInput: HTMLTextAreaElement = document.querySelector(".css-input__input");
+const loadCssButton: HTMLButtonElement = document.querySelector(".css-input__load");
+const removeCssButton: HTMLButtonElement = document.querySelector(".css-input__remove");
+
+loadCssButton.addEventListener("click", () => {
+  injectStyle("custom-css", cssInput.value);
+  toastManager.push({message: "Loaded CSS", toastType: "success"});
+})
+
+removeCssButton.addEventListener("click", () => {
+  removeStyle("custom-css");
+  toastManager.push({message: "Removed CSS", toastType: "success"});
 })
 
 //#endregion

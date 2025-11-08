@@ -51,7 +51,7 @@ export class TabGroup extends HTMLElement {
         }));
     }
 
-    rerender() {
+    async rerender() {
         this.tabContainer.innerHTML = "";
 
         this.tabs.forEach((tab, index) => {
@@ -130,7 +130,7 @@ export class TabGroup extends HTMLElement {
         });
     }
 
-    getCurrentTab() {
+    getCurrentTab(): TabData {
         return this.currentTab;
     }
 }

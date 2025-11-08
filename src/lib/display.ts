@@ -1,4 +1,4 @@
-import { Priority, Queue } from "../utils/queue";
+import { Priority, Queue } from "@/utils/queue";
 
 export abstract class DisplayItem {
     protected timeout: number;
@@ -57,7 +57,7 @@ export class Display<T extends DisplayItem> {
         }
     }
 
-    cancel() {
+    async cancel() {
         if (!this.currentAnimatingItem)
             return;
 

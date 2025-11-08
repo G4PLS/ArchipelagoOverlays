@@ -1,4 +1,4 @@
-export function StrToNumber(value: string, fallback: number): number {
+export function stringToNumber(value: string, fallback: number): number {
     let number: number = fallback;
 
     if (value !== null) {

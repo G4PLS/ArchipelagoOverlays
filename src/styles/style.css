@@ -25,6 +25,10 @@
 
     --border-radius: 0.25em;
 
+    --error: hsl(3, 100%, 71%);
+    --success: hsl(120, 78%, 72%);
+    --warning: hsl(51, 100%, 77%);
+
     font-family: "Roboto", sans-serif;
     font-size: large;
     line-height: 1.5;
@@ -71,4 +75,12 @@ input, select {
     color: var(--text-color-darker);
     font-weight: 500;
     border: none;
+}
+
+dialog {
+    top: 50%;
+    left: 50%;
+    border-radius: var(--border-radius);
+    border: none;
+    padding: 0.5rem;
 }
