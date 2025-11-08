@@ -166,7 +166,7 @@ alertImageSelect.addEventListener('change', (_) => {
 });
 
 const alertAudioSelect = document.querySelector('#alert-audio-multi-select') as MultiSelect;
-alertAudioSelect.addEventListener('change', (e) => {
+alertAudioSelect.addEventListener('change', (_) => {
     if (!selectedAlert)
         return;
 
