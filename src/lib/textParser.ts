@@ -17,15 +17,17 @@ export function parse(alert: AlertInstance, variables: TranslationVariables) {
 }
 
 function replaceText(input: string, variables: TranslationVariables) {
+    // REGEX: {{VARIABLE}}
     input = input.replace(/\{\{(\w+)\}\}/g, (_, variable) => {
         const key = variable as keyof TranslationVariables;
         const value = variables[key] ?? key;
 
-        return `<span class=${variable}>${value}</span>`
+        return `<span class="variable ${variable}">${value}</span>`
     });
 
+    // REGEX: [[KEY:VALUE]]
     input = input.replace(/\[\[(\w+):([^\]]+)\]\]/g, (_, key, value) => {
-        return `<span class=${key}>${value}</span>`
+        return `<span class="${key}">${value}</span>`
     });
 
     return input;
