@@ -19,12 +19,11 @@ import { constructUrl, deconstructUrl, tryUrlMigration } from '@/utils/urlParser
 import { alertUrlParser } from '@/urlParsers/alert';
 import type { MigrationDialogResult } from '@/types/migrationDialogResult';
 import { awaitDialog } from '@/utils/awaitDialog';
-import { ToastManager } from '@/components/Toast/toast';
 import { injectStyle, removeStyle } from '@/utils/domInjector';
+import { Toast } from '@/lib/displayItems/toastItems';
+import { storage } from '@/lib/storage';
 
 initializeAnimations(animationConfig);
-
-const toastManager = new ToastManager();
 
 const alerts = getAlerts();
 let selectedAlert: AlertInstance = null;
@@ -41,6 +40,8 @@ const baseUrl = `${window.location.origin}${import.meta.env.BASE_URL}`;
 
 const display = new Display<Alert>(document.querySelector(".alert"));
 display.push(new Alert("", getAlert("load")));
+
+const toastDisplay = new Display<Toast>(document.querySelector("#toast-notifications"), 3);
 
 //#region PREVIEW 
 
@@ -61,7 +62,7 @@ previewPlayButton.addEventListener('click', () => {
 
   if (!alert) return;
 
-  display.cancel();
+  display.cancelAll();
   display.push(new Alert("SLOT", alert, {
     slot: "SLOT",
     countdown: "COUNTDOWN",
@@ -77,7 +78,7 @@ previewPlayButton.addEventListener('click', () => {
 });
 
 previewStopButton.addEventListener("click", () => {
-  display.cancel();
+  display.cancelAll();
 });
 
 //#endregion
@@ -277,7 +278,7 @@ function generateUrl(): URL {
 generateUrlButton.addEventListener('click', () => {
     const url = generateUrl();
     urlInput.value = url.toString();
-    toastManager.push({message: "Generated URL!", toastType: "success"});
+    toastDisplay.push(new Toast("Generated URL"));
 });
 
 loadUrlButton.addEventListener('click', async () => {
@@ -301,13 +302,14 @@ loadUrlButton.addEventListener('click', async () => {
 
     if (migrated) {
       urlInput.value = url.toString();
-      toastManager.push({message: "Migrated!", toastType: "success"});
+      toastDisplay.push(new Toast("Migrated"));
     } else {
-      toastManager.push({message: "Migration Failed", toastType: "error"});
+      toastDisplay.push(new Toast("Migration Failed"));
+      return;
     }
 
     deconstructUrl(alertUrlParser, params);
-    toastManager.push({message: "Loaded URL!", toastType: "success"});
+    toastDisplay.push(new Toast("Loaded URL"));
 
     apUrlInput.setValue(getArchipelagoConfig().url);
     apSlotInput.setCurrent(getArchipelagoConfig().slots);
@@ -324,7 +326,7 @@ loadUrlButton.addEventListener('click', async () => {
 copyUrlButton.addEventListener('click', () => {
     if (!urlInput.value || urlInput.value === "") return;
     navigator.clipboard.writeText(urlInput.value);
-    toastManager.push({message: "Copied!", toastType: "success"});
+    toastDisplay.push(new Toast("Copied URL"));
 });
 
 openUrlButton.addEventListener('click', () => {
@@ -342,14 +344,26 @@ const cssInput: HTMLTextAreaElement = document.querySelector(".css-input__input"
 const loadCssButton: HTMLButtonElement = document.querySelector(".css-input__load");
 const removeCssButton: HTMLButtonElement = document.querySelector(".css-input__remove");
 
-loadCssButton.addEventListener("click", () => {
+loadCssButton.addEventListener("click", async () => {
+  const cssDialogSeen = storage.get("alertConfigCssLoadDialogSeen");
+
+  if (cssDialogSeen === null || cssDialogSeen === false) {
+    const dialog: HTMLDialogElement = document.querySelector("#css-load-dialog");
+
+    if (dialog) {
+      await awaitDialog(dialog);
+      storage.set("alertConfigCssLoadDialogSeen", true);
+      return;
+    }
+  }
+
   injectStyle("custom-css", cssInput.value);
-  toastManager.push({message: "Loaded CSS", toastType: "success"});
+  toastDisplay.push(new Toast("Loaded CSS"));
 })
 
 removeCssButton.addEventListener("click", () => {
   removeStyle("custom-css");
-  toastManager.push({message: "Removed CSS", toastType: "success"});
+  toastDisplay.push(new Toast("Removed CSS"));
 })
 
 //#endregion

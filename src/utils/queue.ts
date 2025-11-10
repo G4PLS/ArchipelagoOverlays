@@ -39,4 +39,11 @@ export class Queue<T> extends EventTarget {
     isEmpty() {
         return Object.values(this.data).every(arr => arr.length === 0);
     }
+
+    clear() {
+        this.data = {
+            [Priority.LOW]: [],
+            [Priority.CRITICAL]: [],
+        };
+    }
 }
