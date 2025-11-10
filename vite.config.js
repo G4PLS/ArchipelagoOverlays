@@ -19,5 +19,7 @@ export default defineConfig({
       '@': resolve(__dirname, 'src')
     }
   },
-  plugins: [injectHTML()]
+  plugins: [injectHTML({
+    replace: {undefined: "0.1.0-alpha.1"}
+  })]
 })
